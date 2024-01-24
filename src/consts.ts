@@ -1,3 +1,5 @@
+import { TCameraCategory, TCameraLevel, TCameraType } from './types/generalTypes';
+
 enum AppRoute {
   Catalog = '/',
   Product = '/product',
@@ -10,7 +12,15 @@ enum NameSpace {
   SelectedCard = 'SELECTED_CARD',
 }
 
+const CAMERA_TYPES: TCameraType[] = ['Коллекционная', 'Моментальная', 'Цифровая', 'Плёночная'];
+const CAMERA_CATEGORIES:TCameraCategory[] = ['Видеокамера', 'Фотоаппарат'];
+const CAMERA_LEVELS: TCameraLevel[] = ['Нулевой', 'Любительский', 'Профессиональный'];
+
+
 export {
   AppRoute,
   NameSpace,
+  CAMERA_TYPES,
+  CAMERA_CATEGORIES,
+  CAMERA_LEVELS,
 };

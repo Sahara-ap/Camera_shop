@@ -2,10 +2,10 @@ type TCard = {
   id: number;
   name: string;
   vendorCode: string;
-  type: TCameraType;
-  category: TCameraCategory;
+  type: string;
+  category: string;
   description: string;
-  level: TCameraLevel;
+  level: string;
   price: number;
   rating: number;
   reviewCount: number;
@@ -18,7 +18,7 @@ type TCameraType = 'Коллекционная' | 'Моментальная' | '
 type TCameraCategory = 'Видеокамера' | 'Фотоаппарат'
 type TCameraLevel = 'Нулевой' | 'Любительский' | 'Профессиональный'
 
-type SelectedCard = {
+type TSelectedCard = {
   id: number;
   name: string;
   vendorCode: string;
@@ -37,5 +37,8 @@ type SelectedCard = {
 
 export type {
   TCard,
-  SelectedCard,
+  TCameraType,
+  TCameraCategory,
+  TCameraLevel,
+  TSelectedCard,
 };
