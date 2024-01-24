@@ -4,6 +4,7 @@ import { SelectedProductPage } from '../pages/selected-product-page/selected-pro
 import { HelmetProvider } from 'react-helmet-async';
 
 import { AppRoute } from '../consts';
+import { NotFoundPage } from '../pages/not-found-page/not-found-page';
 
 
 function App(): JSX.Element {
@@ -13,6 +14,7 @@ function App(): JSX.Element {
         <Routes>
           <Route path={AppRoute.Catalog} element={<CatalogPage />} />
           <Route path={AppRoute.Product} element={<SelectedProductPage />} />
+          <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
