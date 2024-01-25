@@ -2,9 +2,11 @@ import { Banner } from '../../components/banner/banner';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { CardList } from '../../components/card-list/card-list';
 import { CatalogFilterAside } from '../../components/catalog-filter-aside/catalog-filter-aside';
+import { CatalogPagination } from '../../components/catalog-pagination/catalog-pagination';
 import { CatalogSort } from '../../components/catalog-sort/catalog-sort';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
+
 import { AppRoute } from '../../consts';
 
 function CatalogPage(): JSX.Element {
@@ -23,18 +25,7 @@ function CatalogPage(): JSX.Element {
                 <div className="catalog__content">
                   <CatalogSort />
                   <CardList />
-                  <div className="pagination">
-                    <ul className="pagination__list">
-                      <li className="pagination__item"><a className="pagination__link pagination__link--active" href="1">1</a>
-                      </li>
-                      <li className="pagination__item"><a className="pagination__link" href="2">2</a>
-                      </li>
-                      <li className="pagination__item"><a className="pagination__link" href="3">3</a>
-                      </li>
-                      <li className="pagination__item"><a className="pagination__link pagination__link--text" href="2">Далее</a>
-                      </li>
-                    </ul>
-                  </div>
+                  <CatalogPagination />
                 </div>
               </div>
             </div>
