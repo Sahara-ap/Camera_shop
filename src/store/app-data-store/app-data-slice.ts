@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { fetchCamerasAction } from '../api-actions/card-action';
 import { NameSpace } from '../../consts';
 
 type TAppDataState = {
@@ -18,7 +19,16 @@ const appDataSlice = createSlice({
     setError: (state, action: PayloadAction<null | string>) => {
       state.error = action.payload;
     }
-  }
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchCamerasAction.fulfilled, (state) => {
+        state.hasError = false;
+      })
+      .addCase(fetchCamerasAction.rejected, (state) => {
+        state.hasError = true;
+      });
+}
 });
 
 export {

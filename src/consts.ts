@@ -1,5 +1,9 @@
 import { TCameraCategory, TCameraLevel, TCameraType } from './types/generalTypes';
 
+enum APIRoute {
+  Cameras = '/cameras'
+}
+
 enum AppRoute {
   Catalog = '/',
   Product = '/product',
@@ -18,6 +22,7 @@ const CAMERA_LEVELS: TCameraLevel[] = ['Нулевой', 'Любительски
 
 
 export {
+  APIRoute,
   AppRoute,
   NameSpace,
   CAMERA_TYPES,

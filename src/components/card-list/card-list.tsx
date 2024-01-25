@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../hooks/store-hooks';
-import { getCameras } from '../../store/cards-data/cards-data-selectors';
+import { getCameras } from '../../store/cards-data-store/cards-data-selectors';
 import { Card } from '../card/card';
 
 function CardList(): JSX.Element {
