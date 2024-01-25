@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts';
 
-function Header(): JSX.Element {
+type HeaderProps = {
+  page: AppRoute;
+}
+
+function Header({page}: HeaderProps): JSX.Element {
   return (
     <header className="header" id="header">
       <div className="container">
@@ -44,11 +48,12 @@ function Header(): JSX.Element {
             </svg><span className="visually-hidden">Сбросить поиск</span>
           </button>
         </div>
-        <a className="header__basket-link" href="#">
+        <Link className="header__basket-link" to="#">
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
           </svg>
-        </a>
+          {page === AppRoute.Product && <span className="header__basket-count">3</span>}
+        </Link>
       </div>
     </header>
   );

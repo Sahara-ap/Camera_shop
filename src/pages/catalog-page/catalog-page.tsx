@@ -1,9 +1,10 @@
 import { Header } from '../../components/header/header';
+import { AppRoute } from '../../consts';
 
 function CatalogPage(): JSX.Element {
   return (
     <div className="wrapper">
-      <Header />
+      <Header page={AppRoute.Catalog}/>
       <main>
         <div className="banner">
           <picture>
