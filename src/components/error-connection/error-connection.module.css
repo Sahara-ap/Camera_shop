@@ -1,0 +1,39 @@
+.title {
+  color: rgb(98, 6, 148);
+  font-size: 2em;
+
+}
+
+.btn {
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0.19em 20px;
+  font-weight: 600;
+  font-size: 1.5em;
+  line-height: 1.2;
+  color: #000000;
+  letter-spacing: .03em;
+  text-transform: inherit;
+  overflow-wrap: anywhere;
+  background-color: transparent;
+  border: 1px solid #f2890f;
+  border-radius: 47px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.wrapper {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10%;
+}
