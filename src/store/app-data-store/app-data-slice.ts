@@ -28,7 +28,7 @@ const appDataSlice = createSlice({
       .addCase(fetchCamerasAction.rejected, (state) => {
         state.hasError = true;
       });
-}
+  }
 });
 
 export {
