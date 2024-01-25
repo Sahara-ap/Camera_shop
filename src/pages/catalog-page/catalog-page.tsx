@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Banner } from '../../components/banner/banner';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { CardList } from '../../components/card-list/card-list';
@@ -6,10 +7,26 @@ import { CatalogPagination } from '../../components/catalog-pagination/catalog-p
 import { CatalogSort } from '../../components/catalog-sort/catalog-sort';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
+import { Loading } from '../../components/loading/loading';
 
 import { AppRoute } from '../../consts';
+import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
+import { fetchCamerasAction } from '../../store/api-actions/card-action';
+import { getCameras, getIsCamerasLoading } from '../../store/cards-data-store/cards-data-selectors';
 
 function CatalogPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const isCameraLoading = useAppSelector(getIsCamerasLoading);
+
+  useEffect(() => {
+    dispatch(fetchCamerasAction());
+  }, [dispatch]);
+
+  const cameras = useAppSelector(getCameras);
+
+  if (isCameraLoading) {
+    return <Loading />;
+  }
   return (
     <div className="wrapper">
       <Header page={AppRoute.Catalog} />
@@ -24,7 +41,7 @@ function CatalogPage(): JSX.Element {
                 <CatalogFilterAside />
                 <div className="catalog__content">
                   <CatalogSort />
-                  <CardList />
+                  <CardList cards={cameras}/>
                   <CatalogPagination />
                 </div>
               </div>

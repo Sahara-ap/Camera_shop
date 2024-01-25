@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../consts';
 
 import { TCard } from '../../types/generalTypes';
-import { makeFakeCards } from '../../utils/mocks';
 import { fetchCamerasAction } from '../api-actions/card-action';
 
 type TCardsDataState = {
@@ -11,7 +10,7 @@ type TCardsDataState = {
 }
 
 const initialState: TCardsDataState = {
-  cameras: makeFakeCards(),
+  cameras: [],
   isCamerasLoading: false
 };
 

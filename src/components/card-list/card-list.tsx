@@ -1,24 +1,19 @@
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
-import { fetchCamerasAction } from '../../store/api-actions/card-action';
-import { getCameras } from '../../store/cards-data-store/cards-data-selectors';
 import { Card } from '../card/card';
 
-function CardList(): JSX.Element {
-  const dispatch = useAppDispatch();
+import { TCard } from '../../types/generalTypes';
 
-  useEffect(() => {
-    dispatch(fetchCamerasAction());
-  }, [dispatch]);
+type TCardListProps = {
+  cards: TCard[];
+}
+function CardList({cards}: TCardListProps): JSX.Element {
 
-  const cameras = useAppSelector(getCameras);
 
   return (
     <div className="cards catalog__cards">
-      {cameras.map((camera) => (
+      {cards.map((card) => (
         <Card
-          key={camera.id}
-          cardData={camera}
+          key={card.id}
+          cardData={card}
         />
       ))}
 
