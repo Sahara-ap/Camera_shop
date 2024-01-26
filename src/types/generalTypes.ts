@@ -44,6 +44,8 @@ type TSelectedCard = {
   previewImgWebp2x: string;
 }
 
+type TCameraId = string
+
 
 export type {
   TBanner,
@@ -52,4 +54,5 @@ export type {
   TCameraCategory,
   TCameraLevel,
   TSelectedCard,
+  TCameraId
 };

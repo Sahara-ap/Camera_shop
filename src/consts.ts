@@ -3,6 +3,7 @@ import { TCameraCategory, TCameraLevel, TCameraType } from './types/generalTypes
 enum APIRoute {
   Cameras = '/cameras',
   Banner = '/promo',
+  SelectedCamera = '/cameras',
 }
 
 enum AppRoute {

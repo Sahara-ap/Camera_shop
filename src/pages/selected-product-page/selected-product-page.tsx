@@ -1,8 +1,26 @@
+import { useEffect } from 'react';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { AppRoute } from '../../consts';
+import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
+import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
+import { fetchSelectedCameraAction } from '../../store/api-actions/card-action';
+import { useParams } from 'react-router-dom';
 
 function SelectedProductPage(): JSX.Element {
+  const {cardId} = useParams();
+  const selectedCard = useAppSelector(getSelectedCamera);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if(cardId) {
+      dispatch(fetchSelectedCameraAction(cardId));
+    }
+  }, [cardId, dispatch]);
+
+  console.log(selectedCard);
+
+
   return (
     <div className="wrapper">
       <Header page={AppRoute.Product}/>
