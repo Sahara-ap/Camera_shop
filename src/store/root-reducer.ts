@@ -5,9 +5,11 @@ import { selectedCardDataSlice } from './selected-card-data-store/selected-card-
 import { appDataSlice } from './app-data-store/app-data-slice';
 
 import { NameSpace } from '../consts';
+import { bannerSlice } from './banner-store/banner-slice';
 
 const rootReducer = combineReducers({
   [NameSpace.App]: appDataSlice.reducer,
+  [NameSpace.Banner]: bannerSlice.reducer,
   [NameSpace.Cards]: cardsDataSlice.reducer,
   [NameSpace.SelectedCard]: selectedCardDataSlice.reducer,
 });
