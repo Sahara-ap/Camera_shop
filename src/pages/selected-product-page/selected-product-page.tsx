@@ -26,9 +26,6 @@ function SelectedProductPage(): JSX.Element {
     };
   }, [cardId, dispatch]);
 
-  console.log(selectedCard);
-
-
   return (
     <div className="wrapper">
       <Header page={AppRoute.Product} />
@@ -64,11 +61,14 @@ function SelectedProductPage(): JSX.Element {
           <SelectedProductReviews />
         </div>
       </main>
-      <a className="up-btn" href="#header">
+      <span
+        onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
+        className="up-btn"
+      >
         <svg width="12" height="18" aria-hidden="true">
           <use xlinkHref="#icon-arrow2"></use>
         </svg>
-      </a>
+      </span>
       <Footer />
     </div>
   );
