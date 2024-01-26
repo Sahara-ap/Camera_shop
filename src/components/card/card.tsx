@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { TCard } from '../../types/generalTypes';
+import { AppRoute } from '../../consts';
 
 type TCardProps = {
   cardData: TCard;
@@ -40,7 +41,7 @@ function Card({cardData}: TCardProps): JSX.Element {
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить
         </button>
-        <Link className="btn btn--transparent" to="#">Подробнее
+        <Link className="btn btn--transparent" to={`${AppRoute.Product}/${cardData.id}`}>Подробнее
         </Link>
       </div>
     </div>

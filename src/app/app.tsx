@@ -15,7 +15,7 @@ function App(): JSX.Element {
       <HistoryRouter history={browserHistory}>
         <Routes>
           <Route path={AppRoute.Catalog} element={<CatalogPage />} />
-          <Route path={AppRoute.Product} element={<SelectedProductPage />} />
+          <Route path={`${AppRoute.Product}/:cardId`} element={<SelectedProductPage />} />
           <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
         </Routes>
       </HistoryRouter>
