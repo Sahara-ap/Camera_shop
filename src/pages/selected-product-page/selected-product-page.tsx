@@ -3,17 +3,18 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { AppRoute } from '../../consts';
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
-import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
 import { fetchSelectedCameraAction } from '../../store/api-actions/card-action';
 import { useParams } from 'react-router-dom';
 import { SelectedProductInfo } from '../../components/selected-product-info/selected-product-info';
 import { SelectedProductSimilar } from '../../components/selected-product-similar/selected-product-similar';
 import { SelectedProductReviews } from '../../components/selected-product-reviews/selected-product-reviews';
+import { getIsSelectedCameraLoading } from '../../store/selected-card-data-store/selected-card-data-selectors';
+import { Loading } from '../../components/loading/loading';
 
 function SelectedProductPage(): JSX.Element {
   const { cardId } = useParams();
-  const selectedCard = useAppSelector(getSelectedCamera);
   const dispatch = useAppDispatch();
+  const isSelectedCardLoading = useAppSelector(getIsSelectedCameraLoading);
 
   useEffect(() => {
     let isMounted = true;
@@ -25,6 +26,10 @@ function SelectedProductPage(): JSX.Element {
       isMounted = false;
     };
   }, [cardId, dispatch]);
+
+  if(isSelectedCardLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="wrapper">
