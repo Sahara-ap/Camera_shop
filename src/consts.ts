@@ -1,7 +1,8 @@
 import { TCameraCategory, TCameraLevel, TCameraType } from './types/generalTypes';
 
 enum APIRoute {
-  Cameras = '/cameras'
+  Cameras = '/cameras',
+  Banner = '/promo',
 }
 
 enum AppRoute {
@@ -12,6 +13,7 @@ enum AppRoute {
 
 enum NameSpace {
   App = 'APP',
+  Banner = 'BANNER',
   Cards = 'CARDS',
   SelectedCard = 'SELECTED_CARD',
 }

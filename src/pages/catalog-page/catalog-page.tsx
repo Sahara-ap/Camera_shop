@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { Banner } from '../../components/banner/banner';
+import { BannerList } from '../../components/banner-list/banner-list';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { CardList } from '../../components/card-list/card-list';
 import { CatalogFilterAside } from '../../components/catalog-filter-aside/catalog-filter-aside';
@@ -36,7 +36,7 @@ function CatalogPage(): JSX.Element {
     <div className="wrapper">
       <Header page={AppRoute.Catalog} />
       <main>
-        <Banner />
+        <BannerList />
         <div className="page-content">
           <Breadcrumbs />
           <section className="catalog">
