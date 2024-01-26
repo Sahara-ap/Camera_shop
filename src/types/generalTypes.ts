@@ -1,11 +1,20 @@
+type TBanner = {
+  id: number;
+  name: string;
+  previewImg: string;
+  previewImg2x: string;
+  previewImgWebp: string;
+  previewImgWebp2x: string;
+}
+
 type TCard = {
   id: number;
   name: string;
   vendorCode: string;
-  type: string;
-  category: string;
+  type: TCameraType;
+  category: TCameraCategory;
   description: string;
-  level: string;
+  level: TCameraLevel;
   price: number;
   rating: number;
   reviewCount: number;
@@ -35,7 +44,9 @@ type TSelectedCard = {
   previewImgWebp2x: string;
 }
 
+
 export type {
+  TBanner,
   TCard,
   TCameraType,
   TCameraCategory,
