@@ -12,7 +12,7 @@ import { Loading } from '../../components/loading/loading';
 import { ErrorConnection } from '../../components/error-connection/error-connection';
 
 import { getHasErrorWithConnection } from '../../store/app-data-store/app-data-selectors';
-import { fetchCamerasAction } from '../../store/api-actions/card-action';
+import { fetchCamerasAction } from '../../store/api-actions/card-actions';
 import { getCameras, getIsCamerasLoading } from '../../store/cards-data-store/cards-data-selectors';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';

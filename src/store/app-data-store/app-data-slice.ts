@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { fetchCamerasAction } from '../api-actions/card-action';
+import { fetchCamerasAction } from '../api-actions/card-actions';
 import { NameSpace } from '../../consts';
 
 type TAppDataState = {

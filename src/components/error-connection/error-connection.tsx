@@ -1,7 +1,7 @@
 import styles from './error-connection.module.css';
 
 import { useAppDispatch } from '../../hooks/store-hooks';
-import { fetchCamerasAction } from '../../store/api-actions/card-action';
+import { fetchCamerasAction } from '../../store/api-actions/card-actions';
 
 type TErrorConnectionProps = {
   page: 'catalog';

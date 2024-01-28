@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../consts';
 
 import { TCard } from '../../types/generalTypes';
-import { fetchCamerasAction } from '../api-actions/card-action';
+import { fetchCamerasAction } from '../api-actions/card-actions';
 
 type TCardsDataState = {
   cameras: TCard[];

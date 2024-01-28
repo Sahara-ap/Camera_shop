@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../consts';
-import { fetchSelectedCameraAction } from '../api-actions/card-action';
+import { fetchSelectedCameraAction } from '../api-actions/card-actions';
 import { TSelectedCard } from '../../types/generalTypes';
 
 type TSelectedCardState = {

@@ -3,7 +3,7 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { AppRoute } from '../../consts';
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
-import { fetchSelectedCameraAction } from '../../store/api-actions/card-action';
+import { fetchSelectedCameraAction } from '../../store/api-actions/card-actions';
 import { useParams } from 'react-router-dom';
 import { SelectedProductInfo } from '../../components/selected-product-info/selected-product-info';
 import { SelectedProductSimilar } from '../../components/selected-product-similar/selected-product-similar';
