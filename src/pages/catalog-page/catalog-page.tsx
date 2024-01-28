@@ -16,15 +16,18 @@ import { fetchCamerasAction } from '../../store/api-actions/card-actions';
 import { getCameras, getIsCamerasLoading } from '../../store/cards-data-store/cards-data-selectors';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
-import { AppRoute, CARDS_NUMBER_PER_PAGE } from '../../consts';
+import { AppRoute } from '../../consts';
 
 const DEFAULT_PAGE_NUMBER = 1;
+const CARDS_NUMBER_PER_PAGE = 9;
 
 function CatalogPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const cameras = useAppSelector(getCameras);
 
   const totalCardsLength = cameras.length;
+  const totalPages = Math.ceil(totalCardsLength / CARDS_NUMBER_PER_PAGE);
+
   const [pageNumber, setPageNumber] = useState(DEFAULT_PAGE_NUMBER);
   const start = CARDS_NUMBER_PER_PAGE * (pageNumber - 1);
   const end = CARDS_NUMBER_PER_PAGE * pageNumber;
@@ -56,11 +59,16 @@ function CatalogPage(): JSX.Element {
                 <div className="catalog__content">
                   <CatalogSort />
                   {hasErrorWithConnection
-                    ? <ErrorConnection page={'catalog'}/>
+                    ? <ErrorConnection page={'catalog'} />
                     :
                     <>
                       <CardList cards={currentCameras} />
-                      <CatalogPagination totalCardsLength={totalCardsLength}/>
+                      <CatalogPagination
+                        totalCardsLength={totalCardsLength}
+                        totalPages={totalPages}
+                        pageNumber={pageNumber}
+                        onPaginationClick={setPageNumber}
+                      />
                     </>}
 
                 </div>
