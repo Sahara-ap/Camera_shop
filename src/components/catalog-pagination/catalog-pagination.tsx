@@ -1,6 +1,14 @@
 import { Link } from 'react-router-dom';
 
-function CatalogPagination(): JSX.Element {
+type TCatalogPaginationProps = {
+  totalCardsLength: number;
+
+}
+function CatalogPagination({totalCardsLength}: TCatalogPaginationProps): JSX.Element | null {
+
+  if(totalCardsLength <= 9) {
+    return null;
+  }
   return (
     <div className="pagination">
       <ul className="pagination__list">

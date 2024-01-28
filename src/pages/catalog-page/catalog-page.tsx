@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { BannerList } from '../../components/banner-list/banner-list';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
@@ -16,11 +16,20 @@ import { fetchCamerasAction } from '../../store/api-actions/card-actions';
 import { getCameras, getIsCamerasLoading } from '../../store/cards-data-store/cards-data-selectors';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
-import { AppRoute } from '../../consts';
+import { AppRoute, CARDS_NUMBER_PER_PAGE } from '../../consts';
+
+const DEFAULT_PAGE_NUMBER = 1;
 
 function CatalogPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const cameras = useAppSelector(getCameras);
+
+  const totalCardsLength = cameras.length;
+  const [pageNumber, setPageNumber] = useState(DEFAULT_PAGE_NUMBER);
+  const start = CARDS_NUMBER_PER_PAGE * (pageNumber - 1);
+  const end = CARDS_NUMBER_PER_PAGE * pageNumber;
+  const currentCameras = cameras.slice(start, end);
+
   const hasErrorWithConnection = useAppSelector(getHasErrorWithConnection);
   const isCameraLoading = useAppSelector(getIsCamerasLoading);
 
@@ -50,8 +59,8 @@ function CatalogPage(): JSX.Element {
                     ? <ErrorConnection page={'catalog'}/>
                     :
                     <>
-                      <CardList cards={cameras} />
-                      <CatalogPagination />
+                      <CardList cards={currentCameras} />
+                      <CatalogPagination totalCardsLength={totalCardsLength}/>
                     </>}
 
                 </div>
