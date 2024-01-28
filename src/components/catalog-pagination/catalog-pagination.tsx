@@ -17,6 +17,7 @@ function CatalogPagination({ totalPages, pageNumber, onPaginationClick }: TCatal
 
   function handlePaginationClick(page: number) {
     onPaginationClick(page);
+    window.scrollTo({top:0, left:0, behavior:'smooth'});
   }
 
   function getPaginationLength(pages: number) {
