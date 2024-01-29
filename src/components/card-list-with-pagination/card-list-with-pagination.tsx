@@ -16,31 +16,45 @@ const MIN_PAGES = 2;
 
 function CardListWithPagination(): JSX.Element {
   const cameras = useAppSelector(getCameras);
+
   const totalCardsLength = cameras.length;
   const totalPages = Math.ceil(totalCardsLength / CARDS_NUMBER_PER_PAGE);
 
-  const [pageNumber, setPageNumber] = useState(DEFAULT_PAGE_NUMBER);
+  function getPageNumber() {
+    const url = new URL(window.location.href);
+    const params = Object.fromEntries(url.searchParams);
+    const { page } = params;
+
+    return page;
+  }
+  const initialPageNumber = Number(getPageNumber() ?? 1);
+  const navigate = useNavigate();
+
+  const [pageNumber, setPageNumber] = useState(initialPageNumber);
+
   const start = CARDS_NUMBER_PER_PAGE * (pageNumber - 1);
   const end = CARDS_NUMBER_PER_PAGE * pageNumber;
   const currentCameras = cameras.slice(start, end);
 
-  const isCameraLoading = useAppSelector(getIsCamerasLoading);
+  const isCamerasLoading = useAppSelector(getIsCamerasLoading);
 
-  const navigate = useNavigate();
+
   useEffect(() => {
     let isMounted = true;
-    if (isMounted) {
+
+    if (isMounted && (totalPages !== 0) && (pageNumber > totalPages)) {
       navigate(`${AppRoute.Catalog}?page=${DEFAULT_PAGE_NUMBER}`);
+      setPageNumber(DEFAULT_PAGE_NUMBER);
     }
     return () => {
       isMounted = false;
     };
+  }, [totalPages, pageNumber, navigate]);
 
-  }, [navigate]);
-
-  if (isCameraLoading) {
+  if (isCamerasLoading) {
     return <Loading />;
   }
+
   return (
     <>
       <CardList cards={currentCameras} />

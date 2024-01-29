@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
-import { AppRoute } from '../../consts';
-
 const STEP = 1;
 
 type TCatalogPaginationProps = {
@@ -12,13 +10,7 @@ type TCatalogPaginationProps = {
 
 }
 function CatalogPagination({ totalPages, pageNumber, onPaginationClick }: TCatalogPaginationProps): JSX.Element | null {
-
   const lastPage = totalPages;
-
-  function handlePaginationClick(page: number) {
-    onPaginationClick(page);
-    window.scrollTo({top:0, left:0, behavior:'smooth'});
-  }
 
   function getPaginationLength(pages: number) {
     switch (pages) {
@@ -48,6 +40,13 @@ function CatalogPagination({ totalPages, pageNumber, onPaginationClick }: TCatal
 
     return result;
   });
+  const previousPage = paginationRange[0] - STEP;
+  const nextPage = paginationRange[paginationRange.length - 1] + STEP;
+
+  function handlePaginationClick(page: number) {
+    onPaginationClick(page);
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }
 
 
   return (
@@ -57,21 +56,21 @@ function CatalogPagination({ totalPages, pageNumber, onPaginationClick }: TCatal
           <li className="pagination__item">
             <Link
               className="pagination__link pagination__link--text"
-              to={`${AppRoute.Catalog}?page${paginationRange[0] - STEP}`}
-              onClick={() => handlePaginationClick(paginationRange[0] - STEP)}
+              to={`?page=${previousPage}`}
+              onClick={() => handlePaginationClick(previousPage)}
             >Назад
             </Link>
           </li>}
 
         {paginationRange.map((value) => (
           <li
-            key={value}
+            key={crypto.randomUUID()}
             className="pagination__item"
           >
             <Link
               className={cn('pagination__link', { 'pagination__link--active': value === pageNumber })}
-              to={`${AppRoute.Catalog}?page=${value}`}
               onClick={() => handlePaginationClick(value)}
+              to={`?page=${value}`}
             >
               {value}
             </Link>
@@ -82,8 +81,8 @@ function CatalogPagination({ totalPages, pageNumber, onPaginationClick }: TCatal
           <li className="pagination__item">
             <Link
               className="pagination__link pagination__link--text"
-              to={`${AppRoute.Catalog}?page${paginationRange[paginationRange.length - 1] + STEP}`}
-              onClick={() => handlePaginationClick(paginationRange[paginationRange.length - 1] + STEP)}
+              to={`?page=${nextPage}`}
+              onClick={() => handlePaginationClick(nextPage)}
             >Далее
             </Link>
           </li>}
