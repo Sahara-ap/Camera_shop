@@ -11,37 +11,42 @@ import { getHasErrorWithConnection } from '../../store/app-data-store/app-data-s
 
 import { useAppSelector } from '../../hooks/store-hooks';
 import { AppRoute } from '../../consts';
+import { Helmet } from 'react-helmet-async';
 
 
 function CatalogPage(): JSX.Element {
   const hasErrorWithConnection = useAppSelector(getHasErrorWithConnection);
 
   return (
-    <div className="wrapper">
-      <Header page={AppRoute.Catalog} />
-      <main>
-        <BannerList />
-        <div className="page-content">
-          <Breadcrumbs page={'catalog'}/>
-          <section className="catalog">
-            <div className="container">
-              <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
-              <div className="page-content__columns">
-                <CatalogFilterAside />
-                <div className="catalog__content">
-                  <CatalogSort />
-                  {hasErrorWithConnection
-                    ? <ErrorConnection page={'catalog'} />
-                    : <CardListWithPagination />}
+    <>
+      <Helmet><title>{'Каталог - Фотошоп'}</title></Helmet>
+      <div className="wrapper">
+        <Header page={AppRoute.Catalog} />
+        <main>
+          <BannerList />
+          <div className="page-content">
+            <Breadcrumbs page={'catalog'} />
+            <section className="catalog">
+              <div className="container">
+                <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
+                <div className="page-content__columns">
+                  <CatalogFilterAside />
+                  <div className="catalog__content">
+                    <CatalogSort />
+                    {hasErrorWithConnection
+                      ? <ErrorConnection page={'catalog'} />
+                      : <CardListWithPagination />}
 
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
-        </div>
-      </main>
-      <Footer />
-    </div>
+            </section>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    </>
+
   );
 }
 
