@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { TCard, TSelectedCard } from '../types/generalTypes';
+import { TBanner, TCard, TSelectedCard } from '../types/generalTypes';
 import { pickRandomElement } from './utils-functions';
 import { CAMERA_CATEGORIES, CAMERA_LEVELS, CAMERA_TYPES } from '../consts';
 
@@ -38,8 +38,17 @@ const makeFakeSelectedCard = (): TSelectedCard => ({
   previewImgWebp2x: faker.internet.url(),
 });
 
+const makeFakeBanners = ():TBanner[] => new Array(5).fill(null).map(() => ({
+  id: faker.number.int(),
+  name: faker.lorem.words(3),
+  previewImg: 'img/content/promo-look-54.jpg',
+  previewImg2x: 'img/content/promo-look-54@2x.jpg',
+  previewImgWebp: 'img/content/promo-look-54.webp',
+  previewImgWebp2x: 'img/content/promo-look-54@2x.webp',
+}));
 
 export {
   makeFakeCards,
   makeFakeSelectedCard,
+  makeFakeBanners,
 };

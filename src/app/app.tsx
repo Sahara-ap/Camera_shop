@@ -5,7 +5,7 @@ import { HelmetProvider } from 'react-helmet-async';
 
 import { AppRoute } from '../consts';
 import { NotFoundPage } from '../pages/not-found-page/not-found-page';
-import HistoryRouter from '../components/history-router';
+import HistoryRouter from '../components/history-router/history-router';
 import browserHistory from '../browser-history';
 
 

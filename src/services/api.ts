@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 import { toast } from 'react-toastify';
 
-const BASE_URL = 'https://camera-shop.accelerator.pages.academy';
+const BASE_URL = 'https://camera-shop.accelerator.htmlacademy.pro';
 const REQUEST_TIMEOUT = 5000;
 
 type DetailMessageError = {

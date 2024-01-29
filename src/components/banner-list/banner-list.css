@@ -1,0 +1,20 @@
+.sample-swiper .swiper-pagination {
+  display: flex;
+  flex-direction: row-reverse;
+  position: absolute;
+  bottom: 15px;
+  left: -15px;
+}
+.sample-swiper .swiper-pagination-bullet {
+  background-color: rgba(244, 244, 252, 1);
+  opacity: 1;
+  width: 15px;
+  height: 15px;
+  margin: 0 5px;
+
+}
+
+.sample-swiper .swiper-pagination-bullet-active {
+  background-color: rgb(110, 110, 240);
+  opacity: 1;
+}
