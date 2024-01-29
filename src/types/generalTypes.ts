@@ -23,9 +23,13 @@ type TCard = {
   previewImgWebp: string;
   previewImgWebp2x: string;
 }
-type TCameraType = 'Коллекционная' | 'Моментальная' | 'Цифровая' | 'Плёночная'
 type TCameraCategory = 'Видеокамера' | 'Фотоаппарат'
 type TCameraLevel = 'Нулевой' | 'Любительский' | 'Профессиональный'
+type TCameraType = 'Коллекционная' | 'Моментальная' | 'Цифровая' | 'Плёночная'
+
+type TCameraId = string
+
+type TPage = 'catalog' | 'product'
 
 type TSelectedCard = {
   id: number;
@@ -44,15 +48,14 @@ type TSelectedCard = {
   previewImgWebp2x: string;
 }
 
-type TCameraId = string
-
 
 export type {
   TBanner,
   TCard,
   TCameraType,
+  TCameraId,
   TCameraCategory,
   TCameraLevel,
+  TPage,
   TSelectedCard,
-  TCameraId
 };

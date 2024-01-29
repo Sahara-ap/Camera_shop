@@ -22,7 +22,7 @@ function CatalogPage(): JSX.Element {
       <main>
         <BannerList />
         <div className="page-content">
-          <Breadcrumbs />
+          <Breadcrumbs page={'catalog'}/>
           <section className="catalog">
             <div className="container">
               <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
