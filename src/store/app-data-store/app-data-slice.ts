@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { fetchCamerasAction } from '../api-actions/card-actions';
+import { fetchCamerasAction, fetchSelectedCameraAction } from '../api-actions/card-actions';
 import { NameSpace } from '../../consts';
 
 type TAppDataState = {
@@ -26,6 +26,12 @@ const appDataSlice = createSlice({
         state.hasErrorWithConnection = false;
       })
       .addCase(fetchCamerasAction.rejected, (state) => {
+        state.hasErrorWithConnection = true;
+      })
+      .addCase(fetchSelectedCameraAction.fulfilled, (state) => {
+        state.hasErrorWithConnection = false;
+      })
+      .addCase(fetchSelectedCameraAction.rejected, (state) => {
         state.hasErrorWithConnection = true;
       });
   }

@@ -11,6 +11,9 @@ import { SelectedProductReviews } from '../../components/selected-product-review
 import { getIsSelectedCameraLoading, getSelectedCameraName } from '../../store/selected-card-data-store/selected-card-data-selectors';
 import { Loading } from '../../components/loading/loading';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
+import { getHasErrorWithConnection } from '../../store/app-data-store/app-data-selectors';
+import { ErrorConnection } from '../../components/error-connection/error-connection';
+
 
 function SelectedProductPage(): JSX.Element {
 
@@ -19,6 +22,7 @@ function SelectedProductPage(): JSX.Element {
 
   const cameraName = useAppSelector(getSelectedCameraName);
   const isSelectedCardLoading = useAppSelector(getIsSelectedCameraLoading);
+  const hasErrorWithConnection = useAppSelector(getHasErrorWithConnection);
 
   useEffect(() => {
     let isMounted = true;
@@ -36,14 +40,21 @@ function SelectedProductPage(): JSX.Element {
   }
 
   return (
+
     <div className="wrapper">
       <Header page={AppRoute.Product} />
       <main>
         <div className="page-content">
           <Breadcrumbs page='product' productName={cameraName} />
-          <SelectedProductInfo />
-          <SelectedProductSimilar />
-          <SelectedProductReviews />
+          {hasErrorWithConnection
+            ? <ErrorConnection page={'product'} />
+            :
+            <>
+              <SelectedProductInfo />
+              <SelectedProductSimilar />
+              <SelectedProductReviews />
+            </>}
+
         </div>
       </main>
       <span
@@ -56,6 +67,8 @@ function SelectedProductPage(): JSX.Element {
       </span>
       <Footer />
     </div>
+
+
   );
 }
 
