@@ -1,6 +1,8 @@
 import { useAppSelector } from '../../hooks/store-hooks';
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
 
+import { formatPrice } from '../../utils/utils-functions';
+
 function SelectedProductInfo(): JSX.Element | null {
   const info = useAppSelector(getSelectedCamera);
 
@@ -38,7 +40,7 @@ function SelectedProductInfo(): JSX.Element | null {
               <p className="visually-hidden">Рейтинг: {info.rating}</p>
               <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{info.reviewCount}</p>
             </div>
-            <p className="product__price"><span className="visually-hidden">Цена:</span>{info.price} ₽</p>
+            <p className="product__price"><span className="visually-hidden">Цена:</span>{formatPrice(info.price)} ₽</p>
             <button className="btn btn--purple" type="button">
               <svg width="24" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-add-basket"></use>
