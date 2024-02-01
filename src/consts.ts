@@ -20,6 +20,7 @@ enum NameSpace {
   App = 'APP',
   Banner = 'BANNER',
   Cards = 'CARDS',
+  Modals = 'MODALS',
   SelectedCard = 'SELECTED_CARD',
 }
 
