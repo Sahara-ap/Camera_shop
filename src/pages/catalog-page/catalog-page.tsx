@@ -12,6 +12,7 @@ import { getHasErrorWithConnection } from '../../store/app-data-store/app-data-s
 import { useAppSelector } from '../../hooks/store-hooks';
 import { AppRoute } from '../../consts';
 import { Helmet } from 'react-helmet-async';
+import { ModalAddItem } from '../../components/modal-add-item/modal-add-item';
 
 
 function CatalogPage(): JSX.Element {
@@ -43,6 +44,7 @@ function CatalogPage(): JSX.Element {
             </section>
           </div>
         </main>
+        <ModalAddItem />
         <Footer />
       </div>
     </>

@@ -4,11 +4,18 @@ import { formatPrice } from '../../utils/utils-functions';
 import { AppRoute } from '../../consts';
 
 import { TCard } from '../../types/generalTypes';
+import { useAppDispatch } from '../../hooks/store-hooks';
+import { setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
 
 type TCardProps = {
   cardData: TCard;
 }
-function Card({cardData}: TCardProps): JSX.Element {
+function Card({ cardData }: TCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  function handleButtonClick() {
+    dispatch(setIsBuyProductActive(true));
+  }
 
   return (
     <div className="product-card">
@@ -42,7 +49,12 @@ function Card({cardData}: TCardProps): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">Купить
+        <button
+          onClick={handleButtonClick}
+          className="btn btn--purple product-card__btn"
+          type="button"
+        >
+          Купить
         </button>
         <Link className="btn btn--transparent" to={`${AppRoute.Product}/${cardData.id}`}>Подробнее
         </Link>
