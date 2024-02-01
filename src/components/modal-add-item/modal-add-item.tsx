@@ -1,12 +1,21 @@
 import cn from 'classnames';
 import { useAppSelector } from '../../hooks/store-hooks';
+
 import { getIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-selectors';
+import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
+import { formatPrice } from '../../utils/utils-functions';
 
-function ModalAddItem(): JSX.Element {
-  const isBuyProductAcive = useAppSelector(getIsBuyProductActive);
+function ModalAddItem(): JSX.Element | null {
+  const isBuyProductActive = useAppSelector(getIsBuyProductActive);
+  const productData = useAppSelector(getSelectedCamera);
+  console.log(productData);
 
+
+  if (!productData) {
+    return null;
+  }
   return (
-    <div className={cn('modal', {'is-active': isBuyProductAcive})}>
+    <div className={cn('modal', { 'is-active': isBuyProductActive })}>
       <div className="modal__wrapper">
         <div className="modal__overlay"></div>
         <div className="modal__content">
@@ -14,19 +23,26 @@ function ModalAddItem(): JSX.Element {
           <div className="basket-item basket-item--short">
             <div className="basket-item__img">
               <picture>
-                <source type="image/webp" srcSet="img/content/orlenok.webp, img/content/orlenok@2x.webp 2x" />
-                <img src="img/content/orlenok.jpg" srcSet="img/content/orlenok@2x.jpg 2x" width="140" height="120" alt="Фотоаппарат «Орлёнок»" />
+                <source type="image/webp"
+                  srcSet={`${productData.previewImgWebp}, ${productData.previewImgWebp2x} 2x`}
+                />
+                <img
+                  src={productData.previewImg}
+                  srcSet={`${productData.previewImg2x} 2x`}
+                  width="140" height="120"
+                  alt={productData.name}
+                />
               </picture>
             </div>
             <div className="basket-item__description">
-              <p className="basket-item__title">Орлёнок</p>
+              <p className="basket-item__title">{productData.name}</p>
               <ul className="basket-item__list">
-                <li className="basket-item__list-item"><span className="basket-item__article">Артикул:</span> <span className="basket-item__number">O78DFGSD832</span>
+                <li className="basket-item__list-item"><span className="basket-item__article">Артикул:</span> <span className="basket-item__number">{productData.vendorCode}</span>
                 </li>
-                <li className="basket-item__list-item">Плёночная фотокамера</li>
-                <li className="basket-item__list-item">Любительский уровень</li>
+                <li className="basket-item__list-item">{productData.category}</li>
+                <li className="basket-item__list-item">{productData.level} уровень</li>
               </ul>
-              <p className="basket-item__price"><span className="visually-hidden">Цена:</span>18 970 ₽</p>
+              <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{formatPrice(productData.price)} ₽</p>
             </div>
           </div>
           <div className="modal__buttons">

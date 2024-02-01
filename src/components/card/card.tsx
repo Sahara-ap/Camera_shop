@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 
+import { useAppDispatch } from '../../hooks/store-hooks';
+import { setSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-slice';
+import { setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
+
 import { formatPrice } from '../../utils/utils-functions';
 import { AppRoute } from '../../consts';
-
 import { TCard } from '../../types/generalTypes';
-import { useAppDispatch } from '../../hooks/store-hooks';
-import { setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
 
 type TCardProps = {
   cardData: TCard;
@@ -15,6 +16,7 @@ function Card({ cardData }: TCardProps): JSX.Element {
 
   function handleButtonClick() {
     dispatch(setIsBuyProductActive(true));
+    dispatch(setSelectedCamera(cardData));
   }
 
   return (
