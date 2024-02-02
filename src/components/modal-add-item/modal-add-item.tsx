@@ -31,12 +31,12 @@ function ModalAddItem(): JSX.Element | null {
   useEffect(() => {
     if (isBuyProductActive) {
       document.addEventListener('keydown', handleModalWindowKeydown);
-      // document.body.classList.add('scroll-lock');
+      document.body.classList.add('scroll-lock');
     }
 
     return () => {
       document.removeEventListener('keydown', handleModalWindowKeydown);
-      // document.body.classList.remove('scroll-lock');
+      document.body.classList.remove('scroll-lock');
     };
   });
 
