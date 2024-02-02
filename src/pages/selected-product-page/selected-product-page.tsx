@@ -38,10 +38,10 @@ function SelectedProductPage(): JSX.Element {
     };
   }, [cardId, dispatch]);
 
+
   if (isSelectedCardLoading) {
     return <Loading />;
   }
-
   return (
     <>
       <Helmet><title>{'Продукт - Фотошоп'}</title></Helmet>

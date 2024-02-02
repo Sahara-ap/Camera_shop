@@ -1,10 +1,17 @@
-import { useAppSelector } from '../../hooks/store-hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
+import { setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
 
 import { formatPrice } from '../../utils/utils-functions';
+import { ModalAddItem } from '../modal-add-item/modal-add-item';
 
 function SelectedProductInfo(): JSX.Element | null {
+  const dispatch = useAppDispatch();
   const info = useAppSelector(getSelectedCamera);
+
+  function handleButtonClick() {
+    dispatch(setIsBuyProductActive(true));
+  }
 
   if (!info) {
     return null;
@@ -41,7 +48,11 @@ function SelectedProductInfo(): JSX.Element | null {
               <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{info.reviewCount}</p>
             </div>
             <p className="product__price"><span className="visually-hidden">Цена:</span>{formatPrice(info.price)} ₽</p>
-            <button className="btn btn--purple" type="button">
+            <button
+              className="btn btn--purple"
+              type="button"
+              onClick={handleButtonClick}
+            >
               <svg width="24" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-add-basket"></use>
               </svg>Добавить в корзину
@@ -78,6 +89,7 @@ function SelectedProductInfo(): JSX.Element | null {
           </div>
         </div>
       </section>
+      <ModalAddItem />
     </div>
 
   );
