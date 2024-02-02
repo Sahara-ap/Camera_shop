@@ -1,24 +1,57 @@
 import cn from 'classnames';
-import { useAppSelector } from '../../hooks/store-hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 
 import { getIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-selectors';
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
 import { formatPrice } from '../../utils/utils-functions';
+import { setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
+import { useEffect} from 'react';
 
 function ModalAddItem(): JSX.Element | null {
+
+  const dispatch = useAppDispatch();
   const isBuyProductActive = useAppSelector(getIsBuyProductActive);
   const productData = useAppSelector(getSelectedCamera);
-  console.log(productData);
+
+
+  function handleCloseButtonClick() {
+    dispatch(setIsBuyProductActive(false));
+  }
+
+  function handleOverlayClick() {
+    dispatch(setIsBuyProductActive(false));
+  }
+
+  function handleModalWindowKeydown(event: KeyboardEvent) {
+    event.preventDefault();
+    if (event.key.startsWith('Esc')) {
+      dispatch(setIsBuyProductActive(false));
+    }
+  }
+  useEffect(() => {
+    if (isBuyProductActive) {
+      document.addEventListener('keydown', handleModalWindowKeydown);
+      // document.body.classList.add('scroll-lock');
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleModalWindowKeydown);
+      // document.body.classList.remove('scroll-lock');
+    };
+  });
 
 
   if (!productData) {
     return null;
   }
   return (
-    <div className={cn('modal', { 'is-active': isBuyProductActive })}>
+    <div
+      className={cn('modal', { 'is-active': isBuyProductActive })}
+      tabIndex={-1}
+    >
       <div className="modal__wrapper">
-        <div className="modal__overlay"></div>
-        <div className="modal__content">
+        <div className="modal__overlay" onClick={handleOverlayClick}></div>
+        <div className="modal__content" >
           <p className="title title--h4">Добавить товар в корзину</p>
           <div className="basket-item basket-item--short">
             <div className="basket-item__img">
@@ -31,6 +64,7 @@ function ModalAddItem(): JSX.Element | null {
                   srcSet={`${productData.previewImg2x} 2x`}
                   width="140" height="120"
                   alt={productData.name}
+
                 />
               </picture>
             </div>
@@ -46,16 +80,27 @@ function ModalAddItem(): JSX.Element | null {
             </div>
           </div>
           <div className="modal__buttons">
-            <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button">
+            <button
+              tabIndex={0}
+              className="btn btn--purple modal__btn modal__btn--fit-width" type="button"
+            >
               <svg width="24" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-add-basket"></use>
               </svg>Добавить в корзину
+
             </button>
           </div>
-          <button className="cross-btn" type="button" aria-label="Закрыть попап">
+          <button
+            onClick={handleCloseButtonClick}
+            className="cross-btn"
+            type="button"
+            aria-label="Закрыть попап"
+
+          >
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg>
+
           </button>
         </div>
       </div>
