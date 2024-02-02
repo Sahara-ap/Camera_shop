@@ -4,6 +4,7 @@ import { getSelectedCamera } from '../../store/selected-card-data-store/selected
 
 import { formatPrice } from '../../utils/utils-functions';
 import { ModalAddItem } from '../modal-add-item/modal-add-item';
+import { SelectedProductInfoTabs } from '../selected-product-info-tabs/selected-product-info-tabs';
 
 function SelectedProductInfo(): JSX.Element | null {
   const dispatch = useAppDispatch();
@@ -57,35 +58,8 @@ function SelectedProductInfo(): JSX.Element | null {
                 <use xlinkHref="#icon-add-basket"></use>
               </svg>Добавить в корзину
             </button>
-            <div className="tabs product__tabs">
-              <div className="tabs__controls product__tabs-controls">
-                <button className="tabs__control" type="button">Характеристики</button>
-                <button className="tabs__control is-active" type="button">Описание</button>
-              </div>
-              <div className="tabs__content">
-                <div className="tabs__element">
-                  <ul className="product__tabs-list">
-                    <li className="item-list"><span className="item-list__title">Артикул:</span>
-                      <p className="item-list__text"> {info.vendorCode}</p>
-                    </li>
-                    <li className="item-list"><span className="item-list__title">Категория:</span>
-                      <p className="item-list__text">{info.category}</p>
-                    </li>
-                    <li className="item-list"><span className="item-list__title">Тип камеры:</span>
-                      <p className="item-list__text">{info.type}</p>
-                    </li>
-                    <li className="item-list"><span className="item-list__title">Уровень:</span>
-                      <p className="item-list__text">{info.level}</p>
-                    </li>
-                  </ul>
-                </div>
-                <div className="tabs__element is-active">
-                  <div className="product__tabs-text">
-                    <p>{info.description}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+
+            <SelectedProductInfoTabs info={info}/>
           </div>
         </div>
       </section>
