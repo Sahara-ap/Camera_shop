@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 import { getHasErrorWithConnection } from '../../store/app-data-store/app-data-selectors';
-import { fetchSelectedCameraAction } from '../../store/api-actions/card-actions';
+import { fetchSelectedCameraAction, fetchSimilars } from '../../store/api-actions/card-actions';
 import { getIsSelectedCameraLoading, getSelectedCameraName } from '../../store/selected-card-data-store/selected-card-data-selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 
@@ -32,6 +32,7 @@ function SelectedProductPage(): JSX.Element {
 
     if (cardId && isMounted) {
       dispatch(fetchSelectedCameraAction(cardId));
+      dispatch(fetchSimilars(cardId));
     }
     return () => {
       isMounted = false;

@@ -1,5 +1,9 @@
+import { useAppSelector } from '../../hooks/store-hooks';
+import { getSimilars } from '../../store/similars-store/similars-selectors';
 
 function SelectedProductSimilar(): JSX.Element {
+  const similars = useAppSelector(getSimilars);
+
   return (
     <div className="page-content__section">
       <section className="product-similar">

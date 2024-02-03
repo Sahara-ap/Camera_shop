@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { APIRoute } from '../../consts';
 
-import { TCameraId, TCard, TSelectedCard } from '../../types/generalTypes';
+import { TCameraId, TCard, TSelectedCard, TSimilar } from '../../types/generalTypes';
 import { ThunkAPI } from '../../types/store';
 
 const fetchCamerasAction = createAsyncThunk<TCard[], undefined, ThunkAPI>(
@@ -20,7 +20,17 @@ const fetchSelectedCameraAction = createAsyncThunk<TSelectedCard, TCameraId, Thu
   }
 );
 
+const fetchSimilars = createAsyncThunk<TSimilar[], TCameraId, ThunkAPI >(
+  'similars/fetch',
+  async (cameraId, { extra: api }) => {
+    const {data} = await api.get<TSimilar[]>(`${APIRoute.Similars}/${cameraId}/similar`);
+
+    return data;
+  }
+);
+
 export {
   fetchCamerasAction,
   fetchSelectedCameraAction,
+  fetchSimilars,
 };

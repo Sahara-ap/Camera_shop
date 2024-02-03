@@ -48,6 +48,22 @@ type TSelectedCard = {
   previewImgWebp2x: string;
 }
 
+type TSimilar = {
+  id: number;
+  name: string;
+  vendorCode: string;
+  type: TCameraType;
+  category: TCameraCategory;
+  description: string;
+  level: TCameraLevel;
+  price: number;
+  rating: number;
+  reviewCount: number;
+  previewImg: string;
+  previewImg2x: string;
+  previewImgWebp: string;
+  previewImgWebp2x: string;
+}
 
 export type {
   TBanner,
@@ -58,4 +74,5 @@ export type {
   TCameraLevel,
   TPage,
   TSelectedCard,
+  TSimilar,
 };

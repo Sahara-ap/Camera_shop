@@ -7,6 +7,7 @@ import { modalWindowsSlice } from './modal-windows-store/modal-windows-slice';
 import { selectedCardDataSlice } from './selected-card-data-store/selected-card-data-slice';
 
 import { NameSpace } from '../consts';
+import { similarsSlice } from './similars-store/similars-slice';
 
 const rootReducer = combineReducers({
   [NameSpace.App]: appDataSlice.reducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   [NameSpace.Cards]: cardsDataSlice.reducer,
   [NameSpace.Modals]: modalWindowsSlice.reducer,
   [NameSpace.SelectedCard]: selectedCardDataSlice.reducer,
+  [NameSpace.Similar]: similarsSlice.reducer,
 });
 
 export {rootReducer};

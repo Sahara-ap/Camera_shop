@@ -4,6 +4,7 @@ enum APIRoute {
   Cameras = '/cameras',
   Banner = '/promo',
   SelectedCamera = '/cameras',
+  Similars = '/cameras',
 }
 
 enum AppRoute {
@@ -22,6 +23,7 @@ enum NameSpace {
   Cards = 'CARDS',
   Modals = 'MODALS',
   SelectedCard = 'SELECTED_CARD',
+  Similar = 'SIMILAR',
 }
 
 export {
