@@ -1,9 +1,25 @@
-import { useAppSelector } from '../../hooks/store-hooks';
-import { getReviews } from '../../store/reviews-store/reviews-selectors';
-import { ReviewList } from '../review-list/review-list';
+import { useState } from 'react';
 
-function SelectedProductReviews(): JSX.Element {
-  const reviews = useAppSelector(getReviews);
+import { ReviewList } from '../review-list/review-list';
+import { TReview } from '../../types/generalTypes';
+
+type TSelectedProductReviewsProps = {
+  reviews: TReview[];
+}
+function SelectedProductReviews({ reviews }: TSelectedProductReviewsProps): JSX.Element | null {
+
+  const initialShownReviews = reviews.slice(0, 3);
+  const initialClicks = 2;
+
+  const [shownReviews, setShownReviews] = useState(initialShownReviews);
+  const [clickCount, setClickCount] = useState(initialClicks);
+
+  function handleMoreButtonClick() {
+    setClickCount((prev) => prev + 1);
+    const updatedReviews = reviews.filter((_, index) => index < clickCount * 3);
+    setShownReviews(updatedReviews);
+
+  }
 
   return (
     <div className="page-content__section">
@@ -15,11 +31,16 @@ function SelectedProductReviews(): JSX.Element {
           </div>
 
           <ul className="review-block__list">
-            <ReviewList reviews={reviews}/>
+            <ReviewList reviews={shownReviews} />
           </ul>
 
           <div className="review-block__buttons">
-            <button className="btn btn--purple" type="button">Показать больше отзывов
+            <button
+              onClick={handleMoreButtonClick}
+              className="btn btn--purple"
+              type="button"
+            >
+              Показать больше отзывов
             </button>
           </div>
         </div>

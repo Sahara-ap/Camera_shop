@@ -18,8 +18,10 @@ import { ErrorConnection } from '../../components/error-connection/error-connect
 
 import { AppRoute } from '../../consts';
 import { fetchReviews } from '../../store/api-actions/reviews-action';
+import { getReviews } from '../../store/reviews-store/reviews-selectors';
 
 function SelectedProductPage(): JSX.Element {
+  const reviews = useAppSelector(getReviews);
 
   const { cardId } = useParams();
   const dispatch = useAppDispatch();
@@ -59,7 +61,8 @@ function SelectedProductPage(): JSX.Element {
               <>
                 <SelectedProductInfo />
                 <SelectedProductSimilar />
-                <SelectedProductReviews />
+                {reviews.length !== 0 &&
+                  <SelectedProductReviews reviews={reviews} />}
               </>}
 
           </div>
