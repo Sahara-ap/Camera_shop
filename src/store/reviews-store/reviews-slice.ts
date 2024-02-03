@@ -15,7 +15,11 @@ const initialState: TReviewsState = {
 const reviewsSlice = createSlice({
   name: NameSpace.Reviews,
   initialState,
-  reducers: {},
+  reducers: {
+    dropReviews: (state) => {
+      state.reviews = [];
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchReviews.pending, (state) => {
@@ -29,9 +33,12 @@ const reviewsSlice = createSlice({
         state.isReviewLoading = false;
       });
   }
-
 });
+
+const {dropReviews} = reviewsSlice.actions;
 
 export {
   reviewsSlice,
+
+  dropReviews,
 };

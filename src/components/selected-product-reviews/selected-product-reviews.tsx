@@ -3,12 +3,15 @@ import { useState } from 'react';
 import { ReviewList } from '../review-list/review-list';
 import { TReview } from '../../types/generalTypes';
 
+const STEP = 3;
+const FIRST_REVIEW = 0;
+
 type TSelectedProductReviewsProps = {
   reviews: TReview[];
 }
 function SelectedProductReviews({ reviews }: TSelectedProductReviewsProps): JSX.Element | null {
 
-  const initialShownReviews = reviews.slice(0, 3);
+  const initialShownReviews = reviews.slice(FIRST_REVIEW, STEP);
   const initialClicks = 2;
 
   const [shownReviews, setShownReviews] = useState(initialShownReviews);
@@ -16,7 +19,7 @@ function SelectedProductReviews({ reviews }: TSelectedProductReviewsProps): JSX.
 
   function handleMoreButtonClick() {
     setClickCount((prev) => prev + 1);
-    const updatedReviews = reviews.filter((_, index) => index < clickCount * 3);
+    const updatedReviews = reviews.slice(FIRST_REVIEW, clickCount * STEP);
     setShownReviews(updatedReviews);
 
   }
