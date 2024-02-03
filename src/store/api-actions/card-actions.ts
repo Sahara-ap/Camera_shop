@@ -23,7 +23,7 @@ const fetchSelectedCameraAction = createAsyncThunk<TSelectedCard, TCameraId, Thu
 const fetchSimilars = createAsyncThunk<TSimilar[], TCameraId, ThunkAPI >(
   'similars/fetch',
   async (cameraId, { extra: api }) => {
-    const {data} = await api.get<TSimilar[]>(`${APIRoute.Similars}/${cameraId}/similar`);
+    const {data} = await api.get<TSimilar[]>(`${APIRoute.Cameras}/${cameraId}${APIRoute.Similars}`);
 
     return data;
   }

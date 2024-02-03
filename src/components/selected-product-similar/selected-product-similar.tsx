@@ -7,11 +7,13 @@ import 'swiper/css/bundle';
 import { useAppSelector } from '../../hooks/store-hooks';
 import { getSimilars } from '../../store/similars-store/similars-selectors';
 import { Card } from '../card/card';
+import { getHasErrorWithConnection } from '../../store/app-data-store/app-data-selectors';
 
 function SelectedProductSimilar(): JSX.Element | null {
   const similars = useAppSelector(getSimilars);
+  const hasErrorWithConnection = useAppSelector(getHasErrorWithConnection);
 
-  if (similars.length === 0) {
+  if (similars.length === 0 || hasErrorWithConnection) {
     return null;
   }
   return (
