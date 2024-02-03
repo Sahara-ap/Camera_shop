@@ -35,13 +35,14 @@ function SelectedProductReviews({ reviews }: TSelectedProductReviewsProps): JSX.
           </ul>
 
           <div className="review-block__buttons">
-            <button
-              onClick={handleMoreButtonClick}
-              className="btn btn--purple"
-              type="button"
-            >
-              Показать больше отзывов
-            </button>
+            {shownReviews.length < reviews.length &&
+              <button
+                onClick={handleMoreButtonClick}
+                className="btn btn--purple"
+                type="button"
+              >
+                Показать больше отзывов
+              </button>}
           </div>
         </div>
       </section>
