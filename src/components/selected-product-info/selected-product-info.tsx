@@ -4,6 +4,7 @@ import { getSelectedCamera } from '../../store/selected-card-data-store/selected
 
 import { formatPrice } from '../../utils/utils-functions';
 import { ModalAddItem } from '../modal-add-item/modal-add-item';
+import { RatingStars } from '../rating-stars/rating-stars';
 import { SelectedProductInfoTabs } from '../selected-product-info-tabs/selected-product-info-tabs';
 
 function SelectedProductInfo(): JSX.Element | null {
@@ -30,21 +31,7 @@ function SelectedProductInfo(): JSX.Element | null {
           <div className="product__content">
             <h1 className="title title--h3">{info.name}</h1>
             <div className="rate product__rate">
-              <svg width="17" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-full-star"></use>
-              </svg>
-              <svg width="17" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-full-star"></use>
-              </svg>
-              <svg width="17" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-full-star"></use>
-              </svg>
-              <svg width="17" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-full-star"></use>
-              </svg>
-              <svg width="17" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-star"></use>
-              </svg>
+              <RatingStars rating={info.rating}/>
               <p className="visually-hidden">Рейтинг: {info.rating}</p>
               <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{info.reviewCount}</p>
             </div>

@@ -8,6 +8,7 @@ import { setIsBuyProductActive } from '../../store/modal-windows-store/modal-win
 import { formatPrice } from '../../utils/utils-functions';
 import { AppRoute } from '../../consts';
 import { TCard } from '../../types/generalTypes';
+import { RatingStars } from '../rating-stars/rating-stars';
 
 
 type TCardProps = {
@@ -40,21 +41,7 @@ function Card({ cardData, page }: TCardProps): JSX.Element {
 
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
-          </svg>
-          <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
-          </svg>
-          <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
-          </svg>
-          <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-          <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
+          <RatingStars rating={cardData.rating}/>
           <p className="visually-hidden">Рейтинг: {cardData.rating}</p>
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{cardData.reviewCount}</p>
         </div>
