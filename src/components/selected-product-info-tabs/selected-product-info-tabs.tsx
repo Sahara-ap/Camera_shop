@@ -1,33 +1,42 @@
 import { useState } from 'react';
 import { TSelectedCard } from '../../types/generalTypes';
 import cn from 'classnames';
+import { useSearchParams } from 'react-router-dom';
 
 type TSelectedProductInfoTabsProps = {
   info: TSelectedCard;
 }
-function SelectedProductInfoTabs({info}:TSelectedProductInfoTabsProps): JSX.Element {
-  const [activeTab, setActiveTab] = useState<'list' | 'text'>('list');
-  // const [isButtonTextActive, setIsButtonTextActive] = useState(false);
+function SelectedProductInfoTabs({ info }: TSelectedProductInfoTabsProps): JSX.Element {
+  enum Tab {
+    List = 'list',
+    Text = 'text'
+  }
+
+  const [searchParams, setSearchParams] = useSearchParams({ tab: Tab.List });
+  const paramTab = searchParams.get('tab') as Tab;
+  const [activeTab, setActiveTab] = useState<Tab>(paramTab);
 
   function handleListButtonClick() {
-    setActiveTab('list');
+    setActiveTab(Tab.List);
+    setSearchParams({ tab: 'list' });
   }
   function handleTextButtonClick() {
-    setActiveTab('text');
+    setActiveTab(Tab.Text);
+    setSearchParams({ tab: 'text' });
   }
 
   return (
     <div className="tabs product__tabs">
       <div className="tabs__controls product__tabs-controls">
         <button
-          className={cn('tabs__control', {'is-active': activeTab === 'list' })}
+          className={cn('tabs__control', { 'is-active': activeTab === 'list' })}
           type="button"
           onClick={handleListButtonClick}
         >
           Характеристики
         </button>
         <button
-          className={cn('tabs__control', {'is-active': activeTab === 'text' })}
+          className={cn('tabs__control', { 'is-active': activeTab === 'text' })}
           type="button"
           onClick={handleTextButtonClick}
         >
@@ -35,7 +44,7 @@ function SelectedProductInfoTabs({info}:TSelectedProductInfoTabsProps): JSX.Elem
         </button>
       </div>
       <div className="tabs__content">
-        <div className={cn('tabs__element', {'is-active': activeTab === 'list'})}>
+        <div className={cn('tabs__element', { 'is-active': activeTab === 'list' })}>
           <ul className="product__tabs-list">
             <li className="item-list"><span className="item-list__title">Артикул:</span>
               <p className="item-list__text"> {info.vendorCode}</p>
@@ -51,7 +60,7 @@ function SelectedProductInfoTabs({info}:TSelectedProductInfoTabsProps): JSX.Elem
             </li>
           </ul>
         </div>
-        <div className={cn('tabs__element', {'is-active': activeTab === 'text' })}>
+        <div className={cn('tabs__element', { 'is-active': activeTab === 'text' })}>
           <div className="product__tabs-text">
             <p>{info.description}</p>
           </div>
