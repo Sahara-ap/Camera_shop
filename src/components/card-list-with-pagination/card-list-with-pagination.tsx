@@ -57,7 +57,7 @@ function CardListWithPagination(): JSX.Element {
 
   return (
     <>
-      <CardList cards={currentCameras} />
+      <CardList cards={currentCameras} page='catalog'/>
       {totalPages >= MIN_PAGES &&
         <CatalogPagination
           totalPages={totalPages}

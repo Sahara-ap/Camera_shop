@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import cn from 'classnames';
 
 import { useAppDispatch } from '../../hooks/store-hooks';
 import { setSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-slice';
@@ -8,10 +9,12 @@ import { formatPrice } from '../../utils/utils-functions';
 import { AppRoute } from '../../consts';
 import { TCard } from '../../types/generalTypes';
 
+
 type TCardProps = {
   cardData: TCard;
+  page: 'catalog' | 'similar';
 }
-function Card({ cardData }: TCardProps): JSX.Element {
+function Card({ cardData, page }: TCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   function handleButtonClick() {
@@ -20,12 +23,21 @@ function Card({ cardData }: TCardProps): JSX.Element {
   }
 
   return (
-    <div className="product-card">
+    <div className={cn('product-card', { 'is-active': page === 'similar' })} >
       <div className="product-card__img">
         <picture>
-          <source type="image/webp" srcSet={`${cardData.previewImgWebp}, ${cardData.previewImgWebp2x} 2x`} /><img src={cardData.previewImg} srcSet={`${cardData.previewImg2x} 2x`} width="280" height="240" alt={cardData.name} />
+          <source
+            type="image/webp"
+            srcSet={`${cardData.previewImgWebp}, ${cardData.previewImgWebp2x} 2x`}
+          />
+          <img
+            src={cardData.previewImg}
+            srcSet={`${cardData.previewImg2x} 2x`} width="280" height="240"
+            alt={cardData.name}
+          />
         </picture>
       </div>
+
       <div className="product-card__info">
         <div className="rate product-card__rate">
           <svg width="17" height="16" aria-hidden="true">
@@ -50,6 +62,7 @@ function Card({ cardData }: TCardProps): JSX.Element {
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{formatPrice(cardData.price)} ₽
         </p>
       </div>
+
       <div className="product-card__buttons">
         <button
           onClick={handleButtonClick}
