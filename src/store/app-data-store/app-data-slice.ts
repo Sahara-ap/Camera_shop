@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { fetchCamerasAction, fetchSelectedCameraAction, fetchSimilars } from '../api-actions/card-actions';
 import { NameSpace } from '../../consts';
+import { fetchReviews } from '../api-actions/reviews-action';
 
 type TAppDataState = {
   errorServerResponse: null | string;
@@ -40,6 +41,13 @@ const appDataSlice = createSlice({
         state.hasErrorWithConnection = false;
       })
       .addCase(fetchSimilars.rejected, (state) => {
+        state.hasErrorWithConnection = true;
+      })
+
+      .addCase(fetchReviews.fulfilled, (state) => {
+        state.hasErrorWithConnection = false;
+      })
+      .addCase(fetchReviews.rejected, (state) => {
         state.hasErrorWithConnection = true;
       });
   }

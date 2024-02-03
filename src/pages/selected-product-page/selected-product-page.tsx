@@ -17,6 +17,7 @@ import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { ErrorConnection } from '../../components/error-connection/error-connection';
 
 import { AppRoute } from '../../consts';
+import { fetchReviews } from '../../store/api-actions/reviews-action';
 
 function SelectedProductPage(): JSX.Element {
 
@@ -33,6 +34,7 @@ function SelectedProductPage(): JSX.Element {
     if (cardId && isMounted) {
       dispatch(fetchSelectedCameraAction(cardId));
       dispatch(fetchSimilars(cardId));
+      dispatch(fetchReviews(cardId));
     }
     return () => {
       isMounted = false;

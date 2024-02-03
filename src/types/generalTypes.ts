@@ -31,6 +31,17 @@ type TCameraId = string
 
 type TPage = 'catalog' | 'product'
 
+type TReview = {
+  id: string;
+  createAt: string;
+  cameraId: number;
+  userName: string;
+  advantage: string;
+  disadvantage: string;
+  review: string;
+  rating: number;
+}
+
 type TSelectedCard = {
   id: number;
   name: string;
@@ -73,6 +84,7 @@ export type {
   TCameraCategory,
   TCameraLevel,
   TPage,
+  TReview,
   TSelectedCard,
   TSimilar,
 };

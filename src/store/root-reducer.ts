@@ -8,12 +8,14 @@ import { selectedCardDataSlice } from './selected-card-data-store/selected-card-
 
 import { NameSpace } from '../consts';
 import { similarsSlice } from './similars-store/similars-slice';
+import { reviewsSlice } from './reviews-store/reviews-slice';
 
 const rootReducer = combineReducers({
   [NameSpace.App]: appDataSlice.reducer,
   [NameSpace.Banner]: bannerSlice.reducer,
   [NameSpace.Cards]: cardsDataSlice.reducer,
   [NameSpace.Modals]: modalWindowsSlice.reducer,
+  [NameSpace.Reviews]: reviewsSlice.reducer,
   [NameSpace.SelectedCard]: selectedCardDataSlice.reducer,
   [NameSpace.Similar]: similarsSlice.reducer,
 });

@@ -3,6 +3,7 @@ import { TCameraCategory, TCameraLevel, TCameraType } from './types/generalTypes
 enum APIRoute {
   Cameras = '/cameras',
   Banner = '/promo',
+  Reviews = '/reviews',
   SelectedCamera = '/cameras',
   Similars = '/similar',
 }
@@ -22,6 +23,7 @@ enum NameSpace {
   Banner = 'BANNER',
   Cards = 'CARDS',
   Modals = 'MODALS',
+  Reviews = 'REVIEWS',
   SelectedCard = 'SELECTED_CARD',
   Similar = 'SIMILAR',
 }
