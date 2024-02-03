@@ -18,10 +18,10 @@ import { ErrorConnection } from '../../components/error-connection/error-connect
 
 import { AppRoute } from '../../consts';
 import { fetchReviews } from '../../store/api-actions/reviews-action';
-import { getReviews } from '../../store/reviews-store/reviews-selectors';
+import { getSortedReviews } from '../../store/reviews-store/reviews-selectors';
 
 function SelectedProductPage(): JSX.Element {
-  const reviews = useAppSelector(getReviews);
+  const reviews = useAppSelector(getSortedReviews);
 
   const { cardId } = useParams();
   const dispatch = useAppDispatch();

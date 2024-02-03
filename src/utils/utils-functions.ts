@@ -1,6 +1,10 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 
+function convertDateInMs(value: string) {
+  return Date.parse(value);
+}
+
 function formatDate(value: dayjs.ConfigType): string {
   dayjs.locale('ru');
   return dayjs(value, 'ru').format('DD MMMM');
@@ -16,6 +20,7 @@ function pickRandomElement<T>(items:T[]) {
 }
 
 export {
+  convertDateInMs,
   formatDate,
   formatPrice,
   pickRandomElement,
