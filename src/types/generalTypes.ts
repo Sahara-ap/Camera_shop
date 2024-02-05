@@ -42,6 +42,16 @@ type TReview = {
   rating: number;
 }
 
+type TReviewPost = {
+  cameraId: number;
+  userName: string;
+  advantage: string;
+  disadvantage: string;
+  review: string;
+  rating: number;
+}
+
+
 type TSelectedCard = {
   id: number;
   name: string;
@@ -85,6 +95,7 @@ export type {
   TCameraLevel,
   TPage,
   TReview,
+  TReviewPost,
   TSelectedCard,
   TSimilar,
 };
