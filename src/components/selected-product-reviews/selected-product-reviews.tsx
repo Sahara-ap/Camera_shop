@@ -2,19 +2,25 @@ import { useState } from 'react';
 
 import { ReviewList } from '../review-list/review-list';
 import { getIsReviewsLoading, getSortedReviews } from '../../store/reviews-store/reviews-selectors';
-import { useAppSelector } from '../../hooks/store-hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
+import { setIsReviewModalActive } from '../../store/modal-windows-store/modal-windows-slice';
 
 const INITIAL_NUMBER_REVIEWS = 3;
 
 function SelectedProductReviews(): JSX.Element | null {
   const reviews = useAppSelector(getSortedReviews);
   const isLoading = useAppSelector(getIsReviewsLoading);
+  const dispatch = useAppDispatch();
 
   const [countReviews, setCountReviews] = useState(INITIAL_NUMBER_REVIEWS);
   const shownReviews = reviews.slice(0, countReviews);
 
   function handleMoreButtonClick() {
     setCountReviews(countReviews + INITIAL_NUMBER_REVIEWS);
+  }
+
+  function handleReviewButtonClick() {
+    dispatch(setIsReviewModalActive(true));
   }
 
   if (isLoading) {
@@ -26,7 +32,13 @@ function SelectedProductReviews(): JSX.Element | null {
         <div className="container">
           <div className="page-content__headed">
             <h2 className="title title--h3">Отзывы</h2>
-            <button className="btn" type="button">Оставить свой отзыв</button>
+            <button
+              onClick={ handleReviewButtonClick}
+              className="btn"
+              type="button"
+            >
+              Оставить свой отзыв
+            </button>
           </div>
 
           <ul className="review-block__list">

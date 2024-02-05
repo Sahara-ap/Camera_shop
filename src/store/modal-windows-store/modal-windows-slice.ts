@@ -5,10 +5,14 @@ import { TSelectedCard } from '../../types/generalTypes';
 type TModalWindowsState = {
   isBuyProductActive: boolean;
   productData: TSelectedCard | null;
+
+  isReviewModalActive: boolean;
 }
 const initialState: TModalWindowsState = {
   isBuyProductActive: false,
-  productData: null
+  productData: null,
+
+  isReviewModalActive: false
 };
 
 const modalWindowsSlice = createSlice({
@@ -18,13 +22,17 @@ const modalWindowsSlice = createSlice({
     setIsBuyProductActive: (state, action: PayloadAction<boolean>) => {
       state.isBuyProductActive = action.payload;
     },
+    setIsReviewModalActive: (state, action: PayloadAction<boolean>) => {
+      state.isReviewModalActive = action.payload;
+    }
   }
 });
 
-const {setIsBuyProductActive} = modalWindowsSlice.actions;
+const {setIsBuyProductActive, setIsReviewModalActive} = modalWindowsSlice.actions;
 
 export {
   modalWindowsSlice,
 
   setIsBuyProductActive,
+  setIsReviewModalActive,
 };

@@ -18,6 +18,7 @@ import { ErrorConnection } from '../../components/error-connection/error-connect
 
 import { AppRoute } from '../../consts';
 import { fetchReviews } from '../../store/api-actions/reviews-action';
+import { ModalReview } from '../../components/modal-review/modal-review';
 
 function SelectedProductPage(): JSX.Element {
 
@@ -64,15 +65,16 @@ function SelectedProductPage(): JSX.Element {
               </>}
 
           </div>
+          <span
+            onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
+            className="up-btn"
+          >
+            <svg width="12" height="18" aria-hidden="true">
+              <use xlinkHref="#icon-arrow2"></use>
+            </svg>
+          </span>
+          <ModalReview />
         </main>
-        <span
-          onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
-          className="up-btn"
-        >
-          <svg width="12" height="18" aria-hidden="true">
-            <use xlinkHref="#icon-arrow2"></use>
-          </svg>
-        </span>
         <Footer />
       </div>
     </>
