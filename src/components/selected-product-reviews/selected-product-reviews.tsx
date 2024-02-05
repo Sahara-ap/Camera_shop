@@ -1,29 +1,25 @@
 import { useState } from 'react';
 
 import { ReviewList } from '../review-list/review-list';
-import { TReview } from '../../types/generalTypes';
+import { getIsReviewsLoading, getSortedReviews } from '../../store/reviews-store/reviews-selectors';
+import { useAppSelector } from '../../hooks/store-hooks';
 
-const STEP = 3;
-const FIRST_REVIEW = 0;
+const INITIAL_NUMBER_REVIEWS = 3;
 
-type TSelectedProductReviewsProps = {
-  reviews: TReview[];
-}
-function SelectedProductReviews({ reviews }: TSelectedProductReviewsProps): JSX.Element | null {
+function SelectedProductReviews(): JSX.Element | null {
+  const reviews = useAppSelector(getSortedReviews);
+  const isLoading = useAppSelector(getIsReviewsLoading);
 
-  const initialShownReviews = reviews.slice(FIRST_REVIEW, STEP);
-  const initialClicks = 2;
-
-  const [shownReviews, setShownReviews] = useState(initialShownReviews);
-  const [clickCount, setClickCount] = useState(initialClicks);
+  const [countReviews, setCountReviews] = useState(INITIAL_NUMBER_REVIEWS);
+  const shownReviews = reviews.slice(0, countReviews);
 
   function handleMoreButtonClick() {
-    setClickCount((prev) => prev + 1);
-    const updatedReviews = reviews.slice(FIRST_REVIEW, clickCount * STEP);
-    setShownReviews(updatedReviews);
-
+    setCountReviews(countReviews + INITIAL_NUMBER_REVIEWS);
   }
 
+  if (isLoading) {
+    return null;
+  }
   return (
     <div className="page-content__section">
       <section className="review-block">
