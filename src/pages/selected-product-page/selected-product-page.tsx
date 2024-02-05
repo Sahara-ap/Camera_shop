@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 
 import { getHasErrorWithConnection } from '../../store/app-data-store/app-data-selectors';
 import { fetchSelectedCameraAction, fetchSimilars } from '../../store/api-actions/card-actions';
-import { getIsSelectedCameraLoading, getSelectedCameraName } from '../../store/selected-card-data-store/selected-card-data-selectors';
+import { getIsSelectedCameraLoading, getSelectedCamera, getSelectedCameraName } from '../../store/selected-card-data-store/selected-card-data-selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 
 import { Footer } from '../../components/footer/footer';
