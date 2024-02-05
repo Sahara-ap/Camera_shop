@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { TCameraId } from '../../types/generalTypes';
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { postReview } from '../../store/api-actions/reviews-action';
 
 
 
@@ -31,7 +32,7 @@ function ModalReview(): JSX.Element {
   }
   useEffect(() => {
     if (isActive) {
-      document.addEventListener('keydown', handleModalWindowKeydown);
+      // document.addEventListener('keydown', handleModalWindowKeydown);
       document.body.classList.add('scroll-lock');
     }
 
@@ -44,7 +45,7 @@ function ModalReview(): JSX.Element {
 
 
   type FormInputs = {
-    rate: boolean;
+    rate: number;
     'user-name': string;
     'user-plus': string;
     'user-minus': string;
@@ -63,21 +64,21 @@ function ModalReview(): JSX.Element {
 
   const submit: SubmitHandler<FormInputs> = (formData, event) => {
     event?.preventDefault();
+    if (cameraId) {
+      const body = {
+        cameraId: cameraId,
+        userName: formData['user-name'],
+        advantage: formData['user-plus'],
+        disadvantage: formData['user-minus'],
+        review: formData['user-comment'],
+        rating: Number(formData.rate),
+      };
+      console.log(body);
 
-    const body = {
-      cameraId: cameraId,
-      userName: formData['user-name'],
-      advantage: formData['user-plus'],
-      disadvantage: formData['user-minus'],
-      review: formData['user-comment'],
-      rating: formData.rate,
-    };
-    console.log(body);
+      dispatch(postReview(body));
+    }
 
 
-    // if (questId) {
-    //   dispatch(sendBookingData({ questId, body }));
-    // }
   };
 
   return (
@@ -147,8 +148,8 @@ function ModalReview(): JSX.Element {
                     </span>
                     <input
                       {...register('user-name', {
-                        required: 'Нужно указать имя11' ,
-                          
+                        required: 'Нужно указать имя11',
+
                       })}
                       type="text"
                       placeholder="Введите ваше имя"

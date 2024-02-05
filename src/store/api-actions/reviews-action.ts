@@ -17,8 +17,7 @@ const fetchReviews = createAsyncThunk<TReview[], TCameraId, ThunkAPI>(
 const postReview = createAsyncThunk<TReview, TReviewPost, ThunkAPI>(
   'review/post',
   async(body, {extra: api}) => {
-    const path = `${APIRoute.Cameras}/${body.cameraId}${APIRoute.Reviews}`;
-    const {data} = await api.post<TReview>(path, body);
+    const {data} = await api.post<TReview>(APIRoute.Reviews, body);
 
     return data;
   }
