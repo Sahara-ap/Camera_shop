@@ -91,11 +91,13 @@ function ModalReview(): JSX.Element {
         reset();
         dispatch(setIsReviewModalActive(false));
         dispatch(setIsReviewModalSuccessActive(true));
+        dispatch(setReviewSendingStatus(LoadingDataStatus.Unsent));
         break;
       case LoadingDataStatus.Error:
         toast.warn('Данные не отправлены, попробуйте снова');
         dispatch(setReviewSendingStatus(LoadingDataStatus.Unsent));
     }
+
   }, [sendingStatus, reset, dispatch]);
 
   const ratingValue = watch('rate');
