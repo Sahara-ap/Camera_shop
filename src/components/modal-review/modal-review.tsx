@@ -4,16 +4,14 @@ import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { getIsReviewModalActive } from '../../store/modal-windows-store/modal-windows-selectors';
 import { setIsReviewModalActive } from '../../store/modal-windows-store/modal-windows-slice';
 import { useEffect } from 'react';
-import { TCameraId } from '../../types/generalTypes';
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { postReview } from '../../store/api-actions/reviews-action';
-
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 
 function ModalReview(): JSX.Element {
   const isActive = useAppSelector(getIsReviewModalActive);
-  const cameraId = useAppSelector(getSelectedCamera)?.id
+  const cameraId = useAppSelector(getSelectedCamera)?.id;
   const dispatch = useAppDispatch();
 
   function handleCloseButtonClick() {
@@ -40,8 +38,6 @@ function ModalReview(): JSX.Element {
       document.body.classList.remove('scroll-lock');
     };
   });
-
-
 
   type FormInputs = {
     rate: number;
@@ -70,15 +66,21 @@ function ModalReview(): JSX.Element {
         advantage: formData['user-plus'],
         disadvantage: formData['user-minus'],
         review: formData['user-comment'],
-        rating: Number(formData.rate),
+        rating: formData.rate,
       };
-      console.log(body);
 
       dispatch(postReview(body));
     }
-
-
   };
+
+  const errorRating = errors.rate;
+  const errorName = errors['user-name'];
+  const errorAdvantage = errors['user-plus'];
+  const errorDisadvantage = errors['user-minus'];
+  const errorComment = errors['user-comment'];
+
+
+
 
   return (
     <div className={cn('modal', { 'is-active': isActive })}>
@@ -93,7 +95,7 @@ function ModalReview(): JSX.Element {
             >
 
               <div className="form-review__rate">
-                <fieldset className="rate form-review__item">
+                <fieldset className={cn('rate form-review__item', {'is-invalid': errorRating})} >
                   <legend className="rate__caption">Рейтинг
                     <svg width="9" height="9" aria-hidden="true">
                       <use xlinkHref="#icon-snowflake"></use>
@@ -103,7 +105,7 @@ function ModalReview(): JSX.Element {
                   <div className="rate__bar">
                     <div className="rate__group">
                       <input
-                        {...register('rate', { required: 'Нужно оценить товар11' })}
+                        {...register('rate', { required: 'Нужно оценить товар11', valueAsNumber: true })}
                         className="visually-hidden" id="star-5" type="radio" value="5"
                       />
                       <label className="rate__label" htmlFor="star-5" title="Отлично"></label>
@@ -135,10 +137,11 @@ function ModalReview(): JSX.Element {
                       </span> <span>/</span> <span className="rate__all-stars">5</span>
                     </div>
                   </div>
-                  <p className="rate__message">Нужно оценить товар</p>
+                  {errorRating ? <p className="rate__message ">{errorRating.message}</p> : null}
+                  {/* <p className="rate__message" >Нужно оценить товар</p> */}
                 </fieldset>
 
-                <div className="custom-input form-review__item">
+                <div className={cn('custom-input form-review__item', {'is-invalid': errorName})}>
                   <label>
                     <span className="custom-input__label">Ваше имя
                       <svg width="9" height="9" aria-hidden="true">
@@ -146,18 +149,16 @@ function ModalReview(): JSX.Element {
                       </svg>
                     </span>
                     <input
-                      {...register('user-name', {
-                        required: 'Нужно указать имя11',
-
-                      })}
+                      {...register('user-name', {required: 'Нужно указать имя11'})}
                       type="text"
                       placeholder="Введите ваше имя"
                     />
                   </label>
-                  <p className="custom-input__error">Нужно указать имя</p>
+                  {errorName ? <p className="custom-input__error">{errorName.message}</p> : null}
                 </div>
+                  {/* <p className="custom-input__error">Нужно указать имя</p> */}
 
-                <div className="custom-input form-review__item">
+                <div className={cn({'custom-input form-review__item', {'is-invalid': errorAdvantage}})}>
                   <label>
                     <span className="custom-input__label">Достоинства
                       <svg width="9" height="9" aria-hidden="true">
