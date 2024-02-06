@@ -4,16 +4,14 @@ import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { getIsReviewModalActive } from '../../store/modal-windows-store/modal-windows-selectors';
 import { setIsReviewModalActive } from '../../store/modal-windows-store/modal-windows-slice';
 import { useEffect } from 'react';
-import { TCameraId } from '../../types/generalTypes';
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { postReview } from '../../store/api-actions/reviews-action';
-
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 
 function ModalReview(): JSX.Element {
   const isActive = useAppSelector(getIsReviewModalActive);
-  const cameraId = useAppSelector(getSelectedCamera)?.id
+  const cameraId = useAppSelector(getSelectedCamera)?.id;
   const dispatch = useAppDispatch();
 
   function handleCloseButtonClick() {
@@ -40,8 +38,6 @@ function ModalReview(): JSX.Element {
       document.body.classList.remove('scroll-lock');
     };
   });
-
-
 
   type FormInputs = {
     rate: number;
@@ -103,7 +99,7 @@ function ModalReview(): JSX.Element {
                   <div className="rate__bar">
                     <div className="rate__group">
                       <input
-                        {...register('rate', { required: 'Нужно оценить товар11' })}
+                        {...register('rate', { required: 'Нужно оценить товар11', valueAsNumber: true })}
                         className="visually-hidden" id="star-5" type="radio" value="5"
                       />
                       <label className="rate__label" htmlFor="star-5" title="Отлично"></label>
@@ -135,7 +131,8 @@ function ModalReview(): JSX.Element {
                       </span> <span>/</span> <span className="rate__all-stars">5</span>
                     </div>
                   </div>
-                  <p className="rate__message">Нужно оценить товар</p>
+                  {errors.rate ? <p className="rate__message custom-input__error">{errors.rate.message}</p> : null}
+                  <p className="rate__message custom-input__error" >Нужно оценить товар</p>
                 </fieldset>
 
                 <div className="custom-input form-review__item">
@@ -146,16 +143,14 @@ function ModalReview(): JSX.Element {
                       </svg>
                     </span>
                     <input
-                      {...register('user-name', {
-                        required: 'Нужно указать имя11',
-
-                      })}
+                      {...register('user-name', {required: 'Нужно указать имя11'})}
                       type="text"
                       placeholder="Введите ваше имя"
                     />
                   </label>
-                  <p className="custom-input__error">Нужно указать имя</p>
+                  {errors['user-name'] ? <p className="custom-input__error">{errors['user-name'].message}</p> : null}
                 </div>
+                  {/* <p className="custom-input is-invalid custom-input__error">Нужно указать имя</p> */}
 
                 <div className="custom-input form-review__item">
                   <label>
