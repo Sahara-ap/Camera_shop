@@ -5,13 +5,15 @@ import { getIsBuyProductActive } from '../../store/modal-windows-store/modal-win
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
 import { formatPrice } from '../../utils/utils-functions';
 import { setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
-import { useEffect} from 'react';
+import { useEffect, useRef} from 'react';
+import { DELAY } from '../../consts';
 
 function ModalAddItem(): JSX.Element | null {
 
   const dispatch = useAppDispatch();
   const isBuyProductActive = useAppSelector(getIsBuyProductActive);
   const productData = useAppSelector(getSelectedCamera);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
 
   function handleCloseButtonClick() {
@@ -32,6 +34,8 @@ function ModalAddItem(): JSX.Element | null {
     if (isBuyProductActive) {
       document.addEventListener('keydown', handleModalWindowKeydown);
       document.body.classList.add('scroll-lock');
+
+      setTimeout(() => buttonRef.current?.focus(), DELAY);
     }
 
     return () => {
@@ -83,6 +87,7 @@ function ModalAddItem(): JSX.Element | null {
             <button
               tabIndex={0}
               className="btn btn--purple modal__btn modal__btn--fit-width" type="button"
+              ref={buttonRef}
             >
               <svg width="24" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-add-basket"></use>
