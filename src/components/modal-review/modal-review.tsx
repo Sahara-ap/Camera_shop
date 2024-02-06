@@ -2,16 +2,21 @@ import cn from 'classnames';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { getIsReviewModalActive } from '../../store/modal-windows-store/modal-windows-selectors';
-import { setIsReviewModalActive } from '../../store/modal-windows-store/modal-windows-slice';
+import { setIsReviewModalActive, setIsReviewModalSuccessActive } from '../../store/modal-windows-store/modal-windows-slice';
 import { useEffect } from 'react';
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
 import { postReview } from '../../store/api-actions/reviews-action';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { getReviewSendingStatus } from '../../store/reviews-store/reviews-selectors';
+import { LoadingDataStatus } from '../../consts';
+import { setReviewSendingStatus } from '../../store/reviews-store/reviews-slice';
+import { toast } from 'react-toastify';
 
 
 function ModalReview(): JSX.Element {
   const isActive = useAppSelector(getIsReviewModalActive);
   const cameraId = useAppSelector(getSelectedCamera)?.id;
+  const sendingStatus = useAppSelector(getReviewSendingStatus);
   const dispatch = useAppDispatch();
 
   function handleCloseButtonClick() {
@@ -73,6 +78,19 @@ function ModalReview(): JSX.Element {
       dispatch(postReview(body));
     }
   };
+
+  useEffect(() => {
+    switch (sendingStatus) {
+      case LoadingDataStatus.Success:
+        reset();
+        dispatch(setIsReviewModalActive(false));
+        dispatch(setIsReviewModalSuccessActive(true));
+        break;
+      case LoadingDataStatus.Error:
+        toast.warn('Данные не отправлены, попробуйте снова');
+        dispatch(setReviewSendingStatus(LoadingDataStatus.Unsent));
+    }
+  }, [sendingStatus, reset, dispatch]);
 
   const errorRating = errors.rate;
   const errorName = errors['user-name'];

@@ -28,6 +28,13 @@ enum NameSpace {
   Similar = 'SIMILAR',
 }
 
+enum LoadingDataStatus {
+  Unsent = 'UNSENT',
+  Pending = 'PENDING',
+  Success = 'SUCCESS',
+  Error = 'ERROR',
+}
+
 export {
   APIRoute,
   AppRoute,
@@ -35,4 +42,5 @@ export {
   CAMERA_LEVELS,
   CAMERA_TYPES,
   NameSpace,
+  LoadingDataStatus,
 };

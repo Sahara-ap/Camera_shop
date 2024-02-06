@@ -10,7 +10,7 @@ const getSortedReviews = createSelector([getReviews], (reviews:TReview[]) => rev
   .sort((reviewA, reviewB) => convertDateInMs(reviewB.createAt) - convertDateInMs(reviewA.createAt)));
 
 const getIsReviewsLoading = (state:Pick<State, NameSpace.Reviews>) => (state[NameSpace.Reviews].isReviewLoading);
-const getIsReviewSending = (state:Pick<State, NameSpace.Reviews>) => (state[NameSpace.Reviews].isReviewSending);
+const getReviewSendingStatus = (state:Pick<State, NameSpace.Reviews>) => (state[NameSpace.Reviews].reviewSendingStatus);
 
 
 export {
@@ -18,5 +18,5 @@ export {
   getSortedReviews,
 
   getIsReviewsLoading,
-  getIsReviewSending,
+  getReviewSendingStatus,
 };

@@ -1,17 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../consts';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { LoadingDataStatus, NameSpace } from '../../consts';
 import { TReview } from '../../types/generalTypes';
 import { fetchReviews, postReview } from '../api-actions/reviews-action';
 
 type TReviewsState = {
   reviews: TReview[];
   isReviewLoading: boolean;
-  isReviewSending: boolean;
+  reviewSendingStatus: LoadingDataStatus;
 }
 const initialState: TReviewsState = {
   reviews: [],
   isReviewLoading: false,
-  isReviewSending: false,
+  reviewSendingStatus: LoadingDataStatus.Unsent,
 };
 
 const reviewsSlice = createSlice({
@@ -20,6 +20,9 @@ const reviewsSlice = createSlice({
   reducers: {
     dropReviews: (state) => {
       state.reviews = [];
+    },
+    setReviewSendingStatus: (state, action: PayloadAction<LoadingDataStatus>) => {
+      state.reviewSendingStatus = action.payload;
     }
   },
   extraReducers(builder) {
@@ -36,22 +39,23 @@ const reviewsSlice = createSlice({
       })
 
       .addCase(postReview.pending, (state) => {
-        state.isReviewSending = true;
+        state.reviewSendingStatus = LoadingDataStatus.Pending;
       })
       .addCase(postReview.fulfilled, (state, action) => {
-        state.isReviewSending = false;
+        state.reviewSendingStatus = LoadingDataStatus.Success;
         state.reviews.push(action.payload);
       })
       .addCase(postReview.rejected, (state) => {
-        state.isReviewSending = false;
+        state.reviewSendingStatus = LoadingDataStatus.Error;
       });
   }
 });
 
-const {dropReviews} = reviewsSlice.actions;
+const {dropReviews, setReviewSendingStatus} = reviewsSlice.actions;
 
 export {
   reviewsSlice,
 
   dropReviews,
+  setReviewSendingStatus
 };

@@ -19,6 +19,7 @@ import { ErrorConnection } from '../../components/error-connection/error-connect
 import { AppRoute } from '../../consts';
 import { fetchReviews } from '../../store/api-actions/reviews-action';
 import { ModalReview } from '../../components/modal-review/modal-review';
+import { ModalReviewSuccess } from '../../components/modal-review-success/modal-review.success';
 
 function SelectedProductPage(): JSX.Element {
 
@@ -74,6 +75,7 @@ function SelectedProductPage(): JSX.Element {
             </svg>
           </span>
           <ModalReview />
+          <ModalReviewSuccess />
         </main>
         <Footer />
       </div>
