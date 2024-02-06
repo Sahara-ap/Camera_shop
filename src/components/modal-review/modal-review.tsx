@@ -12,7 +12,7 @@ import { setReviewSendingStatus } from '../../store/reviews-store/reviews-slice'
 
 import { postReview } from '../../store/api-actions/reviews-action';
 
-import { LoadingDataStatus } from '../../consts';
+import { DELAY, LoadingDataStatus } from '../../consts';
 
 
 function ModalReview(): JSX.Element {
@@ -75,9 +75,7 @@ function ModalReview(): JSX.Element {
   useEffect(() => {
     if (isActive) {
       document.body.classList.add('scroll-lock');
-      setTimeout(() => {
-        setFocus('user-name');
-      }, 100);
+      setTimeout(() => setFocus('user-name'), DELAY);
     }
 
     return () => {

@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { getIsReviewModalSuccessActive } from '../../store/modal-windows-store/modal-windows-selectors';
 import { useEffect, useRef } from 'react';
 import { setIsReviewModalSuccessActive } from '../../store/modal-windows-store/modal-windows-slice';
+import { DELAY } from '../../consts';
 
 function ModalReviewSuccess(): JSX.Element {
   const isActive = useAppSelector(getIsReviewModalSuccessActive);
@@ -30,9 +31,7 @@ function ModalReviewSuccess(): JSX.Element {
     if (isActive && ratingRef.current) {
       document.body.classList.add('scroll-lock');
 
-      setTimeout(() => {
-        ratingRef.current?.focus();
-      }, 100);
+      setTimeout(() => ratingRef.current?.focus(), DELAY);
     }
 
     return () => {

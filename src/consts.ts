@@ -18,6 +18,8 @@ const CAMERA_CATEGORIES:TCameraCategory[] = ['Видеокамера', 'Фото
 const CAMERA_LEVELS: TCameraLevel[] = ['Нулевой', 'Любительский', 'Профессиональный'];
 const CAMERA_TYPES: TCameraType[] = ['Коллекционная', 'Моментальная', 'Цифровая', 'Плёночная'];
 
+const DELAY = 100;
+
 enum NameSpace {
   App = 'APP',
   Banner = 'BANNER',
@@ -41,6 +43,7 @@ export {
   CAMERA_CATEGORIES,
   CAMERA_LEVELS,
   CAMERA_TYPES,
+  DELAY,
   NameSpace,
   LoadingDataStatus,
 };
