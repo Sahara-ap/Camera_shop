@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { ReviewList } from '../review-list/review-list';
 import { getIsReviewsLoading, getSortedReviews } from '../../store/reviews-store/reviews-selectors';
@@ -15,6 +15,7 @@ function SelectedProductReviews(): JSX.Element | null {
   const [countReviews, setCountReviews] = useState(INITIAL_NUMBER_REVIEWS);
   const shownReviews = reviews.slice(0, countReviews);
 
+
   function handleMoreButtonClick() {
     setCountReviews(countReviews + INITIAL_NUMBER_REVIEWS);
   }
@@ -22,6 +23,23 @@ function SelectedProductReviews(): JSX.Element | null {
   function handleReviewButtonClick() {
     dispatch(setIsReviewModalActive(true));
   }
+
+
+  const handleDocumentScroll = useCallback((event: Event) => {
+    const target = event.target as Document;
+    if (
+      target.documentElement.scrollHeight - (target.documentElement.scrollTop + window.innerHeight) === 0) {
+      setCountReviews(countReviews + INITIAL_NUMBER_REVIEWS);
+    }
+  }, [countReviews]);
+
+  useEffect(() => {
+    if (shownReviews.length < reviews.length) {
+      document.addEventListener('scroll', handleDocumentScroll);
+    }
+
+    return () => document.removeEventListener('scroll', handleDocumentScroll);
+  }, [shownReviews.length, reviews.length, handleDocumentScroll]);
 
   if (isLoading) {
     return null;
@@ -33,7 +51,7 @@ function SelectedProductReviews(): JSX.Element | null {
           <div className="page-content__headed">
             <h2 className="title title--h3">Отзывы</h2>
             <button
-              onClick={ handleReviewButtonClick}
+              onClick={handleReviewButtonClick}
               className="btn"
               type="button"
             >
