@@ -51,6 +51,7 @@ function ModalReview(): JSX.Element {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors, isSubmitting, isValid },
     resetField,
   } = useForm<FormInputs>({
@@ -66,7 +67,7 @@ function ModalReview(): JSX.Element {
         advantage: formData['user-plus'],
         disadvantage: formData['user-minus'],
         review: formData['user-comment'],
-        rating: formData.rate,
+        rating: Number(formData.rate),
       };
 
       dispatch(postReview(body));
@@ -79,7 +80,7 @@ function ModalReview(): JSX.Element {
   const errorDisadvantage = errors['user-minus'];
   const errorComment = errors['user-comment'];
 
-
+  const ratingValue = watch('rate');
 
 
   return (
@@ -95,7 +96,7 @@ function ModalReview(): JSX.Element {
             >
 
               <div className="form-review__rate">
-                <fieldset className={cn('rate form-review__item', {'is-invalid': errorRating})} >
+                <fieldset className={cn('rate form-review__item', { 'is-invalid': errorRating })} >
                   <legend className="rate__caption">Рейтинг
                     <svg width="9" height="9" aria-hidden="true">
                       <use xlinkHref="#icon-snowflake"></use>
@@ -105,27 +106,27 @@ function ModalReview(): JSX.Element {
                   <div className="rate__bar">
                     <div className="rate__group">
                       <input
-                        {...register('rate', { required: 'Нужно оценить товар11', valueAsNumber: true })}
+                        {...register('rate', { required: 'Нужно оценить товар' })}
                         className="visually-hidden" id="star-5" type="radio" value="5"
                       />
                       <label className="rate__label" htmlFor="star-5" title="Отлично"></label>
                       <input
-                        {...register('rate', { required: 'Нужно оценить товар11' })}
+                        {...register('rate', { required: 'Нужно оценить товар' })}
                         className="visually-hidden" id="star-4" type="radio" value="4"
                       />
                       <label className="rate__label" htmlFor="star-4" title="Хорошо"></label>
                       <input
-                        {...register('rate', { required: 'Нужно оценить товар11' })}
+                        {...register('rate', { required: 'Нужно оценить товар' })}
                         className="visually-hidden" id="star-3" type="radio" value="3"
                       />
                       <label className="rate__label" htmlFor="star-3" title="Нормально"></label>
                       <input
-                        {...register('rate', { required: 'Нужно оценить товар11' })}
+                        {...register('rate', { required: 'Нужно оценить товар' })}
                         className="visually-hidden" id="star-2" type="radio" value="2"
                       />
                       <label className="rate__label" htmlFor="star-2" title="Плохо"></label>
                       <input
-                        {...register('rate', { required: 'Нужно оценить товар11' })}
+                        {...register('rate', { required: 'Нужно оценить товар' })}
                         className="visually-hidden" id="star-1" type="radio" value="1"
                       />
                       <label className="rate__label" htmlFor="star-1" title="Ужасно"></label>
@@ -133,15 +134,14 @@ function ModalReview(): JSX.Element {
 
                     <div className="rate__progress">
                       <span className="rate__stars">
-                        0
+                        {ratingValue ?? 0}
                       </span> <span>/</span> <span className="rate__all-stars">5</span>
                     </div>
                   </div>
                   {errorRating ? <p className="rate__message ">{errorRating.message}</p> : null}
-                  {/* <p className="rate__message" >Нужно оценить товар</p> */}
                 </fieldset>
 
-                <div className={cn('custom-input form-review__item', {'is-invalid': errorName})}>
+                <div className={cn('custom-input form-review__item', { 'is-invalid': errorName })}>
                   <label>
                     <span className="custom-input__label">Ваше имя
                       <svg width="9" height="9" aria-hidden="true">
@@ -149,16 +149,25 @@ function ModalReview(): JSX.Element {
                       </svg>
                     </span>
                     <input
-                      {...register('user-name', {required: 'Нужно указать имя11'})}
+                      {...register('user-name', {
+                        required: 'Нужно указать имя',
+                        minLength: {
+                          value: 2,
+                          message: 'Количество символов от 2 до 15'
+                        },
+                        maxLength: {
+                          value: 15,
+                          message: 'Количество символов от 2 до 15'
+                        }
+                      })}
                       type="text"
                       placeholder="Введите ваше имя"
                     />
                   </label>
                   {errorName ? <p className="custom-input__error">{errorName.message}</p> : null}
                 </div>
-                  {/* <p className="custom-input__error">Нужно указать имя</p> */}
 
-                <div className={cn({'custom-input form-review__item', {'is-invalid': errorAdvantage}})}>
+                <div className={cn('custom-input form-review__item', { 'is-invalid': errorAdvantage })}>
                   <label>
                     <span className="custom-input__label">Достоинства
                       <svg width="9" height="9" aria-hidden="true">
@@ -166,15 +175,25 @@ function ModalReview(): JSX.Element {
                       </svg>
                     </span>
                     <input
-                      {...register('user-plus', { required: 'Нужно указать достоинства11' })}
+                      {...register('user-plus', {
+                        required: 'Нужно указать достоинства',
+                        minLength: {
+                          value: 10,
+                          message: 'Количество символов от 10 до 160'
+                        },
+                        maxLength: {
+                          value: 160,
+                          message: 'Количество символов от 10 до 160'
+                        }
+                      })}
                       type="text"
                       placeholder="Основные преимущества товара"
                     />
                   </label>
-                  <p className="custom-input__error">Нужно указать достоинства</p>
+                  {errorAdvantage ? <p className="custom-input__error">{errorAdvantage.message}</p> : null}
                 </div>
 
-                <div className="custom-input form-review__item">
+                <div className={cn('custom-input form-review__item', { 'is-invalid': errorDisadvantage })}>
                   <label>
                     <span className="custom-input__label">Недостатки
                       <svg width="9" height="9" aria-hidden="true">
@@ -182,15 +201,25 @@ function ModalReview(): JSX.Element {
                       </svg>
                     </span>
                     <input
-                      {...register('user-minus', { required: 'Нужно указать недостатки11' })}
+                      {...register('user-minus', {
+                        required: 'Нужно указать недостатки',
+                        minLength: {
+                          value: 10,
+                          message: 'Количество символов от 10 до 160'
+                        },
+                        maxLength: {
+                          value: 160,
+                          message: 'Количество символов от 10 до 160'
+                        }
+                      })}
                       type="text"
                       placeholder="Главные недостатки товара"
                     />
                   </label>
-                  <p className="custom-input__error">Нужно указать недостатки</p>
+                  {errorDisadvantage ? <p className="custom-input__error">{errorDisadvantage.message}</p> : null}
                 </div>
 
-                <div className="custom-textarea form-review__item">
+                <div className={cn('custom-textarea form-review__item', { 'is-invalid': errorComment })}>
                   <label>
                     <span className="custom-textarea__label">Комментарий
                       <svg width="9" height="9" aria-hidden="true">
@@ -198,17 +227,27 @@ function ModalReview(): JSX.Element {
                       </svg>
                     </span>
                     <textarea
-                      {...register('user-comment', { required: 'Нужно добавить комментарий11' })}
-                      minLength={5}
+                      {...register('user-comment', {
+                        required: 'Нужно добавить комментарий',
+                        minLength: {
+                          value: 10,
+                          message: 'Количество символов от 10 до 160'
+                        },
+                        maxLength: {
+                          value: 160,
+                          message: 'Количество символов от 10 до 160'
+                        }
+                      })}
                       placeholder="Поделитесь своим опытом покупки"
                     />
                   </label>
-                  <div className="custom-textarea__error">Нужно добавить комментарий</div>
+                  {errorComment ? <div className="custom-input__error">{errorComment.message}</div> : null}
                 </div>
 
               </div>
 
               <button
+                disabled={isSubmitting || !isValid}
                 className="btn btn--purple form-review__btn"
                 type="submit"
               >
