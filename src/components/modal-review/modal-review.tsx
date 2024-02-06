@@ -55,7 +55,7 @@ function ModalReview(): JSX.Element {
     mode: 'onChange'
   });
 
-  const submit: SubmitHandler<FormInputs> = (formData, event) => {
+  const handleFormSubmit: SubmitHandler<FormInputs> = (formData, event) => {
     event?.preventDefault();
     if (cameraId) {
       const body = {
@@ -121,7 +121,7 @@ function ModalReview(): JSX.Element {
           <div className="form-review">
             <form
               method="post"
-              onSubmit={(event) => void handleSubmit(submit)(event)}
+              onSubmit={(event) => void handleSubmit(handleFormSubmit)(event)}
             >
 
               <div className="form-review__rate">
