@@ -5,13 +5,14 @@ import { getIsBuyProductActive } from '../../store/modal-windows-store/modal-win
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
 import { formatPrice } from '../../utils/utils-functions';
 import { setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
-import { useEffect} from 'react';
+import { useEffect, useRef} from 'react';
 
 function ModalAddItem(): JSX.Element | null {
 
   const dispatch = useAppDispatch();
   const isBuyProductActive = useAppSelector(getIsBuyProductActive);
   const productData = useAppSelector(getSelectedCamera);
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
 
   function handleCloseButtonClick() {
@@ -29,9 +30,14 @@ function ModalAddItem(): JSX.Element | null {
     }
   }
   useEffect(() => {
-    if (isBuyProductActive) {
+    if (isBuyProductActive && modalRef.current) {
       document.addEventListener('keydown', handleModalWindowKeydown);
       document.body.classList.add('scroll-lock');
+
+      modalRef.current.focus();
+      console.log('modalCurrent', modalRef.current);
+      console.log('activeElement', document.activeElement);
+
     }
 
     return () => {
@@ -48,9 +54,11 @@ function ModalAddItem(): JSX.Element | null {
     <div
       className={cn('modal', { 'is-active': isBuyProductActive })}
       tabIndex={-1}
+      ref={modalRef}
     >
       <div className="modal__wrapper">
-        <div className="modal__overlay" onClick={handleOverlayClick}></div>
+        <div className="modal__overlay" onClick={handleOverlayClick}>
+        </div>
         <div className="modal__content" >
           <p className="title title--h4">Добавить товар в корзину</p>
           <div className="basket-item basket-item--short">
