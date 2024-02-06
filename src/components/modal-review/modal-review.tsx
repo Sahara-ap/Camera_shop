@@ -25,14 +25,13 @@ function ModalReview(): JSX.Element {
   }
 
   function handleModalWindowKeydown(event: KeyboardEvent) {
-    event.preventDefault();
     if (event.key.startsWith('Esc')) {
       dispatch(setIsReviewModalActive(false));
     }
   }
   useEffect(() => {
     if (isActive) {
-      // document.addEventListener('keydown', handleModalWindowKeydown);
+      document.addEventListener('keydown', handleModalWindowKeydown);
       document.body.classList.add('scroll-lock');
     }
 
