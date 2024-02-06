@@ -10,9 +10,19 @@ function ModalReviewSuccess(): JSX.Element {
   const dispatch = useAppDispatch();
   const ratingRef = useRef<HTMLButtonElement | null>(null);
 
+
+  function handleCloseButtonClick() {
+    dispatch(setIsReviewModalSuccessActive(false));
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+  function handleOverlayClick() {
+    dispatch(setIsReviewModalSuccessActive(false));
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
   function handleModalWindowKeydown(event: React.KeyboardEvent) {
     if (event.key.startsWith('Esc')) {
       dispatch(setIsReviewModalSuccessActive(false));
+      window.scrollTo({top: 0, behavior: 'smooth'});
     }
   }
 
@@ -28,18 +38,18 @@ function ModalReviewSuccess(): JSX.Element {
     return () => {
       document.body.classList.remove('scroll-lock');
     };
-  });
+  }, [isActive]);
 
 
   return (
     <div
       className={cn('modal modal--narrow', { 'is-active': isActive })}
-      onKeyDown={ handleModalWindowKeydown}
+      onKeyDown={handleModalWindowKeydown}
     >
       <div className="modal__wrapper">
         <div
-          onClick={() => dispatch(setIsReviewModalSuccessActive(false))}
           className="modal__overlay"
+          onClick={handleOverlayClick}
         >
         </div>
         <div className="modal__content">
@@ -49,7 +59,7 @@ function ModalReviewSuccess(): JSX.Element {
           </svg>
           <div className="modal__buttons">
             <button
-              onClick={() => dispatch(setIsReviewModalSuccessActive(false))}
+              onClick={handleCloseButtonClick}
               className="btn btn--purple modal__btn modal__btn--fit-width"
               type="button"
               ref={ratingRef}
@@ -58,7 +68,7 @@ function ModalReviewSuccess(): JSX.Element {
             </button>
           </div>
           <button
-            onClick={() => dispatch(setIsReviewModalSuccessActive(false))}
+            onClick={handleCloseButtonClick}
             className="cross-btn" type="button" aria-label="Закрыть попап"
           >
             <svg width="10" height="10" aria-hidden="true">

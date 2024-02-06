@@ -1,56 +1,40 @@
+import { useEffect } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import cn from 'classnames';
+import { toast } from 'react-toastify';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { getIsReviewModalActive } from '../../store/modal-windows-store/modal-windows-selectors';
 import { setIsReviewModalActive, setIsReviewModalSuccessActive } from '../../store/modal-windows-store/modal-windows-slice';
-import { useEffect, useRef } from 'react';
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
-import { postReview } from '../../store/api-actions/reviews-action';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { getReviewSendingStatus } from '../../store/reviews-store/reviews-selectors';
-import { LoadingDataStatus } from '../../consts';
 import { setReviewSendingStatus } from '../../store/reviews-store/reviews-slice';
-import { toast } from 'react-toastify';
+
+import { postReview } from '../../store/api-actions/reviews-action';
+
+import { LoadingDataStatus } from '../../consts';
 
 
 function ModalReview(): JSX.Element {
   const isActive = useAppSelector(getIsReviewModalActive);
   const cameraId = useAppSelector(getSelectedCamera)?.id;
   const sendingStatus = useAppSelector(getReviewSendingStatus);
+
   const dispatch = useAppDispatch();
 
-  const buttonRef = useRef<HTMLInputElement | null>(null);
 
   function handleCloseButtonClick() {
     dispatch(setIsReviewModalActive(false));
   }
-
   function handleOverlayClick() {
     dispatch(setIsReviewModalActive(false));
   }
-
   function handleModalWindowKeydown(event: React.KeyboardEvent) {
     if (event.key.startsWith('Esc')) {
       dispatch(setIsReviewModalActive(false));
     }
   }
-  useEffect(() => {
-    if (isActive && buttonRef.current) {
-      document.body.classList.add('scroll-lock');
-    }
 
-    return () => {
-      document.body.classList.remove('scroll-lock');
-    };
-  });
-
-  useEffect(() => {
-    if (isActive) {
-      setTimeout(() => {
-        buttonRef.current?.focus();
-      }, 100);
-    }
-  }, [isActive]);
 
   type FormInputs = {
     rate: number;
@@ -65,6 +49,7 @@ function ModalReview(): JSX.Element {
     handleSubmit,
     reset,
     watch,
+    setFocus,
     formState: { errors, isSubmitting, isValid },
   } = useForm<FormInputs>({
     mode: 'onChange'
@@ -86,6 +71,20 @@ function ModalReview(): JSX.Element {
     }
   };
 
+
+  useEffect(() => {
+    if (isActive) {
+      document.body.classList.add('scroll-lock');
+      setTimeout(() => {
+        setFocus('user-name');
+      }, 100);
+    }
+
+    return () => {
+      document.body.classList.remove('scroll-lock');
+    };
+  }, [isActive, setFocus]);
+
   useEffect(() => {
     switch (sendingStatus) {
       case LoadingDataStatus.Success:
@@ -99,13 +98,13 @@ function ModalReview(): JSX.Element {
     }
   }, [sendingStatus, reset, dispatch]);
 
+  const ratingValue = watch('rate');
+
   const errorRating = errors.rate;
   const errorName = errors['user-name'];
   const errorAdvantage = errors['user-plus'];
   const errorDisadvantage = errors['user-minus'];
   const errorComment = errors['user-comment'];
-
-  const ratingValue = watch('rate');
 
 
   return (
@@ -136,7 +135,7 @@ function ModalReview(): JSX.Element {
                       <input
                         {...register('rate', { required: 'Нужно оценить товар' })}
                         className="visually-hidden" id="star-5" type="radio" value="5"
-                        ref={buttonRef}
+
                       />
                       <label className="rate__label" htmlFor="star-5" title="Отлично"></label>
                       <input
