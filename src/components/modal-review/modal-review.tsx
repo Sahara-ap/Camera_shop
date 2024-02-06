@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { getIsReviewModalActive } from '../../store/modal-windows-store/modal-windows-selectors';
 import { setIsReviewModalActive, setIsReviewModalSuccessActive } from '../../store/modal-windows-store/modal-windows-slice';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
 import { postReview } from '../../store/api-actions/reviews-action';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -19,6 +19,8 @@ function ModalReview(): JSX.Element {
   const sendingStatus = useAppSelector(getReviewSendingStatus);
   const dispatch = useAppDispatch();
 
+  const buttonRef = useRef<HTMLInputElement | null>(null);
+
   function handleCloseButtonClick() {
     dispatch(setIsReviewModalActive(false));
   }
@@ -27,22 +29,28 @@ function ModalReview(): JSX.Element {
     dispatch(setIsReviewModalActive(false));
   }
 
-  function handleModalWindowKeydown(event: KeyboardEvent) {
+  function handleModalWindowKeydown(event: React.KeyboardEvent) {
     if (event.key.startsWith('Esc')) {
       dispatch(setIsReviewModalActive(false));
     }
   }
   useEffect(() => {
-    if (isActive) {
-      document.addEventListener('keydown', handleModalWindowKeydown);
+    if (isActive && buttonRef.current) {
       document.body.classList.add('scroll-lock');
     }
 
     return () => {
-      document.removeEventListener('keydown', handleModalWindowKeydown);
       document.body.classList.remove('scroll-lock');
     };
   });
+
+  useEffect(() => {
+    if (isActive) {
+      setTimeout(() => {
+        buttonRef.current?.focus();
+      }, 100);
+    }
+  }, [isActive]);
 
   type FormInputs = {
     rate: number;
@@ -58,9 +66,8 @@ function ModalReview(): JSX.Element {
     reset,
     watch,
     formState: { errors, isSubmitting, isValid },
-    resetField,
   } = useForm<FormInputs>({
-    mode: 'onBlur'
+    mode: 'onChange'
   });
 
   const submit: SubmitHandler<FormInputs> = (formData, event) => {
@@ -102,7 +109,10 @@ function ModalReview(): JSX.Element {
 
 
   return (
-    <div className={cn('modal', { 'is-active': isActive })}>
+    <div
+      className={cn('modal', { 'is-active': isActive })}
+      onKeyDown={handleModalWindowKeydown}
+    >
       <div className="modal__wrapper">
         <div className="modal__overlay" onClick={handleOverlayClick}></div>
         <div className="modal__content">
@@ -126,6 +136,7 @@ function ModalReview(): JSX.Element {
                       <input
                         {...register('rate', { required: 'Нужно оценить товар' })}
                         className="visually-hidden" id="star-5" type="radio" value="5"
+                        ref={buttonRef}
                       />
                       <label className="rate__label" htmlFor="star-5" title="Отлично"></label>
                       <input
