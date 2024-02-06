@@ -18,9 +18,6 @@ const reviewsSlice = createSlice({
   name: NameSpace.Reviews,
   initialState,
   reducers: {
-    dropReviews: (state) => {
-      state.reviews = [];
-    },
     setReviewSendingStatus: (state, action: PayloadAction<LoadingDataStatus>) => {
       state.reviewSendingStatus = action.payload;
     }
@@ -51,11 +48,10 @@ const reviewsSlice = createSlice({
   }
 });
 
-const {dropReviews, setReviewSendingStatus} = reviewsSlice.actions;
+const { setReviewSendingStatus } = reviewsSlice.actions;
 
 export {
   reviewsSlice,
 
-  dropReviews,
   setReviewSendingStatus
 };

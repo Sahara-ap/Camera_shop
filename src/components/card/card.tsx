@@ -9,7 +9,6 @@ import { formatPrice } from '../../utils/utils-functions';
 import { AppRoute } from '../../consts';
 import { TCard } from '../../types/generalTypes';
 import { RatingStars } from '../rating-stars/rating-stars';
-import { dropReviews } from '../../store/reviews-store/reviews-slice';
 
 
 type TCardProps = {
@@ -24,9 +23,6 @@ function Card({ cardData, page }: TCardProps): JSX.Element {
     dispatch(setSelectedCamera(cardData));
   }
 
-  function handleLinkClick () {
-    dispatch(dropReviews());
-  }
 
   return (
     <div className={cn('product-card', { 'is-active': page === 'similar' })} >
@@ -66,7 +62,6 @@ function Card({ cardData, page }: TCardProps): JSX.Element {
         <Link
           className="btn btn--transparent"
           to={`${AppRoute.Product}/${cardData.id}`}
-          onClick={handleLinkClick}
         >
           Подробнее
         </Link>
