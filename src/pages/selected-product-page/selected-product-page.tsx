@@ -20,6 +20,8 @@ import { AppRoute } from '../../consts';
 import { fetchReviews } from '../../store/api-actions/reviews-action';
 import { ModalReview } from '../../components/modal-review/modal-review';
 import { ModalReviewSuccess } from '../../components/modal-review-success/modal-review.success';
+import { getCameras } from '../../store/cards-data-store/cards-data-selectors';
+import { NotFoundPage } from '../not-found-page/not-found-page';
 
 function SelectedProductPage(): JSX.Element {
 
@@ -28,6 +30,7 @@ function SelectedProductPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const cameraName = useAppSelector(getSelectedCameraName);
+  const idList = useAppSelector(getCameras).map((camera) => camera.id);
   const isSelectedCardLoading = useAppSelector(getIsSelectedCameraLoading);
   const hasErrorWithConnection = useAppSelector(getHasErrorWithConnection);
 
@@ -45,6 +48,9 @@ function SelectedProductPage(): JSX.Element {
   }, [cardId, dispatch]);
 
 
+  if (cardId && !idList.includes(Number(cardId))) {
+    return <NotFoundPage />;
+  }
   if (isSelectedCardLoading) {
     return <Loading />;
   }
