@@ -65,6 +65,16 @@ const makeFakeSelectedCard = (): TSelectedCard => ({
   previewImgWebp2x: faker.internet.url(),
 });
 
+const makeFakeReview = (): TReview => ({
+  id: faker.string.uuid(),
+  createAt: faker.string.numeric(),
+  cameraId: faker.number.int(),
+  userName: faker.person.fullName(),
+  advantage: faker.lorem.lines(1),
+  disadvantage: faker.lorem.lines(1),
+  review: faker.lorem.lines(2),
+  rating: faker.number.int({min: 1, max: 5}),
+});
 
 const makeFakeReviews = (): TReview[] => new Array(5).fill(null).map(() => ({
   id: faker.string.uuid(),
@@ -93,6 +103,7 @@ export {
   makeFakeCards,
   makeFakeSelectedCard,
   makeFakeSimilars,
+  makeFakeReview,
   makeFakeReviews,
   makeFakeReviewPost,
 };
