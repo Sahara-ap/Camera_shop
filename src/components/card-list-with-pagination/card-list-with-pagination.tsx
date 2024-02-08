@@ -57,13 +57,14 @@ function CardListWithPagination(): JSX.Element {
 
   return (
     <>
-      <CardList cards={currentCameras} page='catalog'/>
+      <CardList cards={currentCameras} page='catalog' />
       {totalPages >= MIN_PAGES &&
         <CatalogPagination
           totalPages={totalPages}
           pageNumber={pageNumber}
           onPaginationClick={setPageNumber}
         />}
+
     </>
   );
 }

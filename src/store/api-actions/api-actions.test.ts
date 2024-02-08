@@ -8,12 +8,11 @@ import { State } from '../../types/store';
 import { Action } from '@reduxjs/toolkit';
 import { APIRoute } from '../../consts';
 import { fetchBannerAction } from './banner-action';
-import { makeFakeBanners, makeFakeCards, makeFakeReviewPost, makeFakeReviews, makeFakeSelectedCard, makeFakeSimilars } from '../../utils/mocks';
+import { extractActionTypes, makeFakeBanners, makeFakeCards, makeFakeReviewPost, makeFakeReviews, makeFakeSelectedCard, makeFakeSimilars } from '../../utils/mocks';
 import { fetchCamerasAction, fetchSelectedCameraAction, fetchSimilars } from './card-actions';
 import { fetchReviews, postReview } from './reviews-action';
 
 type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createApi>, Action>
-const extractActionTypes = (actions: Action<string>[]) => actions.map((action) => action.type);
 
 describe('Async actions', () => {
   const api = createApi();

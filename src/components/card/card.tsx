@@ -56,6 +56,7 @@ function Card({ cardData, page }: TCardProps): JSX.Element {
           onClick={handleButtonClick}
           className="btn btn--purple product-card__btn"
           type="button"
+          data-testid="buttonElement"
         >
           Купить
         </button>

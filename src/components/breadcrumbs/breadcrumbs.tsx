@@ -9,7 +9,7 @@ type TBreadcrumbsProps = {
 function Breadcrumbs({ page, productName }: TBreadcrumbsProps): JSX.Element {
 
   return (
-    <div className="breadcrumbs">
+    <div className="breadcrumbs" data-testid="breadcrumbsDivElement">
       <div className="container">
         <ul className="breadcrumbs__list">
           <li className="breadcrumbs__item">
