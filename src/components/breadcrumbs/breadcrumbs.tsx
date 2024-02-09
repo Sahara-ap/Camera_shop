@@ -41,6 +41,7 @@ function Breadcrumbs({ page, productName }: TBreadcrumbsProps): JSX.Element {
                 </span>
               </li>
             </>}
+
         </ul>
       </div>
     </div>
