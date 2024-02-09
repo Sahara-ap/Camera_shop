@@ -1,4 +1,4 @@
-import preloader from '../../../public/img/svg/preloader.svg';
+import preloader from './preloader.svg';
 import styles from './loading.module.css';
 
 import { useAppSelector } from '../../hooks/store-hooks';
