@@ -24,7 +24,7 @@ function BannerList(): JSX.Element {
     isBannerError
       ? <p>Не удалось загрузить изображение</p>
       : (
-        <div className="banner">
+        <div className="banner" data-testid="bannerListDiv">
           <Swiper
             className="sample-swiper"
             modules={[Autoplay, Pagination]}

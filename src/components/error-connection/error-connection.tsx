@@ -1,18 +1,25 @@
 import styles from './error-connection.module.css';
 
 import { useAppDispatch } from '../../hooks/store-hooks';
-import { fetchCamerasAction } from '../../store/api-actions/card-action';
+import { fetchCamerasAction, fetchSelectedCameraAction } from '../../store/api-actions/card-actions';
+import { useParams } from 'react-router-dom';
 
 type TErrorConnectionProps = {
-  page: 'catalog';
+  page: 'catalog' | 'product';
 }
 function ErrorConnection({ page }: TErrorConnectionProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const {cardId} = useParams();
 
   function handleButtonClick() {
     switch (page) {
       case 'catalog':
         dispatch(fetchCamerasAction());
+        break;
+      case 'product':
+        if (cardId) {
+          dispatch(fetchSelectedCameraAction(cardId));
+        }
     }
   }
 

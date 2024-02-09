@@ -1,8 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../consts';
+import { fetchSelectedCameraAction } from '../api-actions/card-actions';
+import { TSelectedCard } from '../../types/generalTypes';
 
 type TSelectedCardState = {
-  selectedCamera: TSelectedCardState | null;
+  selectedCamera: TSelectedCard | null;
   isSelectedCameraLoading: boolean;
 }
 
@@ -14,10 +16,30 @@ const initialState: TSelectedCardState = {
 const selectedCardDataSlice = createSlice({
   name: NameSpace.SelectedCard,
   initialState,
-  reducers: {}
+  reducers: {
+    setSelectedCamera: (state, action: PayloadAction<TSelectedCard>) => {
+      state.selectedCamera = action.payload;
+    }
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchSelectedCameraAction.pending, (state) => {
+        state.isSelectedCameraLoading = true;
+      })
+      .addCase(fetchSelectedCameraAction.fulfilled, (state, action) => {
+        state.isSelectedCameraLoading = false;
+        state.selectedCamera = action.payload;
+      })
+      .addCase(fetchSelectedCameraAction.rejected, (state) => {
+        state.isSelectedCameraLoading = false;
+      });
+  },
 });
+
+const {setSelectedCamera} = selectedCardDataSlice.actions;
 
 export {
   selectedCardDataSlice,
 
+  setSelectedCamera,
 };

@@ -1,0 +1,12 @@
+.slider-controls:active {
+  pointer-events: all;
+}
+
+.product-similar__slider .swiper-slide .product-card {
+  width: 92%;
+  margin: 0;
+}
+
+.product-similar__slider .swiper-slide {
+  width: calc(33.3% - 16px);
+}
