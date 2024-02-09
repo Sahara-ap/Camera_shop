@@ -54,6 +54,7 @@ function SelectedProductReviews(): JSX.Element | null {
               onClick={handleReviewButtonClick}
               className="btn"
               type="button"
+              data-testid="PostReviewButton"
             >
               Оставить свой отзыв
             </button>
@@ -69,6 +70,8 @@ function SelectedProductReviews(): JSX.Element | null {
                 onClick={handleMoreButtonClick}
                 className="btn btn--purple"
                 type="button"
+                data-testid="ShowMoreReviewsButton"
+
               >
                 Показать больше отзывов
               </button>}

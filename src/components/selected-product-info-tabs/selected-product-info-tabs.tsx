@@ -32,6 +32,7 @@ function SelectedProductInfoTabs({ info }: TSelectedProductInfoTabsProps): JSX.E
           className={cn('tabs__control', { 'is-active': activeTab === 'list' })}
           type="button"
           onClick={handleListButtonClick}
+          data-testid="infoTabListButton"
         >
           Характеристики
         </button>
@@ -39,6 +40,7 @@ function SelectedProductInfoTabs({ info }: TSelectedProductInfoTabsProps): JSX.E
           className={cn('tabs__control', { 'is-active': activeTab === 'text' })}
           type="button"
           onClick={handleTextButtonClick}
+          data-testid="infoTabTextButton"
         >
           Описание
         </button>

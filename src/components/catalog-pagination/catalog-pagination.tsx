@@ -50,7 +50,7 @@ function CatalogPagination({ totalPages, pageNumber, onPaginationClick }: TCatal
 
 
   return (
-    <div className="pagination">
+    <div className="pagination" data-testid="catalogPaginationDiv">
       <ul className="pagination__list">
         {totalPages >= 4 && pageNumber >= 3 &&
           <li className="pagination__item">

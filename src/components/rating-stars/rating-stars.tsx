@@ -11,7 +11,7 @@ function RatingStars({ rating }: TRatingProps): JSX.Element {
     <>
       {
         ratingMap.map((_, index) => (
-          <svg key={crypto.randomUUID()} width="17" height="16" aria-hidden="true">
+          <svg key={crypto.randomUUID()} width="17" height="16" aria-hidden="true" data-testid="ratingStarsSvg">
             <use xlinkHref={index <= score ? '#icon-full-star' : '#icon-star'}></use>
           </svg>
         ))

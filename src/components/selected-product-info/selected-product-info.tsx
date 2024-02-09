@@ -40,6 +40,7 @@ function SelectedProductInfo(): JSX.Element | null {
               className="btn btn--purple"
               type="button"
               onClick={handleButtonClick}
+              data-testid="selectedProductInfoAddButton"
             >
               <svg width="24" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-add-basket"></use>

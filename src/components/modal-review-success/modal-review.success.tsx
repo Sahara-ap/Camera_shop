@@ -44,6 +44,7 @@ function ModalReviewSuccess(): JSX.Element {
     <div
       className={cn('modal modal--narrow', { 'is-active': isActive })}
       onKeyDown={handleModalWindowKeydown}
+      data-testid="modalReviewSuccessDiv"
     >
       <div className="modal__wrapper">
         <div
@@ -62,6 +63,7 @@ function ModalReviewSuccess(): JSX.Element {
               className="btn btn--purple modal__btn modal__btn--fit-width"
               type="button"
               ref={ratingRef}
+              data-testid="modalReviewSuccessReturnButton"
             >
               Вернуться к покупкам
             </button>
@@ -69,6 +71,7 @@ function ModalReviewSuccess(): JSX.Element {
           <button
             onClick={handleCloseButtonClick}
             className="cross-btn" type="button" aria-label="Закрыть попап"
+            data-testid="modalReviewCloseButton"
           >
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>

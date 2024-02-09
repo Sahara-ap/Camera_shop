@@ -52,6 +52,7 @@ function ModalAddItem(): JSX.Element | null {
     <div
       className={cn('modal', { 'is-active': isBuyProductActive })}
       tabIndex={-1}
+      data-testid="modalAddItemDiv"
     >
       <div className="modal__wrapper">
         <div className="modal__overlay" onClick={handleOverlayClick}></div>
