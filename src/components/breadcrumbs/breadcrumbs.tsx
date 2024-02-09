@@ -9,7 +9,7 @@ type TBreadcrumbsProps = {
 function Breadcrumbs({ page, productName }: TBreadcrumbsProps): JSX.Element {
 
   return (
-    <div className="breadcrumbs" data-testid="breadcrumbsDivElement">
+    <div className="breadcrumbs" data-testid="brewadcrumbsDivElement">
       <div className="container">
         <ul className="breadcrumbs__list">
           <li className="breadcrumbs__item">
@@ -25,19 +25,22 @@ function Breadcrumbs({ page, productName }: TBreadcrumbsProps): JSX.Element {
                 Каталог
               </span>
             </li>}
-          <li className="breadcrumbs__item">
-            <Link className="breadcrumbs__link" to={AppRoute.Catalog}>Каталог
-              <svg width="5" height="8" aria-hidden="true">
-                <use xlinkHref="#icon-arrow-mini"></use>
-              </svg>
-            </Link>
-          </li>
+
           {page === 'product' &&
-            <li className="breadcrumbs__item">
-              <span className="breadcrumbs__link breadcrumbs__link--active">
-                {productName}
-              </span>
-            </li>}
+            <>
+              <li className="breadcrumbs__item">
+                <Link className="breadcrumbs__link" to={AppRoute.Catalog}>Каталог
+                  <svg width="5" height="8" aria-hidden="true">
+                    <use xlinkHref="#icon-arrow-mini"></use>
+                  </svg>
+                </Link>
+              </li>
+              <li className="breadcrumbs__item">
+                <span className="breadcrumbs__link breadcrumbs__link--active">
+                  {productName}
+                </span>
+              </li>
+            </>}
         </ul>
       </div>
     </div>
