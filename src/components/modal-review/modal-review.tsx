@@ -190,6 +190,7 @@ function ModalReview(): JSX.Element {
                       })}
                       type="text"
                       placeholder="Введите ваше имя"
+                      data-testid="nameElement"
                     />
                   </label>
                   {errorName ? <p className="custom-input__error">{errorName.message}</p> : null}
@@ -216,6 +217,7 @@ function ModalReview(): JSX.Element {
                       })}
                       type="text"
                       placeholder="Основные преимущества товара"
+                      data-testid="advantageElement"
                     />
                   </label>
                   {errorAdvantage ? <p className="custom-input__error">{errorAdvantage.message}</p> : null}
@@ -242,6 +244,7 @@ function ModalReview(): JSX.Element {
                       })}
                       type="text"
                       placeholder="Главные недостатки товара"
+                      data-testid="disadvantageElement"
                     />
                   </label>
                   {errorDisadvantage ? <p className="custom-input__error">{errorDisadvantage.message}</p> : null}
@@ -267,6 +270,7 @@ function ModalReview(): JSX.Element {
                         }
                       })}
                       placeholder="Поделитесь своим опытом покупки"
+                      data-testid="commentElement"
                     />
                   </label>
                   {errorComment ? <div className="custom-input__error">{errorComment.message}</div> : null}
@@ -278,6 +282,7 @@ function ModalReview(): JSX.Element {
                 disabled={isSubmitting || !isValid}
                 className="btn btn--purple form-review__btn"
                 type="submit"
+                data-testid="submitButtonElement"
               >
                 Отправить отзыв
               </button>
@@ -289,6 +294,7 @@ function ModalReview(): JSX.Element {
             className="cross-btn"
             type="button"
             aria-label="Закрыть попап"
+            data-testid="closeButtonElement"
           >
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
