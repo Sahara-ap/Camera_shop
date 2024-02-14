@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
+import { TParamsCatalog } from '../types/generalTypes';
 
 function convertDateInMs(value: string) {
   return Date.parse(value);
@@ -14,6 +15,10 @@ function formatPrice(value: number) {
   return value.toLocaleString('ru');
 }
 
+function getParams(params: URLSearchParams) {
+  return Object.fromEntries(params);
+}
+
 function pickRandomElement<T>(items:T[]) {
   const randomIndex = Math.floor(Math.random() * items.length);
   return items[randomIndex];
@@ -23,5 +28,6 @@ export {
   convertDateInMs,
   formatDate,
   formatPrice,
+  getParams,
   pickRandomElement,
 };

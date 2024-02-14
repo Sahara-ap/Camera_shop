@@ -31,6 +31,13 @@ type TCameraId = string
 
 type TPage = 'catalog' | 'product'
 
+type TParamsCatalog = {
+  cat?: 'video' | 'photo';
+  type?: 'digital' | 'film' | 'snap' | 'coll';
+  level?: 'zero' | 'prof' | 'non_prof';
+  page?: string;
+}
+
 type TReview = {
   id: string;
   createAt: string;
@@ -94,6 +101,7 @@ export type {
   TCameraCategory,
   TCameraLevel,
   TPage,
+  TParamsCatalog,
   TReview,
   TReviewPost,
   TSelectedCard,

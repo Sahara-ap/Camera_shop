@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { getCameras, getIsCamerasLoading } from '../../store/cards-data-store/cards-data-selectors';
 import { useAppSelector } from '../../hooks/store-hooks';
@@ -20,15 +20,23 @@ function CardListWithPagination(): JSX.Element {
   const totalCardsLength = cameras.length;
   const totalPages = Math.ceil(totalCardsLength / CARDS_NUMBER_PER_PAGE);
 
+  const [searchParams, setSearchParams] = useSearchParams({page: '1'});
+  const page = searchParams.get('page');
+  console.log('page', page)
+  function getUrl() {
+    return new URL(window.location.href);
+  }
+
   function getPageNumber() {
-    const url = new URL(window.location.href);
+    const url = getUrl();
     const params = Object.fromEntries(url.searchParams);
     const { page } = params;
 
     return page;
   }
-  const initialPageNumber = Number(getPageNumber() ?? 1);
-  const navigate = useNavigate();
+  // const initialPageNumber = Number(getPageNumber() ?? 1);
+  const initialPageNumber = Number(page) ?? 1;
+  // const navigate = useNavigate();
 
   const [pageNumber, setPageNumber] = useState(initialPageNumber);
 
@@ -38,18 +46,27 @@ function CardListWithPagination(): JSX.Element {
 
   const isCamerasLoading = useAppSelector(getIsCamerasLoading);
 
+  // const params = Object.fromEntries(getUrl().searchParams);
+  const params = Object.fromEntries(searchParams);
+  console.log('p', params);
+
 
   useEffect(() => {
     let isMounted = true;
 
+
+
     if (isMounted && (totalPages !== 0) && (pageNumber > totalPages)) {
-      navigate(`${AppRoute.Catalog}?page=${DEFAULT_PAGE_NUMBER}`);
+      // navigate(`${AppRoute.Catalog}?page=${DEFAULT_PAGE_NUMBER}`);
+      setSearchParams({
+        ...params,
+        page: String(DEFAULT_PAGE_NUMBER)});
       setPageNumber(DEFAULT_PAGE_NUMBER);
     }
     return () => {
       isMounted = false;
     };
-  }, [totalPages, pageNumber, navigate]);
+  }, [totalPages, pageNumber]);
 
   if (isCamerasLoading) {
     return <Loading />;
