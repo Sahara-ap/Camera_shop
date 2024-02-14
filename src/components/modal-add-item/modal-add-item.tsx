@@ -24,7 +24,7 @@ function ModalAddItem(): JSX.Element | null {
     dispatch(setIsBuyProductActive(false));
   }
 
-  function handleModalWindowKeydown(event: KeyboardEvent) {
+  function handleModalWindowKeydown(event: React.KeyboardEvent) {
     event.preventDefault();
     if (event.key.startsWith('Esc')) {
       dispatch(setIsBuyProductActive(false));
@@ -32,14 +32,12 @@ function ModalAddItem(): JSX.Element | null {
   }
   useEffect(() => {
     if (isBuyProductActive) {
-      document.addEventListener('keydown', handleModalWindowKeydown);
       document.body.classList.add('scroll-lock');
 
       setTimeout(() => buttonRef.current?.focus(), DELAY);
     }
 
     return () => {
-      document.removeEventListener('keydown', handleModalWindowKeydown);
       document.body.classList.remove('scroll-lock');
     };
   });
@@ -53,6 +51,7 @@ function ModalAddItem(): JSX.Element | null {
       className={cn('modal', { 'is-active': isBuyProductActive })}
       tabIndex={-1}
       data-testid="modalAddItemDiv"
+      onKeyDown={handleModalWindowKeydown}
     >
       <div className="modal__wrapper">
         <div className="modal__overlay" onClick={handleOverlayClick}></div>
