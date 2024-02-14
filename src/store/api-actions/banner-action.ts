@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { APIRoute } from '../../consts';
 
-import { TBanner } from '../../types/generalTypes';
+import { TBanner } from '../../types/general-types';
 import { ThunkAPI } from '../../types/store';
 
 const fetchBannerAction = createAsyncThunk<TBanner[], undefined, ThunkAPI>(

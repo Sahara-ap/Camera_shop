@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { TCameraId, TReview, TReviewPost } from '../../types/generalTypes';
+import { TCameraId, TReview, TReviewPost } from '../../types/general-types';
 import { ThunkAPI } from '../../types/store';
 import { APIRoute } from '../../consts';
 

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts';
-import { TCard, TPage } from '../../types/generalTypes';
+import { TCard, TPage } from '../../types/general-types';
 
 type TBreadcrumbsProps = {
   page: TPage;

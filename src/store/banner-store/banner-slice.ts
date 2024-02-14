@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { NameSpace } from '../../consts';
-import { TBanner } from '../../types/generalTypes';
+import { TBanner } from '../../types/general-types';
 import { fetchBannerAction } from '../api-actions/banner-action';
 
 type TBannerState = {

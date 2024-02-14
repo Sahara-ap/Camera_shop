@@ -7,7 +7,7 @@ import { setIsBuyProductActive } from '../../store/modal-windows-store/modal-win
 
 import { formatPrice } from '../../utils/utils-functions';
 import { AppRoute } from '../../consts';
-import { TCard } from '../../types/generalTypes';
+import { TCard } from '../../types/general-types';
 import { RatingStars } from '../rating-stars/rating-stars';
 
 

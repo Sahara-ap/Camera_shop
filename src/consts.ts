@@ -1,4 +1,4 @@
-import { TCameraCategory, TCameraLevel, TCameraType } from './types/generalTypes';
+import { TCameraCategory, TCameraLevel, TCameraType } from './types/general-types';
 
 enum APIRoute {
   Cameras = '/cameras',

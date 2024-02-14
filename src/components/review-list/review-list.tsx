@@ -1,4 +1,4 @@
-import { TReview } from '../../types/generalTypes';
+import { TReview } from '../../types/general-types';
 import { Review } from '../review/review';
 
 type TReviewListProps = {

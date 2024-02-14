@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../consts';
-import { TSelectedCard } from '../../types/generalTypes';
+import { TSelectedCard } from '../../types/general-types';
 
 type TModalWindowsState = {
   isBuyProductActive: boolean;

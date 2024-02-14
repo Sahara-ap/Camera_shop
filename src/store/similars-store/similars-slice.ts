@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { TSimilar } from '../../types/generalTypes';
+import { TSimilar } from '../../types/general-types';
 import { NameSpace } from '../../consts';
 import { fetchSimilars } from '../api-actions/card-actions';
 

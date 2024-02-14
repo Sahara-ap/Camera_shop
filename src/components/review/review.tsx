@@ -1,4 +1,4 @@
-import { TReview } from '../../types/generalTypes';
+import { TReview } from '../../types/general-types';
 import { formatDate } from '../../utils/utils-functions';
 import { RatingStars } from '../rating-stars/rating-stars';
 

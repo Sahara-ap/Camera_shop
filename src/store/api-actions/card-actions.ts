@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { APIRoute } from '../../consts';
 
-import { TCameraId, TCard, TSelectedCard, TSimilar } from '../../types/generalTypes';
+import { TCameraId, TCard, TSelectedCard, TSimilar } from '../../types/general-types';
 import { ThunkAPI } from '../../types/store';
 
 const fetchCamerasAction = createAsyncThunk<TCard[], undefined, ThunkAPI>(

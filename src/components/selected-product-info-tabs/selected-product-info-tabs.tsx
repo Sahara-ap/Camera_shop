@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TSelectedCard } from '../../types/generalTypes';
+import { TSelectedCard } from '../../types/general-types';
 import cn from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 

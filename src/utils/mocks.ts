@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { TBanner, TCard, TReview, TReviewPost, TSelectedCard, TSimilar } from '../types/generalTypes';
+import { TBanner, TCard, TReview, TReviewPost, TSelectedCard, TSimilar } from '../types/general-types';
 import { pickRandomElement } from './utils-functions';
 import { CAMERA_CATEGORIES, CAMERA_LEVELS, CAMERA_TYPES, LoadingDataStatus, NameSpace } from '../consts';
 import { State } from '../types/store';

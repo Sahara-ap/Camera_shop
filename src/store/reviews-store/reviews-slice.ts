@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { LoadingDataStatus, NameSpace } from '../../consts';
-import { TReview } from '../../types/generalTypes';
+import { TReview } from '../../types/general-types';
 import { fetchReviews, postReview } from '../api-actions/reviews-action';
 
 type TReviewsState = {

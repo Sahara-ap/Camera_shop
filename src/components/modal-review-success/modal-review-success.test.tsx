@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../utils/mock-components';
 import userEvent from '@testing-library/user-event';
 import { extractActionTypes, makeFakeState } from '../../utils/mocks';
-import { ModalReviewSuccess } from './modal-review.success';
+import { ModalReviewSuccess } from './modal-review-success';
 import { setIsReviewModalSuccessActive } from '../../store/modal-windows-store/modal-windows-slice';
 
 describe('Component: ModalReviewSuccess', () => {

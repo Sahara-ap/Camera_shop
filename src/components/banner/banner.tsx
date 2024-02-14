@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { TBanner } from '../../types/generalTypes';
+import { TBanner } from '../../types/general-types';
 import { AppRoute } from '../../consts';
 
 type TBannerProps = {

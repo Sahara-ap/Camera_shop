@@ -19,7 +19,7 @@ import { ErrorConnection } from '../../components/error-connection/error-connect
 import { AppRoute } from '../../consts';
 import { fetchReviews } from '../../store/api-actions/reviews-action';
 import { ModalReview } from '../../components/modal-review/modal-review';
-import { ModalReviewSuccess } from '../../components/modal-review-success/modal-review.success';
+import { ModalReviewSuccess } from '../../components/modal-review-success/modal-review-success';
 import { getCameras } from '../../store/cards-data-store/cards-data-selectors';
 import { NotFoundPage } from '../not-found-page/not-found-page';
 

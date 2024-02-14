@@ -1,5 +1,5 @@
 import { Card } from '../card/card';
-import { TCard } from '../../types/generalTypes';
+import { TCard } from '../../types/general-types';
 import cn from 'classnames';
 
 type TCardListProps = {
