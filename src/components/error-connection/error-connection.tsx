@@ -1,8 +1,9 @@
 import styles from './error-connection.module.css';
 
 import { useAppDispatch } from '../../hooks/store-hooks';
-import { fetchCamerasAction, fetchSelectedCameraAction } from '../../store/api-actions/card-actions';
+import { fetchCamerasAction, fetchSelectedCameraAction, fetchSimilars } from '../../store/api-actions/card-actions';
 import { useParams } from 'react-router-dom';
+import { fetchReviews } from '../../store/api-actions/reviews-action';
 
 type TErrorConnectionProps = {
   page: 'catalog' | 'product';
@@ -19,6 +20,8 @@ function ErrorConnection({ page }: TErrorConnectionProps): JSX.Element {
       case 'product':
         if (cardId) {
           dispatch(fetchSelectedCameraAction(cardId));
+          dispatch(fetchReviews(cardId));
+          dispatch(fetchSimilars(cardId));
         }
     }
   }

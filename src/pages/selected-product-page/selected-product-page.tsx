@@ -25,12 +25,12 @@ import { NotFoundPage } from '../not-found-page/not-found-page';
 
 function SelectedProductPage(): JSX.Element {
 
-
   const { cardId } = useParams();
   const dispatch = useAppDispatch();
 
   const cameraName = useAppSelector(getSelectedCameraName);
   const idList = useAppSelector(getCameras).map((camera) => camera.id);
+  const isEmptyIdList = idList.length === 0;
   const isSelectedCardLoading = useAppSelector(getIsSelectedCameraLoading);
   const hasErrorWithConnection = useAppSelector(getHasErrorWithConnection);
 
@@ -48,11 +48,12 @@ function SelectedProductPage(): JSX.Element {
   }, [cardId, dispatch]);
 
 
-  if (cardId && !idList.includes(Number(cardId))) {
-    return <NotFoundPage />;
-  }
   if (isSelectedCardLoading) {
     return <Loading />;
+  }
+
+  if (!isEmptyIdList && !idList.includes(Number(cardId))) {
+    return <NotFoundPage />;
   }
   return (
     <>
@@ -70,7 +71,6 @@ function SelectedProductPage(): JSX.Element {
                 <SelectedProductSimilar />
                 <SelectedProductReviews />
               </>}
-
           </div>
           <span
             onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
