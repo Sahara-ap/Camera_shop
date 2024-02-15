@@ -8,7 +8,9 @@ type TCardListProps = {
 }
 function CardList({ cards, page }: TCardListProps): JSX.Element {
 
-
+  if (cards.length === 0) {
+    return <h1 style={{padding: '10%'}}>Нет карточек по выбранным фильтрам</h1>;
+  }
   return (
     <div
       data-testid="divElement"
