@@ -5,6 +5,15 @@ function convertDateInMs(value: string) {
   return Date.parse(value);
 }
 
+
+function disableScrollLock() {
+  document.body.classList.remove('scroll-lock');
+}
+function enableScrollLock() {
+  document.body.classList.add('scroll-lock');
+}
+
+
 function formatDate(value: dayjs.ConfigType): string {
   dayjs.locale('ru');
   return dayjs(value, 'ru').format('DD MMMM');
@@ -19,9 +28,15 @@ function pickRandomElement<T>(items:T[]) {
   return items[randomIndex];
 }
 
+
 export {
   convertDateInMs,
+
+  disableScrollLock,
+  enableScrollLock,
+
   formatDate,
   formatPrice,
   pickRandomElement,
+
 };

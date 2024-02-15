@@ -4,6 +4,7 @@ import { getIsReviewModalSuccessActive } from '../../store/modal-windows-store/m
 import { useEffect, useRef } from 'react';
 import { setIsReviewModalSuccessActive } from '../../store/modal-windows-store/modal-windows-slice';
 import { DELAY } from '../../consts';
+import { disableScrollLock, enableScrollLock } from '../../utils/utils-functions';
 
 function ModalReviewSuccess(): JSX.Element {
   const isActive = useAppSelector(getIsReviewModalSuccessActive);
@@ -29,13 +30,13 @@ function ModalReviewSuccess(): JSX.Element {
 
   useEffect(() => {
     if (isActive && ratingRef.current) {
-      document.body.classList.add('scroll-lock');
+      enableScrollLock();
 
       setTimeout(() => ratingRef.current?.focus(), DELAY);
     }
 
     return () => {
-      document.body.classList.remove('scroll-lock');
+      disableScrollLock();
     };
   }, [isActive]);
 

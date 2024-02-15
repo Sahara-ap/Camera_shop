@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 
 import { getIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-selectors';
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
-import { formatPrice } from '../../utils/utils-functions';
+import { disableScrollLock, enableScrollLock, formatPrice } from '../../utils/utils-functions';
 import { setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
 import { useEffect, useRef} from 'react';
 import { DELAY } from '../../consts';
@@ -32,13 +32,13 @@ function ModalAddItem(): JSX.Element | null {
   }
   useEffect(() => {
     if (isBuyProductActive) {
-      document.body.classList.add('scroll-lock');
+      enableScrollLock();
 
       setTimeout(() => buttonRef.current?.focus(), DELAY);
     }
 
     return () => {
-      document.body.classList.remove('scroll-lock');
+      disableScrollLock();
     };
   });
 
