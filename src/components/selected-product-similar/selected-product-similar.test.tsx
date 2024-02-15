@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../utils/mock-components';
-import { makeFakeState } from '../../utils/mocks';
+import { makeFakeSimilarAndAppSlice } from '../../utils/mocks';
 import { SelectedProductSimilar } from './selected-product-similar';
 
 describe('Component: SelectedProductSimilar', () => {
-  const mockState = makeFakeState();
+  const mockState = makeFakeSimilarAndAppSlice();
   const { withStoreComponent } = withStore(<SelectedProductSimilar />, mockState);
   const preparedComponent = withHistory(withStoreComponent);
 

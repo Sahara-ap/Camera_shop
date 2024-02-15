@@ -1,12 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../utils/mock-components';
-import { makeFakeSelectedCard, makeFakeState } from '../../utils/mocks';
+import { makeFakeSelectedCard } from '../../utils/mocks';
 import { SelectedProductInfoTabs } from './selected-product-info-tabs';
 
 describe('Component: SelectedProductInfoTabs', () => {
   const mockSelectedCard = makeFakeSelectedCard();
-  const mockState = makeFakeState();
-  const { withStoreComponent, } = withStore(<SelectedProductInfoTabs info={mockSelectedCard}/>, mockState);
+  const { withStoreComponent, } = withStore(<SelectedProductInfoTabs info={mockSelectedCard}/>);
   const preparedComponent = withHistory(withStoreComponent);
 
   it('should render correctly', () => {
