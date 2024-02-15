@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
-import { TParamsCatalog } from '../types/generalTypes';
 
 function convertDateInMs(value: string) {
   return Date.parse(value);

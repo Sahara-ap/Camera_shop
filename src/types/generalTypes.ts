@@ -36,6 +36,8 @@ type TParamsCatalog = {
   type?: 'digital' | 'film' | 'snap' | 'coll';
   level?: 'zero' | 'prof' | 'non_prof';
   page?: string;
+  priceMin?: string;
+  priceMax?: string;
 }
 
 type TReview = {

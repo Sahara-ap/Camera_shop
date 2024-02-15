@@ -20,26 +20,27 @@ function CardListWithPagination(): JSX.Element {
   const totalCardsLength = cameras.length;
   const totalPages = Math.ceil(totalCardsLength / CARDS_NUMBER_PER_PAGE);
 
-  const [searchParams, setSearchParams] = useSearchParams({page: '1'});
+  const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get('page');
   // console.log('page', page)
-  function getUrl() {
-    return new URL(window.location.href);
-  }
+  // function getUrl() {
+  //   return new URL(window.location.href);
+  // }
 
-  function getPageNumber() {
-    const url = getUrl();
-    const params = Object.fromEntries(url.searchParams);
-    const { page } = params;
+  // function getPageNumber() {
+  //   const url = getUrl();
+  //   const params = Object.fromEntries(url.searchParams);
+  //   const { page } = params;
 
-    return page;
-  }
+  //   return page;
+  // }
   // const initialPageNumber = Number(getPageNumber() ?? 1);
-  const initialPageNumber = Number(page) ?? 1;
+  const initialPageNumber = page || 1;
+
   // const navigate = useNavigate();
 
-  const [pageNumber, setPageNumber] = useState(initialPageNumber);
-
+  const [pageNumber, setPageNumber] = useState(Number(initialPageNumber));
+ 
   const start = CARDS_NUMBER_PER_PAGE * (pageNumber - 1);
   const end = CARDS_NUMBER_PER_PAGE * pageNumber;
   const currentCameras = cameras.slice(start, end);
@@ -54,9 +55,7 @@ function CardListWithPagination(): JSX.Element {
   useEffect(() => {
     let isMounted = true;
 
-
-
-    if (isMounted && (totalPages !== 0) && (pageNumber > totalPages)) {
+    if (isMounted && (totalPages !== 0) && ((pageNumber > totalPages) || (pageNumber < 1))) {
       // navigate(`${AppRoute.Catalog}?page=${DEFAULT_PAGE_NUMBER}`);
       setSearchParams({
         ...params,

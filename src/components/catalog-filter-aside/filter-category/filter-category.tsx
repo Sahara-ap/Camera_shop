@@ -1,35 +1,65 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getParams } from '../../../utils/utils-functions';
+import { TParamsCatalog } from '../../../types/generalTypes';
 
 const CATEGORIES = [
   {
     title: 'Фотокамера',
     name: 'photocamera',
+    shortcut: 'photo',
     id: 11
   },
   {
     title: 'Видеокамера',
     name: 'videocamera',
+    shortcut: 'video',
     id: 12
   },
 ];
 
+enum FilterTitleShortcut {
+  Page = 'page',
+  Category = 'cat',
+  Level = 'lv',
+  Type = 'type',
+  PriceMin = 'pmin',
+  PriceMax = 'pmax',
+}
+
+enum FilterCategoryShortcuts {
+  Photo = 'ph',
+  Video = 'vd',
+}
+enum FilterTypeShortcuts {
+  Digital = 'dg',
+  film = 'fl',
+  Snap = 'sn',
+  Collection = 'coll',
+}
+
+enum FilterLevelShortcuts {
+  Zero = 'z',
+  Professional = 'prof',
+  NonProffesional = 'nprof'
+}
+
 function FilterCategory(): JSX.Element {
 
-  const [checkedList, setCheckedList] = useState<number[]>([]);
-  const [searchParams, setSearchParams] = useSearchParams({ cat: 'video' });
-  const currentCategoryParam = searchParams.get('cat');
-  const params = getParams(searchParams);
-  const [currentParams, setCurrentParams] = useState(params);
+  const [checkedList, setCheckedList] = useState<TParamsCatalog['cat'][]>([]); //стейт для union входящих фильтров
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentCategoryParam = searchParams.get(FilterTitleShortcut.Category);
 
-  function handleFilterToggle(filterId: number) {
+  const params = getParams(searchParams) as TParamsCatalog || {};
+  const [currentParams, setCurrentParams] = useState(params); //стейт для хранения актуальных параметров. Нужен ли он?
+
+  function handleFilterToggle(shortcut: TParamsCatalog['cat']) {
 
     const updateCheckedList = [...checkedList];
 
-    const currentIndex = checkedList.indexOf(filterId);
+    const currentIndex = checkedList.indexOf(shortcut);
     if (currentIndex === -1) {
-      updateCheckedList.push(filterId);
+      updateCheckedList.push(shortcut);
     } else {
       updateCheckedList.splice(currentIndex, 1);
     }
@@ -37,11 +67,13 @@ function FilterCategory(): JSX.Element {
     setCheckedList(updateCheckedList);
     setCurrentParams({
       ...currentParams,
-      cat: filterId,
+      cat: shortcut,
     });
+
+
     setSearchParams({
       ...params,
-      cat: String(filterId)
+      cat: String(shortcut)
     });
   }
 
@@ -68,8 +100,8 @@ function FilterCategory(): JSX.Element {
             <input
               type="checkbox"
               name={it.name}
-              onChange={() => handleFilterToggle(it.id)}
-              checked={checkedList.includes(it.id)}
+              onChange={() => handleFilterToggle(it.shortcut as TParamsCatalog['cat'])}
+              checked={checkedList.includes(it.shortcut as TParamsCatalog['cat'])}
             />
             <span className="custom-checkbox__icon"></span>
             <span className="custom-checkbox__label">{it.title}</span>
