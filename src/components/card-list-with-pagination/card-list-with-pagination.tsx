@@ -27,7 +27,7 @@ function CardListWithPagination(): JSX.Element {
 
     return page;
   }
-  const initialPageNumber = Number(getPageNumber() ?? 1);
+  const initialPageNumber = Number(getPageNumber() || 1);
   const navigate = useNavigate();
 
   const [pageNumber, setPageNumber] = useState(initialPageNumber);
@@ -42,7 +42,7 @@ function CardListWithPagination(): JSX.Element {
   useEffect(() => {
     let isMounted = true;
 
-    if (isMounted && (totalPages !== 0) && (pageNumber > totalPages)) {
+    if (isMounted && (totalPages !== 0) && (pageNumber > totalPages || pageNumber < 1)) {
       navigate(`${AppRoute.Catalog}?page=${DEFAULT_PAGE_NUMBER}`);
       setPageNumber(DEFAULT_PAGE_NUMBER);
     }
