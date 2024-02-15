@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { TParamsCatalog } from '../../../types/generalTypes';
 import { getParams } from '../../../utils/utils-functions';
 
 const CATEGORIES = [
@@ -19,16 +18,12 @@ const CATEGORIES = [
 function FilterCategory(): JSX.Element {
 
   const [checkedList, setCheckedList] = useState<number[]>([]);
-  const [searchParams, setSearchParams] = useSearchParams({cat: 'video'});
+  const [searchParams, setSearchParams] = useSearchParams({ cat: 'video' });
   const currentCategoryParam = searchParams.get('cat');
-  // console.log('cat', currentCategoryParam)
-  // console.log('checkedList', checkedList);
   const params = getParams(searchParams);
-  console.log('searchParams', getParams(searchParams));
   const [currentParams, setCurrentParams] = useState(params);
 
   function handleFilterToggle(filterId: number) {
-    // console.log('filterId', filterId);
 
     const updateCheckedList = [...checkedList];
 
@@ -46,9 +41,21 @@ function FilterCategory(): JSX.Element {
     });
     setSearchParams({
       ...params,
-      cat: String(filterId)});
-    // console.log('click');
+      cat: String(filterId)
+    });
   }
+
+  let par = [];
+  const entries = searchParams.entries()
+  for (const entrie of entries) {
+    par.push(entrie)
+  }
+
+  // console.log('searchParams', getParams(searchParams));
+  // console.log('entries from filterCategory', entries);
+  // console.log('sp from filterCategory', searchParams);
+  // console.log('par from filterCategory', par);
+  console.log('params from filterCategory', params);
 
 
   return (

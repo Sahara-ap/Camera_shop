@@ -13,8 +13,9 @@ type TCatalogPaginationProps = {
 function CatalogPagination({ totalPages, pageNumber, onPaginationClick }: TCatalogPaginationProps): JSX.Element | null {
   const lastPage = totalPages;
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log('sp from catalog-pag', searchParams)
+  // console.log('sp from catalog-pag', searchParams)
   const params = getParams(searchParams);
+  console.log('params from catalog-pag', params)
 
   function getPaginationLength(pages: number) {
     switch (pages) {

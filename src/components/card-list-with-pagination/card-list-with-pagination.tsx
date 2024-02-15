@@ -22,7 +22,7 @@ function CardListWithPagination(): JSX.Element {
 
   const [searchParams, setSearchParams] = useSearchParams({page: '1'});
   const page = searchParams.get('page');
-  console.log('page', page)
+  // console.log('page', page)
   function getUrl() {
     return new URL(window.location.href);
   }
@@ -48,7 +48,7 @@ function CardListWithPagination(): JSX.Element {
 
   // const params = Object.fromEntries(getUrl().searchParams);
   const params = Object.fromEntries(searchParams);
-  console.log('p', params);
+  console.log('params from CLwithPag', params);
 
 
   useEffect(() => {
