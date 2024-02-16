@@ -7,14 +7,22 @@ import { useAppSelector } from '../../hooks/store-hooks';
 import { CardList } from '../card-list/card-list';
 import { Loading } from '../loading/loading';
 import { CatalogPagination } from '../catalog-pagination/catalog-pagination';
+import { getFilterCategoryList } from '../../store/app-data-store/app-data-selectors';
+import { CategoryName } from '../../consts';
 
 
 const DEFAULT_PAGE_NUMBER = 1;
 const CARDS_NUMBER_PER_PAGE = 9;
 const MIN_PAGES = 2;
+const categoryMap = {
+  [CategoryName.Video]: 'Видеокамера',
+  [CategoryName.Photo]: 'Фотоаппарат',
+};
 
 function CardListWithPagination(): JSX.Element {
   const cameras = useAppSelector(getCameras);
+  const categoryFilters = useAppSelector(getFilterCategoryList);
+  const []
 
   const totalCardsLength = cameras.length;
   const totalPages = Math.ceil(totalCardsLength / CARDS_NUMBER_PER_PAGE);
@@ -33,7 +41,7 @@ function CardListWithPagination(): JSX.Element {
   const isCamerasLoading = useAppSelector(getIsCamerasLoading);
 
   const params = Object.fromEntries(searchParams);
-  console.log('params from CLwithPag', params);
+  // console.log('params from CLwithPag', params);
 
 
   useEffect(() => {
@@ -62,6 +70,7 @@ function CardListWithPagination(): JSX.Element {
           totalPages={totalPages}
           pageNumber={pageNumber}
           onPaginationClick={setPageNumber}
+          params={params}
         />}
 
     </>

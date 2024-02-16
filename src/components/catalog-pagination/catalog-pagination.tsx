@@ -1,21 +1,22 @@
 import { Link, createSearchParams, useSearchParams } from 'react-router-dom';
 import cn from 'classnames';
 import { getParams } from '../../utils/utils-functions';
+import { TParamsCatalog } from '../../types/generalTypes';
 
 const STEP = 1;
 
 type TCatalogPaginationProps = {
   totalPages: number;
   pageNumber: number;
+  params: TParamsCatalog;
   onPaginationClick: (pageNumber: number) => void;
-
 }
-function CatalogPagination({ totalPages, pageNumber, onPaginationClick }: TCatalogPaginationProps): JSX.Element | null {
+function CatalogPagination({ totalPages, pageNumber, params, onPaginationClick }: TCatalogPaginationProps): JSX.Element | null {
   const lastPage = totalPages;
-  const [searchParams, setSearchParams] = useSearchParams();
-  // console.log('sp from catalog-pag', searchParams)
-  const params = getParams(searchParams);
-  console.log('params from catalog-pag', params)
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // // console.log('sp from catalog-pag', searchParams)
+  // const params = getParams(searchParams) as TParamsCatalog;
+  // console.log('params from catalog-pag', params);
 
   function getPaginationLength(pages: number) {
     switch (pages) {

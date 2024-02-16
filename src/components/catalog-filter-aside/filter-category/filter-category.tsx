@@ -33,10 +33,7 @@ const CATEGORIES = [
 ];
 
 
-const categoryMap = {
-  [CategoryName.Video]: 'Видеокамера',
-  [CategoryName.Photo]: 'Фотоаппарат',
-};
+
 
 function FilterCategory(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -52,12 +49,12 @@ function FilterCategory(): JSX.Element {
   }, []);
 
 
-  function handleFilterToggle(name: CategoryName) {
+  function handleFilterToggle(name: CategoryName, id) {
     const currentIndex = checkedList.indexOf(name);
 
     const updatedCheckedList = [...checkedList];
     if (currentIndex === -1) {
-      updatedCheckedList.push(name);
+      updatedCheckedList.push({name, id});
     } else {
       updatedCheckedList.splice(currentIndex, 1);
     }
@@ -84,7 +81,7 @@ function FilterCategory(): JSX.Element {
             <input
               type="checkbox"
               name={it.name}
-              onChange={() => handleFilterToggle(it.name)}
+              onChange={() => handleFilterToggle(it.name, it.id)}
               checked={checkedList.includes(it.name)}
             />
             <span className="custom-checkbox__icon"></span>
