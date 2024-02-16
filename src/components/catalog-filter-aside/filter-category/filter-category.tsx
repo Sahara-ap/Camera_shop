@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getParams } from '../../../utils/utils-functions';
 import { CategoryName } from '../../../consts';
+import { useAppDispatch, useAppSelector } from '../../../hooks/store-hooks';
+import { setFilterCategoryList } from '../../../store/app-data-store/app-data-slice';
+import { getFilterCategoryList } from '../../../store/app-data-store/app-data-selectors';
 
 enum FilterShortcutsList {
   Photo = 'photo',
@@ -36,17 +39,17 @@ const categoryMap = {
 };
 
 function FilterCategory(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const checkedList = useAppSelector(getFilterCategoryList);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const params = getParams(searchParams);
-  const catParams = params.cat?.split('-') as CategoryName[] || [];
 
-  const [checkedList, setCheckedList] = useState<CategoryName[]>(catParams); //стейт для union входящих фильтров
-
-
-  checkedList.forEach((shortcut) => {
-    const value = categoryMap[shortcut] || '';
-    console.log(value);
-  });
+  // const [checkedList, setCheckedList] = useState<CategoryName[]>(catParams); //стейт для union входящих фильтров
+  useEffect(() => {
+    const catParams = params.cat?.split('-') as CategoryName[] || [];
+    dispatch(setFilterCategoryList(catParams));
+  }, []);
 
 
   function handleFilterToggle(name: CategoryName) {
@@ -58,7 +61,8 @@ function FilterCategory(): JSX.Element {
     } else {
       updatedCheckedList.splice(currentIndex, 1);
     }
-    setCheckedList(updatedCheckedList);
+    // setCheckedList(updatedCheckedList);
+    dispatch(setFilterCategoryList(updatedCheckedList));
 
     if (updatedCheckedList.length !== 0) {
       params.cat = updatedCheckedList.join('-');
