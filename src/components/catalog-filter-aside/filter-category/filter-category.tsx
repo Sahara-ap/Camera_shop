@@ -1,93 +1,73 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getParams } from '../../../utils/utils-functions';
-import { TParamsCatalog } from '../../../types/generalTypes';
+import { CategoryName } from '../../../consts';
+
+enum FilterShortcutsList {
+  Photo = 'photo',
+  Video = 'video',
+  Digital = 'digital',
+  film = 'film',
+  Snap = 'snap',
+  Collection = 'colllection',
+  Zero = 'zero',
+  Professional = 'proffesional',
+  NonProffesional = 'nonproffecional'
+}
+
 
 const CATEGORIES = [
   {
     title: 'Фотокамера',
-    name: 'photocamera',
-    shortcut: 'photo',
+    name: CategoryName.Photo,
     id: 11
   },
   {
     title: 'Видеокамера',
-    name: 'videocamera',
-    shortcut: 'video',
+    name: CategoryName.Video,
     id: 12
   },
 ];
 
-enum FilterTitleShortcut {
-  Page = 'page',
-  Category = 'cat',
-  Level = 'lv',
-  Type = 'type',
-  PriceMin = 'pmin',
-  PriceMax = 'pmax',
-}
 
-enum FilterCategoryShortcuts {
-  Photo = 'ph',
-  Video = 'vd',
-}
-enum FilterTypeShortcuts {
-  Digital = 'dg',
-  film = 'fl',
-  Snap = 'sn',
-  Collection = 'coll',
-}
-
-enum FilterLevelShortcuts {
-  Zero = 'z',
-  Professional = 'prof',
-  NonProffesional = 'nprof'
-}
+const categoryMap = {
+  [CategoryName.Video]: 'Видеокамера',
+  [CategoryName.Photo]: 'Фотоаппарат',
+};
 
 function FilterCategory(): JSX.Element {
-
-  const [checkedList, setCheckedList] = useState<TParamsCatalog['cat'][]>([]); //стейт для union входящих фильтров
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentCategoryParam = searchParams.get(FilterTitleShortcut.Category);
+  const params = getParams(searchParams);
+  const catParams = params.cat?.split('-') as CategoryName[] || [];
 
-  const params = getParams(searchParams) as TParamsCatalog || {};
-  const [currentParams, setCurrentParams] = useState(params); //стейт для хранения актуальных параметров. Нужен ли он?
+  const [checkedList, setCheckedList] = useState<CategoryName[]>(catParams); //стейт для union входящих фильтров
 
-  function handleFilterToggle(shortcut: TParamsCatalog['cat']) {
 
-    const updateCheckedList = [...checkedList];
+  checkedList.forEach((shortcut) => {
+    const value = categoryMap[shortcut] || '';
+    console.log(value);
+  });
 
-    const currentIndex = checkedList.indexOf(shortcut);
+
+  function handleFilterToggle(name: CategoryName) {
+    const currentIndex = checkedList.indexOf(name);
+
+    const updatedCheckedList = [...checkedList];
     if (currentIndex === -1) {
-      updateCheckedList.push(shortcut);
+      updatedCheckedList.push(name);
     } else {
-      updateCheckedList.splice(currentIndex, 1);
+      updatedCheckedList.splice(currentIndex, 1);
+    }
+    setCheckedList(updatedCheckedList);
+
+    if (updatedCheckedList.length !== 0) {
+      params.cat = updatedCheckedList.join('-');
+    } else {
+      delete params.cat;
     }
 
-    setCheckedList(updateCheckedList);
-    setCurrentParams({
-      ...currentParams,
-      cat: shortcut,
-    });
-
-
-    setSearchParams({
-      ...params,
-      cat: String(shortcut)
-    });
+    setSearchParams(params);
   }
-
-  let par = [];
-  const entries = searchParams.entries()
-  for (const entrie of entries) {
-    par.push(entrie)
-  }
-
-  // console.log('searchParams', getParams(searchParams));
-  // console.log('entries from filterCategory', entries);
-  // console.log('sp from filterCategory', searchParams);
-  // console.log('par from filterCategory', par);
-  console.log('params from filterCategory', params);
 
 
   return (
@@ -100,8 +80,8 @@ function FilterCategory(): JSX.Element {
             <input
               type="checkbox"
               name={it.name}
-              onChange={() => handleFilterToggle(it.shortcut as TParamsCatalog['cat'])}
-              checked={checkedList.includes(it.shortcut as TParamsCatalog['cat'])}
+              onChange={() => handleFilterToggle(it.name)}
+              checked={checkedList.includes(it.name)}
             />
             <span className="custom-checkbox__icon"></span>
             <span className="custom-checkbox__label">{it.title}</span>

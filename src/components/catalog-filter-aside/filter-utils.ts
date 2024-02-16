@@ -24,7 +24,7 @@ const getFilterResult = (cards: TCard[], ...filters: TCard[]) => {
 
   const cardCountMap = filtersList.reduce<Record<TCard['vendorCode'], number>>((acc, item) => {
     const vendorCode = item.vendorCode;
-    acc[vendorCode] = (acc[vendorCode] + 1) || 1;
+    acc[vendorCode] = (acc[vendorCode] || 0) + 1;
     return acc;
   }, {});
   const filteredNameList = Object.keys(cardCountMap).filter((key) => cardCountMap[key] > 1);

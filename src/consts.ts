@@ -18,6 +18,11 @@ const CAMERA_CATEGORIES:TCameraCategory[] = ['Видеокамера', 'Фото
 const CAMERA_LEVELS: TCameraLevel[] = ['Нулевой', 'Любительский', 'Профессиональный'];
 const CAMERA_TYPES: TCameraType[] = ['Коллекционная', 'Моментальная', 'Цифровая', 'Плёночная'];
 
+enum CategoryName {
+  Photo = 'photocamera',
+  Video = 'videocamera',
+}
+
 const DELAY = 100;
 
 enum NameSpace {
@@ -43,6 +48,7 @@ export {
   CAMERA_CATEGORIES,
   CAMERA_LEVELS,
   CAMERA_TYPES,
+  CategoryName,
   DELAY,
   NameSpace,
   LoadingDataStatus,
