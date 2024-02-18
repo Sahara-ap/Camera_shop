@@ -20,28 +20,41 @@ const categoryMap = {
 };
 
 function CardListWithPagination(): JSX.Element {
+  const isCamerasLoading = useAppSelector(getIsCamerasLoading);
   const cameras = useAppSelector(getCameras);
   const categoryFilters = useAppSelector(getFilterCategoryList);
-  const []
 
-  const totalCardsLength = cameras.length;
+  const [categoryValue] = categoryFilters;
+  console.log('categoryValue', categoryValue);
+
+  function isFilterValuesValid() {
+    return (
+      Boolean(categoryValue)
+    );
+  }
+
+  const preparedCameraList = isFilterValuesValid() ? [] : cameras;
+  if (categoryValue) {
+    const filterByCategoryCameras = cameras.filter((camera) => camera.category === categoryValue);
+    preparedCameraList.push(...filterByCategoryCameras);
+  }
+
+
+  const totalCardsLength = preparedCameraList.length;
   const totalPages = Math.ceil(totalCardsLength / CARDS_NUMBER_PER_PAGE);
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const params = Object.fromEntries(searchParams);
   const page = searchParams.get('page');
 
-  const initialPageNumber = page || 1;
 
+  const initialPageNumber = page || 1;
   const [pageNumber, setPageNumber] = useState(Number(initialPageNumber));
 
   const start = CARDS_NUMBER_PER_PAGE * (pageNumber - 1);
   const end = CARDS_NUMBER_PER_PAGE * pageNumber;
-  const currentCameras = cameras.slice(start, end);
+  const currentCameras = preparedCameraList.slice(start, end);
 
-  const isCamerasLoading = useAppSelector(getIsCamerasLoading);
-
-  const params = Object.fromEntries(searchParams);
-  // console.log('params from CLwithPag', params);
 
 
   useEffect(() => {
@@ -50,7 +63,8 @@ function CardListWithPagination(): JSX.Element {
     if (isMounted && (totalPages !== 0) && ((pageNumber > totalPages) || (pageNumber < 1))) {
       setSearchParams({
         ...params,
-        page: String(DEFAULT_PAGE_NUMBER)});
+        page: String(DEFAULT_PAGE_NUMBER)
+      });
       setPageNumber(DEFAULT_PAGE_NUMBER);
     }
     return () => {

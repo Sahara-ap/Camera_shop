@@ -32,9 +32,9 @@ type TCameraId = string
 type TPage = 'catalog' | 'product'
 
 type TParamsCatalog = {
-  cat?: string;
-  type?: string;
-  level?: string;
+  cat?: TCameraCategory | string;
+  type?: TCameraType | string;
+  level?: TCameraLevel | string;
   page?: string;
   priceMin?: string;
   priceMax?: string;

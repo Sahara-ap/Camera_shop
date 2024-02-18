@@ -1,12 +1,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { fetchCamerasAction, fetchSelectedCameraAction, fetchSimilars } from '../api-actions/card-actions';
-import { CategoryName, NameSpace } from '../../consts';
+import { NameSpace } from '../../consts';
 import { fetchReviews } from '../api-actions/reviews-action';
+import { TCameraCategory } from '../../types/generalTypes';
 
 type TAppDataState = {
   errorServerResponse: null | string;
   hasErrorWithConnection: boolean;
-  filterCategoryList: CategoryName[];
+  filterCategoryList: TCameraCategory[];
 }
 
 const initialState: TAppDataState = {
@@ -23,7 +24,7 @@ const appDataSlice = createSlice({
     setErrorServerResponse: (state, action: PayloadAction<null | string>) => {
       state.errorServerResponse = action.payload;
     },
-    setFilterCategoryList: (state, action: PayloadAction<CategoryName[]>) => {
+    setFilterCategoryList: (state, action: PayloadAction<TCameraCategory[]>) => {
       state.filterCategoryList = action.payload;
     }
   },

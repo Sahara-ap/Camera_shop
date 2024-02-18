@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getParams } from '../../../utils/utils-functions';
 import { CategoryName } from '../../../consts';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store-hooks';
 import { setFilterCategoryList } from '../../../store/app-data-store/app-data-slice';
 import { getFilterCategoryList } from '../../../store/app-data-store/app-data-selectors';
+import { TCameraCategory, TParamsCatalog } from '../../../types/generalTypes';
 
 enum FilterShortcutsList {
   Photo = 'photo',
@@ -18,22 +19,28 @@ enum FilterShortcutsList {
   NonProffesional = 'nonproffecional'
 }
 
+enum CategoryParam {
+  Video = 'Видеокамера',
+  Photo = 'Фотоаппарат',
+}
 
-const CATEGORIES = [
-  {
-    title: 'Фотокамера',
-    name: CategoryName.Photo,
-    id: 11
-  },
-  {
-    title: 'Видеокамера',
-    name: CategoryName.Video,
-    id: 12
-  },
-];
-
-
-
+const CATEGORIES: {
+  title: CategoryParam;
+  name: CategoryName;
+  id: number;
+}[] =
+  [
+    {
+      title: CategoryParam.Photo,
+      name: CategoryName.Photo,
+      id: 11
+    },
+    {
+      title: CategoryParam.Video,
+      name: CategoryName.Video,
+      id: 12
+    },
+  ];
 
 function FilterCategory(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -42,23 +49,21 @@ function FilterCategory(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   const params = getParams(searchParams);
 
-  // const [checkedList, setCheckedList] = useState<CategoryName[]>(catParams); //стейт для union входящих фильтров
   useEffect(() => {
-    const catParams = params.cat?.split('-') as CategoryName[] || [];
+    const catParams = params.cat?.split('-') as TCameraCategory[] || [];
     dispatch(setFilterCategoryList(catParams));
   }, []);
 
 
-  function handleFilterToggle(name: CategoryName, id) {
-    const currentIndex = checkedList.indexOf(name);
+  function handleFilterToggle(title: TCameraCategory) {
+    const currentIndex = checkedList.indexOf(title);
 
     const updatedCheckedList = [...checkedList];
     if (currentIndex === -1) {
-      updatedCheckedList.push({name, id});
+      updatedCheckedList.push(title);
     } else {
       updatedCheckedList.splice(currentIndex, 1);
     }
-    // setCheckedList(updatedCheckedList);
     dispatch(setFilterCategoryList(updatedCheckedList));
 
     if (updatedCheckedList.length !== 0) {
@@ -81,8 +86,9 @@ function FilterCategory(): JSX.Element {
             <input
               type="checkbox"
               name={it.name}
-              onChange={() => handleFilterToggle(it.name, it.id)}
-              checked={checkedList.includes(it.name)}
+              onChange={() => handleFilterToggle(it.title)}
+              checked={checkedList.includes(it.title)}
+              disabled={(params.cat !== it.title) && ('cat' in params)}
             />
             <span className="custom-checkbox__icon"></span>
             <span className="custom-checkbox__label">{it.title}</span>
