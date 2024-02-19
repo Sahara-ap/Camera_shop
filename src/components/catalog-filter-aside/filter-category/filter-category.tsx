@@ -7,6 +7,7 @@ import { getCategoryFilterList } from '../../../store/app-data-store/app-data-se
 
 import { getParams } from '../../../utils/utils-functions';
 import { TCameraCategory } from '../../../types/general-types';
+import { TypeParam } from '../filter-type/filter-type';
 
 enum FilterShortcutsList {
   Photo = 'photo',
@@ -43,6 +44,7 @@ const CATEGORIES: {
     },
   ];
 
+
 function FilterCategory(): JSX.Element {
   const dispatch = useAppDispatch();
   const categoryFilterList = useAppSelector(getCategoryFilterList);
@@ -57,9 +59,9 @@ function FilterCategory(): JSX.Element {
 
 
   function handleFilterToggle(title: TCameraCategory) {
-    const currentIndex = categoryFilterList.indexOf(title);
-
     const updatedCheckedList = [...categoryFilterList];
+
+    const currentIndex = updatedCheckedList.indexOf(title);
     if (currentIndex === -1) {
       updatedCheckedList.push(title);
     } else {
@@ -72,7 +74,6 @@ function FilterCategory(): JSX.Element {
     } else {
       delete params.cat;
     }
-
     setSearchParams(params);
   }
 
@@ -89,7 +90,10 @@ function FilterCategory(): JSX.Element {
               name={it.name}
               onChange={() => handleFilterToggle(it.title)}
               checked={categoryFilterList.includes(it.title)}
-              disabled={(params.cat !== it.title) && ('cat' in params)}
+              disabled={
+                ('cat' in params) && (params.cat !== it.title)
+                || (it.title === CategoryParam.Video) && (/Плёночная|Моментальная/.test(String(params.type)))
+              }
             />
             <span className="custom-checkbox__icon"></span>
             <span className="custom-checkbox__label">{it.title}</span>
