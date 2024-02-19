@@ -5,7 +5,7 @@ import { CategoryName } from '../../../consts';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store-hooks';
 import { setFilterCategoryList } from '../../../store/app-data-store/app-data-slice';
 import { getFilterCategoryList } from '../../../store/app-data-store/app-data-selectors';
-import { TCameraCategory, TParamsCatalog } from '../../../types/generalTypes';
+import { TCameraCategory, TParamsCatalog } from '../../../types/general-types';
 
 enum FilterShortcutsList {
   Photo = 'photo',

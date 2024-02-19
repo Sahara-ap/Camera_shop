@@ -1,7 +1,6 @@
-import { Link, createSearchParams, useSearchParams } from 'react-router-dom';
+import { Link, createSearchParams } from 'react-router-dom';
 import cn from 'classnames';
-import { getParams } from '../../utils/utils-functions';
-import { TParamsCatalog } from '../../types/generalTypes';
+import { TParamsCatalog } from '../../types/general-types';
 
 const STEP = 1;
 
@@ -13,10 +12,6 @@ type TCatalogPaginationProps = {
 }
 function CatalogPagination({ totalPages, pageNumber, params, onPaginationClick }: TCatalogPaginationProps): JSX.Element | null {
   const lastPage = totalPages;
-  // const [searchParams, setSearchParams] = useSearchParams();
-  // // console.log('sp from catalog-pag', searchParams)
-  // const params = getParams(searchParams) as TParamsCatalog;
-  // console.log('params from catalog-pag', params);
 
   function getPaginationLength(pages: number) {
     switch (pages) {
@@ -62,7 +57,6 @@ function CatalogPagination({ totalPages, pageNumber, params, onPaginationClick }
             <Link
               className="pagination__link pagination__link--text"
               onClick={() => handlePaginationClick(previousPage)}
-              // to={`?page=${previousPage}`}
               to={{
                 search: createSearchParams({
                   ...params,
@@ -81,7 +75,6 @@ function CatalogPagination({ totalPages, pageNumber, params, onPaginationClick }
             <Link
               className={cn('pagination__link', { 'pagination__link--active': value === pageNumber })}
               onClick={() => handlePaginationClick(value)}
-              // to={`?page=${value}`}
               to={{
                 search: createSearchParams({
                   ...params,
@@ -100,7 +93,6 @@ function CatalogPagination({ totalPages, pageNumber, params, onPaginationClick }
             <Link
               className="pagination__link pagination__link--text"
               onClick={() => handlePaginationClick(nextPage)}
-              // to={`?page=${nextPage}`}
               to={{
                 search: createSearchParams({
                   ...params,

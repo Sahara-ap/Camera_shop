@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { fetchCamerasAction, fetchSelectedCameraAction, fetchSimilars } from '../api-actions/card-actions';
 import { NameSpace } from '../../consts';
 import { fetchReviews } from '../api-actions/reviews-action';
-import { TCameraCategory } from '../../types/generalTypes';
+import { TCameraCategory } from '../../types/general-types';
 
 type TAppDataState = {
   errorServerResponse: null | string;

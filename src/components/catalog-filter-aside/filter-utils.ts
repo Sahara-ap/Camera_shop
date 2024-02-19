@@ -1,4 +1,4 @@
-import { TCameraCategory, TCameraLevel, TCameraType, TCard } from '../../types/generalTypes';
+import { TCameraCategory, TCameraLevel, TCameraType, TCard } from '../../types/general-types';
 
 const filterByPrice = (cards: TCard[], minValue = '', maxValue = '') => (
   cards.filter((card) => card.price >= Number(minValue) && card.price <= Number(maxValue)

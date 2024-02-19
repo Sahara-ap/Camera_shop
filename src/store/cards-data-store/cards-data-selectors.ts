@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { NameSpace } from '../../consts';
 import { State } from '../../types/store';
-import { TCard } from '../../types/generalTypes';
+import { TCard } from '../../types/general-types';
 
 const getCameras = (state: Pick<State, NameSpace.Cards>) => (state[NameSpace.Cards].cameras);
 const getIsCamerasLoading = (state: Pick<State, NameSpace.Cards>) => (state[NameSpace.Cards].isCamerasLoading);

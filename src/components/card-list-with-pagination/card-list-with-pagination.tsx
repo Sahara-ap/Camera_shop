@@ -64,7 +64,6 @@ function CardListWithPagination(): JSX.Element {
         ...params,
         page: String(DEFAULT_PAGE_NUMBER)
       });
->
       setPageNumber(DEFAULT_PAGE_NUMBER);
     }
     return () => {
