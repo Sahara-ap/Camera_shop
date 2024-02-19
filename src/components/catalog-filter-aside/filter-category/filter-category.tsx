@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { getParams } from '../../../utils/utils-functions';
-import { CategoryName } from '../../../consts';
+
 import { useAppDispatch, useAppSelector } from '../../../hooks/store-hooks';
 import { setFilterCategoryList } from '../../../store/app-data-store/app-data-slice';
 import { getFilterCategoryList } from '../../../store/app-data-store/app-data-selectors';
-import { TCameraCategory, TParamsCatalog } from '../../../types/general-types';
+
+import { getParams } from '../../../utils/utils-functions';
+import { TCameraCategory } from '../../../types/general-types';
 
 enum FilterShortcutsList {
   Photo = 'photo',
@@ -26,25 +27,25 @@ enum CategoryParam {
 
 const CATEGORIES: {
   title: CategoryParam;
-  name: CategoryName;
+  name: 'photocamera' | 'videocamera';
   id: number;
 }[] =
   [
     {
       title: CategoryParam.Photo,
-      name: CategoryName.Photo,
+      name: 'photocamera',
       id: 11
     },
     {
       title: CategoryParam.Video,
-      name: CategoryName.Video,
+      name: 'videocamera',
       id: 12
     },
   ];
 
 function FilterCategory(): JSX.Element {
   const dispatch = useAppDispatch();
-  const checkedList = useAppSelector(getFilterCategoryList);
+  const categoryFilterList = useAppSelector(getFilterCategoryList);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const params = getParams(searchParams);
@@ -56,9 +57,9 @@ function FilterCategory(): JSX.Element {
 
 
   function handleFilterToggle(title: TCameraCategory) {
-    const currentIndex = checkedList.indexOf(title);
+    const currentIndex = categoryFilterList.indexOf(title);
 
-    const updatedCheckedList = [...checkedList];
+    const updatedCheckedList = [...categoryFilterList];
     if (currentIndex === -1) {
       updatedCheckedList.push(title);
     } else {
@@ -87,7 +88,7 @@ function FilterCategory(): JSX.Element {
               type="checkbox"
               name={it.name}
               onChange={() => handleFilterToggle(it.title)}
-              checked={checkedList.includes(it.title)}
+              checked={categoryFilterList.includes(it.title)}
               disabled={(params.cat !== it.title) && ('cat' in params)}
             />
             <span className="custom-checkbox__icon"></span>
