@@ -2,19 +2,22 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { fetchCamerasAction, fetchSelectedCameraAction, fetchSimilars } from '../api-actions/card-actions';
 import { NameSpace } from '../../consts';
 import { fetchReviews } from '../api-actions/reviews-action';
-import { TCameraCategory } from '../../types/general-types';
+import { TCameraCategory, TCameraType } from '../../types/general-types';
 
 type TAppDataState = {
   errorServerResponse: null | string;
   hasErrorWithConnection: boolean;
-  filterCategoryList: TCameraCategory[];
+
+  categoryFilterList: TCameraCategory[];
+  typeFilterList: TCameraType[];
 }
 
 const initialState: TAppDataState = {
   errorServerResponse: null,
   hasErrorWithConnection: false,
 
-  filterCategoryList: [],
+  categoryFilterList: [],
+  typeFilterList: [],
 };
 
 const appDataSlice = createSlice({
@@ -24,8 +27,11 @@ const appDataSlice = createSlice({
     setErrorServerResponse: (state, action: PayloadAction<null | string>) => {
       state.errorServerResponse = action.payload;
     },
-    setFilterCategoryList: (state, action: PayloadAction<TCameraCategory[]>) => {
-      state.filterCategoryList = action.payload;
+    setCategoryFilterList: (state, action: PayloadAction<TCameraCategory[]>) => {
+      state.categoryFilterList = action.payload;
+    },
+    setTypeFilterList: (state, action: PayloadAction<TCameraType[]>) => {
+      state.typeFilterList = action.payload;
     }
   },
   extraReducers(builder) {
@@ -59,12 +65,13 @@ const appDataSlice = createSlice({
       });
   }
 });
-const {setErrorServerResponse, setFilterCategoryList} = appDataSlice.actions;
+const {setErrorServerResponse, setCategoryFilterList, setTypeFilterList} = appDataSlice.actions;
 
 export {
   appDataSlice,
 
   setErrorServerResponse,
-  setFilterCategoryList,
+  setCategoryFilterList,
+  setTypeFilterList,
 };
 

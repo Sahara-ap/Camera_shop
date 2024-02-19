@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { NameSpace } from '../../consts';
 import { State } from '../../types/store';
 import { TCard } from '../../types/general-types';
-import { getFilterCategoryList } from '../app-data-store/app-data-selectors';
+import { getCategoryFilterList } from '../app-data-store/app-data-selectors';
 
 const getCameras = (state: Pick<State, NameSpace.Cards>) => (state[NameSpace.Cards].cameras);
 const getIsCamerasLoading = (state: Pick<State, NameSpace.Cards>) => (state[NameSpace.Cards].isCamerasLoading);
@@ -17,7 +17,7 @@ const getMinAndMaxCameraPrices = createSelector([getSortedByPriceCameras], (came
 });
 
 
-const getFilterCameras = createSelector([getFilterCategoryList, getCameras], (categoryFilterList, cameras) => {
+const getFilterCameras = createSelector([getCategoryFilterList, getCameras], (categoryFilterList, cameras) => {
   const [categoryValue] = categoryFilterList;
 
   const isFilterValuesValid = Boolean(categoryValue);

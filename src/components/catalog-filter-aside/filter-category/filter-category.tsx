@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks/store-hooks';
-import { setFilterCategoryList } from '../../../store/app-data-store/app-data-slice';
-import { getFilterCategoryList } from '../../../store/app-data-store/app-data-selectors';
+import { setCategoryFilterList } from '../../../store/app-data-store/app-data-slice';
+import { getCategoryFilterList } from '../../../store/app-data-store/app-data-selectors';
 
 import { getParams } from '../../../utils/utils-functions';
 import { TCameraCategory } from '../../../types/general-types';
@@ -12,7 +12,7 @@ enum FilterShortcutsList {
   Photo = 'photo',
   Video = 'video',
   Digital = 'digital',
-  film = 'film',
+  Film = 'film',
   Snap = 'snap',
   Collection = 'colllection',
   Zero = 'zero',
@@ -45,14 +45,14 @@ const CATEGORIES: {
 
 function FilterCategory(): JSX.Element {
   const dispatch = useAppDispatch();
-  const categoryFilterList = useAppSelector(getFilterCategoryList);
+  const categoryFilterList = useAppSelector(getCategoryFilterList);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const params = getParams(searchParams);
 
   useEffect(() => {
     const catParams = params.cat?.split('-') as TCameraCategory[] || [];
-    dispatch(setFilterCategoryList(catParams));
+    dispatch(setCategoryFilterList(catParams));
   }, []);
 
 
@@ -65,7 +65,7 @@ function FilterCategory(): JSX.Element {
     } else {
       updatedCheckedList.splice(currentIndex, 1);
     }
-    dispatch(setFilterCategoryList(updatedCheckedList));
+    dispatch(setCategoryFilterList(updatedCheckedList));
 
     if (updatedCheckedList.length !== 0) {
       params.cat = updatedCheckedList.join('-');
