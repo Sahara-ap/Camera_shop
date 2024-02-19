@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import { getCameras, getIsCamerasLoading } from '../../store/cards-data-store/cards-data-selectors';
 import { useAppSelector } from '../../hooks/store-hooks';
@@ -7,49 +7,70 @@ import { useAppSelector } from '../../hooks/store-hooks';
 import { CardList } from '../card-list/card-list';
 import { Loading } from '../loading/loading';
 import { CatalogPagination } from '../catalog-pagination/catalog-pagination';
+import { getFilterCategoryList } from '../../store/app-data-store/app-data-selectors';
+import { CategoryName } from '../../consts';
 
-import { AppRoute } from '../../consts';
 
 const DEFAULT_PAGE_NUMBER = 1;
 const CARDS_NUMBER_PER_PAGE = 9;
 const MIN_PAGES = 2;
+const categoryMap = {
+  [CategoryName.Video]: 'Видеокамера',
+  [CategoryName.Photo]: 'Фотоаппарат',
+};
 
 function CardListWithPagination(): JSX.Element {
+  const isCamerasLoading = useAppSelector(getIsCamerasLoading);
   const cameras = useAppSelector(getCameras);
+  const categoryFilters = useAppSelector(getFilterCategoryList);
 
-  const totalCardsLength = cameras.length;
+  const [categoryValue] = categoryFilters;
+  console.log('categoryValue', categoryValue);
+
+  function isFilterValuesValid() {
+    return (
+      Boolean(categoryValue)
+    );
+  }
+
+  const preparedCameraList = isFilterValuesValid() ? [] : cameras;
+  if (categoryValue) {
+    const filterByCategoryCameras = cameras.filter((camera) => camera.category === categoryValue);
+    preparedCameraList.push(...filterByCategoryCameras);
+  }
+
+
+  const totalCardsLength = preparedCameraList.length;
   const totalPages = Math.ceil(totalCardsLength / CARDS_NUMBER_PER_PAGE);
 
-  function getPageNumber() {
-    const url = new URL(window.location.href);
-    const params = Object.fromEntries(url.searchParams);
-    const { page } = params;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const params = Object.fromEntries(searchParams);
+  const page = searchParams.get('page');
 
-    return page;
-  }
-  const initialPageNumber = Number(getPageNumber() || 1);
-  const navigate = useNavigate();
-
-  const [pageNumber, setPageNumber] = useState(initialPageNumber);
+  const initialPageNumber = page || 1;
+  const [pageNumber, setPageNumber] = useState(Number(initialPageNumber));
 
   const start = CARDS_NUMBER_PER_PAGE * (pageNumber - 1);
   const end = CARDS_NUMBER_PER_PAGE * pageNumber;
-  const currentCameras = cameras.slice(start, end);
+  const currentCameras = preparedCameraList.slice(start, end);
 
-  const isCamerasLoading = useAppSelector(getIsCamerasLoading);
 
 
   useEffect(() => {
     let isMounted = true;
 
-    if (isMounted && (totalPages !== 0) && (pageNumber > totalPages || pageNumber < 1)) {
-      navigate(`${AppRoute.Catalog}?page=${DEFAULT_PAGE_NUMBER}`);
+    if (isMounted && (totalPages !== 0) && ((pageNumber > totalPages) || (pageNumber < 1))) {
+      setSearchParams({
+        ...params,
+        page: String(DEFAULT_PAGE_NUMBER)
+      });
+>
       setPageNumber(DEFAULT_PAGE_NUMBER);
     }
     return () => {
       isMounted = false;
     };
-  }, [totalPages, pageNumber, navigate]);
+  }, [totalPages, pageNumber, params, setSearchParams]);
 
   if (isCamerasLoading) {
     return <Loading />;
@@ -63,6 +84,7 @@ function CardListWithPagination(): JSX.Element {
           totalPages={totalPages}
           pageNumber={pageNumber}
           onPaginationClick={setPageNumber}
+          params={params}
         />}
 
     </>

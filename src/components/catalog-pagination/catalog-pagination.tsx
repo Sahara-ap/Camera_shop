@@ -1,16 +1,22 @@
-import { Link } from 'react-router-dom';
+import { Link, createSearchParams, useSearchParams } from 'react-router-dom';
 import cn from 'classnames';
+import { getParams } from '../../utils/utils-functions';
+import { TParamsCatalog } from '../../types/generalTypes';
 
 const STEP = 1;
 
 type TCatalogPaginationProps = {
   totalPages: number;
   pageNumber: number;
+  params: TParamsCatalog;
   onPaginationClick: (pageNumber: number) => void;
-
 }
-function CatalogPagination({ totalPages, pageNumber, onPaginationClick }: TCatalogPaginationProps): JSX.Element | null {
+function CatalogPagination({ totalPages, pageNumber, params, onPaginationClick }: TCatalogPaginationProps): JSX.Element | null {
   const lastPage = totalPages;
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // // console.log('sp from catalog-pag', searchParams)
+  // const params = getParams(searchParams) as TParamsCatalog;
+  // console.log('params from catalog-pag', params);
 
   function getPaginationLength(pages: number) {
     switch (pages) {
@@ -55,8 +61,14 @@ function CatalogPagination({ totalPages, pageNumber, onPaginationClick }: TCatal
           <li className="pagination__item">
             <Link
               className="pagination__link pagination__link--text"
-              to={`?page=${previousPage}`}
               onClick={() => handlePaginationClick(previousPage)}
+              // to={`?page=${previousPage}`}
+              to={{
+                search: createSearchParams({
+                  ...params,
+                  page: String(previousPage)
+                }).toString()
+              }}
             >Назад
             </Link>
           </li>}
@@ -69,7 +81,14 @@ function CatalogPagination({ totalPages, pageNumber, onPaginationClick }: TCatal
             <Link
               className={cn('pagination__link', { 'pagination__link--active': value === pageNumber })}
               onClick={() => handlePaginationClick(value)}
-              to={`?page=${value}`}
+              // to={`?page=${value}`}
+              to={{
+                search: createSearchParams({
+                  ...params,
+                  page: String(value)
+                }).toString()
+              }}
+
             >
               {value}
             </Link>
@@ -80,8 +99,14 @@ function CatalogPagination({ totalPages, pageNumber, onPaginationClick }: TCatal
           <li className="pagination__item">
             <Link
               className="pagination__link pagination__link--text"
-              to={`?page=${nextPage}`}
               onClick={() => handlePaginationClick(nextPage)}
+              // to={`?page=${nextPage}`}
+              to={{
+                search: createSearchParams({
+                  ...params,
+                  page: String(nextPage)
+                }).toString()
+              }}
             >Далее
             </Link>
           </li>}

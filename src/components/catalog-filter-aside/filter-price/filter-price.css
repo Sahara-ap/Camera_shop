@@ -1,0 +1,9 @@
+
+.catalog-filter__block .catalog-filter__price-range .custom-input  input::placeholder {
+  transform: translateY(-40%);
+  max-width: 100%;
+  font-size: 85%;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+}
