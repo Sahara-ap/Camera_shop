@@ -12,14 +12,6 @@ const FULL_LEVEL_FILTER_LIST: TCameraLevel[] = ['Нулевой', 'Любите�
 const getCameras = (state: Pick<State, NameSpace.Cards>) => (state[NameSpace.Cards].cameras);
 const getIsCamerasLoading = (state: Pick<State, NameSpace.Cards>) => (state[NameSpace.Cards].isCamerasLoading);
 
-const getSortedByPriceCameras = createSelector([getCameras], (cameras) => cameras.slice().sort((cameraA, cameraB) => cameraA.price - cameraB.price));
-const getMinAndMaxCameraPrices = createSelector([getSortedByPriceCameras], (cameras) => {
-  const sortedPriceList: TCard['price'][] = cameras.map((camera) => camera.price);
-  const minPrice = sortedPriceList.at(0) as number;
-  const maxPrice = sortedPriceList.at(-1) as number;
-
-  return [minPrice, maxPrice];
-});
 
 const getFilterCameras = createSelector(
   [getCategoryFilterList, getTypeFilterList, getLevelFilterList, getCameras],
@@ -58,6 +50,16 @@ const getFilterCameras = createSelector(
 
     return preparedCameraList;
   });
+
+
+const getSortedByPriceCameras = createSelector([getFilterCameras], (cameras) => cameras.slice().sort((cameraA, cameraB) => cameraA.price - cameraB.price));
+const getMinAndMaxCameraPrices = createSelector([getSortedByPriceCameras], (cameras) => {
+  const sortedPriceList: TCard['price'][] = cameras.map((camera) => camera.price);
+  const minPrice = sortedPriceList.at(0) as number;
+  const maxPrice = sortedPriceList.at(-1) as number;
+
+  return [minPrice, maxPrice];
+});
 
 export {
   getCameras,
