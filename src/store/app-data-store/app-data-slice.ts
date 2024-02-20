@@ -8,6 +8,7 @@ type TAppDataState = {
   errorServerResponse: null | string;
   hasErrorWithConnection: boolean;
 
+  priceFilterList: number[];
   categoryFilterList: TCameraCategory[];
   typeFilterList: TCameraType[];
   levelFilterList: TCameraLevel[];
@@ -17,6 +18,7 @@ const initialState: TAppDataState = {
   errorServerResponse: null,
   hasErrorWithConnection: false,
 
+  priceFilterList: [],
   categoryFilterList: [],
   typeFilterList: [],
   levelFilterList: [],
@@ -28,6 +30,10 @@ const appDataSlice = createSlice({
   reducers: {
     setErrorServerResponse: (state, action: PayloadAction<null | string>) => {
       state.errorServerResponse = action.payload;
+    },
+
+    setPriceFilterList: (state, action: PayloadAction<number[]>) => {
+      state.priceFilterList = action.payload;
     },
     setCategoryFilterList: (state, action: PayloadAction<TCameraCategory[]>) => {
       state.categoryFilterList = action.payload;
@@ -70,12 +76,14 @@ const appDataSlice = createSlice({
       });
   }
 });
-const {setErrorServerResponse, setCategoryFilterList, setTypeFilterList, setLevelFilterList} = appDataSlice.actions;
+const {setErrorServerResponse, setPriceFilterList, setCategoryFilterList, setTypeFilterList, setLevelFilterList} = appDataSlice.actions;
 
 export {
   appDataSlice,
 
   setErrorServerResponse,
+
+  setPriceFilterList,
   setCategoryFilterList,
   setTypeFilterList,
   setLevelFilterList,
