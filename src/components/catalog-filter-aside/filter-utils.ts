@@ -61,11 +61,11 @@ function updateCheckedList<T extends Array<string>, U extends string>(list: T, t
 }
 
 type TCameraFilters = TCameraCategory | TCameraType | TCameraLevel
-function updateFilterParam(checkedList: TCameraFilters[], urlParams: TParamsCatalog, paramKey: keyof TParamsCatalog) {
-  if (checkedList.length !== 0) {
-    urlParams[paramKey] = checkedList.join('-');
+function updateFilterParam(checkedFilterList: TCameraFilters[], params: TParamsCatalog, paramKey: keyof TParamsCatalog) {
+  if (checkedFilterList.length !== 0) {
+    params[paramKey] = checkedFilterList.join('-');
   } else {
-    delete urlParams[paramKey];
+    delete params[paramKey];
   }
 }
 
