@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { setCategoryFilterList, setTypeFilterList } from '../../../store/app-data-store/app-data-slice';
 import { TCameraType } from '../../../types/general-types';
 
-export enum TypeParam {
+enum TypeParam {
   Collection = 'Коллекционная',
   Digital = 'Цифровая',
   Film = 'Плёночная',
