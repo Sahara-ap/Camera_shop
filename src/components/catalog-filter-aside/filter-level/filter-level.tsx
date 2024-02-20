@@ -47,15 +47,15 @@ function FilterLevel(): JSX.Element {
   useEffect(() => {
     const levelParams = params.level?.split('-') as TCameraLevel[] || [];
     dispatch(setLevelFilterList(levelParams));
-  }, []);
+  }, [dispatch, params.level]);
 
   function handleFilterToggle(title: TCameraLevel) {
     const levelCheckedList = [...levelFilterList];
 
     updateCheckedList(levelCheckedList, title);
-    dispatch(setLevelFilterList(levelCheckedList));
+    // dispatch(setLevelFilterList(levelCheckedList));
 
-    updateFilterParam(levelCheckedList, params, 'level');
+    updateFilterParam(params, 'level', levelCheckedList);
     setSearchParams(params);
   }
 

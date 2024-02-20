@@ -61,7 +61,7 @@ function updateCheckedList<T extends Array<string>, U extends string>(list: T, t
 }
 
 type TCameraFilters = TCameraCategory | TCameraType | TCameraLevel
-function updateFilterParam(checkedFilterList: TCameraFilters[], params: TParamsCatalog, paramKey: keyof TParamsCatalog) {
+function updateFilterParam(params: TParamsCatalog, paramKey: keyof TParamsCatalog, checkedFilterList: TCameraFilters[]) {
   if (checkedFilterList.length !== 0) {
     params[paramKey] = checkedFilterList.join('-');
   } else {

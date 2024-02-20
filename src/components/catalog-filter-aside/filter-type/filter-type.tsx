@@ -53,15 +53,15 @@ function FilterType(): JSX.Element {
   useEffect(() => {
     const typeParams = params.type?.split('-') as TCameraType[] || [];
     dispatch(setTypeFilterList(typeParams));
-  }, []);
+  }, [dispatch, params.type]);
 
   function handleFilterToggle(title: TCameraType) {
     const typeCheckedList = [...typeFilterList];
 
     updateCheckedList(typeCheckedList, title);
-    dispatch(setTypeFilterList(typeCheckedList));
+    // dispatch(setTypeFilterList(typeCheckedList));
 
-    updateFilterParam(typeCheckedList, params, 'type');
+    updateFilterParam(params, 'type', typeCheckedList);
     setSearchParams(params);
   }
 

@@ -55,16 +55,16 @@ function FilterCategory(): JSX.Element {
   useEffect(() => {
     const catParams = params.cat?.split('-') as TCameraCategory[] || [];
     dispatch(setCategoryFilterList(catParams));
-  }, []);
+  }, [dispatch, params.cat]);
 
 
   function handleFilterToggle(title: TCameraCategory) {
     const categoryCheckedList = [...categoryFilterList];
 
     updateCheckedList(categoryCheckedList, title);
-    dispatch(setCategoryFilterList(categoryCheckedList));
+    // dispatch(setCategoryFilterList(categoryCheckedList));
 
-    updateFilterParam(categoryCheckedList, params, 'cat');
+    updateFilterParam(params, 'cat', categoryCheckedList);
     setSearchParams(params);
   }
 
