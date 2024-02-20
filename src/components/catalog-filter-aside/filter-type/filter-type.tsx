@@ -5,7 +5,7 @@ import { getTypeFilterList } from '../../../store/app-data-store/app-data-select
 import { useEffect } from 'react';
 import { setCategoryFilterList, setTypeFilterList } from '../../../store/app-data-store/app-data-slice';
 import { TCameraType } from '../../../types/general-types';
-import { updateCheckedList } from '../filter-utils';
+import { updateCheckedList, updateFilterParam } from '../filter-utils';
 
 enum TypeParam {
   Collection = 'Коллекционная',
@@ -67,11 +67,13 @@ function FilterType(): JSX.Element {
     updateCheckedList(typeCheckedList, title);
     dispatch(setTypeFilterList(typeCheckedList));
 
-    if (typeCheckedList.length !== 0) {
-      params.type = typeCheckedList.join('-');
-    } else {
-      delete params.type;
-    }
+    updateFilterParam(typeCheckedList, params, 'type');
+
+    // if (typeCheckedList.length !== 0) {
+    //   params.type = typeCheckedList.join('-');
+    // } else {
+    //   delete params.type;
+    // }
     setSearchParams(params);
 
     // if (updatedLevelCheckedList.includes(TypeParam.Film)) {

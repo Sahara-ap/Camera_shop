@@ -1,4 +1,4 @@
-import { TCameraCategory, TCameraLevel, TCameraType, TCard } from '../../types/general-types';
+import { TCameraCategory, TCameraLevel, TCameraType, TCard, TParamsCatalog } from '../../types/general-types';
 
 const filterByPrice = (cards: TCard[], minValue = '', maxValue = '') => (
   cards.filter((card) => card.price >= Number(minValue) && card.price <= Number(maxValue)
@@ -46,12 +46,26 @@ function filterCards(cards: TCard[], ...filterValues: TFilterValues[]) {
   ));
 }
 
+
+
+
+
+
 function updateCheckedList<T extends Array<string>, U extends string>(list: T, title: U) {
   const currentIndex = list.indexOf(title);
   if (currentIndex === -1) {
     list.push(title);
   } else {
     list.splice(currentIndex, 1);
+  }
+}
+
+type TCameraFilters = TCameraCategory | TCameraType | TCameraLevel
+function updateFilterParam(checkedList: TCameraFilters[], urlParams: TParamsCatalog, paramKey: keyof TParamsCatalog) {
+  if (checkedList.length !== 0) {
+    urlParams[paramKey] = checkedList.join('-');
+  } else {
+    delete urlParams[paramKey];
   }
 }
 
@@ -66,4 +80,5 @@ export {
   getFilterResult,
 
   updateCheckedList,
+  updateFilterParam,
 };

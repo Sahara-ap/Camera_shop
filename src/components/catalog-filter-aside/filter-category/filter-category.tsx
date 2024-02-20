@@ -6,9 +6,9 @@ import { setCategoryFilterList } from '../../../store/app-data-store/app-data-sl
 import { getCategoryFilterList } from '../../../store/app-data-store/app-data-selectors';
 
 import { getParams } from '../../../utils/utils-functions';
-import { TCameraCategory, TParamsCatalog } from '../../../types/general-types';
+import { TCameraCategory, TCameraLevel, TCameraType, TParamsCatalog } from '../../../types/general-types';
 import { TypeParam } from '../filter-type/filter-type';
-import { updateCheckedList } from '../filter-utils';
+import { updateCheckedList, updateFilterParam } from '../filter-utils';
 
 enum FilterShortcutsList {
   Photo = 'photo',
@@ -58,28 +58,32 @@ function FilterCategory(): JSX.Element {
     dispatch(setCategoryFilterList(catParams));
   }, []);
 
-  
+
+
   function handleFilterToggle(title: TCameraCategory) {
     const categoryCheckedList = [...categoryFilterList];
 
-    // const currentIndex = updatedCheckedList.indexOf(title);
-    // if (currentIndex === -1) {
-    //   updatedCheckedList.push(title);
-    // } else {
-    //   updatedCheckedList.splice(currentIndex, 1);
-    // }
     updateCheckedList(categoryCheckedList, title);
     dispatch(setCategoryFilterList(categoryCheckedList));
 
-    if (categoryCheckedList.length !== 0) {
-      params.cat = categoryCheckedList.join('-');
-    } else {
-      delete params.cat;
-    }
+    updateFilterParam(categoryCheckedList, params, 'cat');
     setSearchParams(params);
   }
 
+  // const currentIndex = updatedCheckedList.indexOf(title);
+  // if (currentIndex === -1) {
+  //   updatedCheckedList.push(title);
+  // } else {
+  //   updatedCheckedList.splice(currentIndex, 1);
+  // }
 
+
+
+  // if (categoryCheckedList.length !== 0) {
+  //   params.cat = categoryCheckedList.join('-');
+  // } else {
+  //   delete params.cat;
+  // }
   return (
     <fieldset className="catalog-filter__block">
       <legend className="title title--h5">Категория</legend>

@@ -5,7 +5,7 @@ import { getParams } from '../../../utils/utils-functions';
 import { useEffect } from 'react';
 import { setLevelFilterList } from '../../../store/app-data-store/app-data-slice';
 import { TCameraLevel } from '../../../types/general-types';
-import { updateCheckedList } from '../filter-utils';
+import { updateCheckedList, updateFilterParam } from '../filter-utils';
 
 enum LevelParam {
   zero = 'Нулевой',
@@ -61,11 +61,12 @@ function FilterLevel(): JSX.Element {
     updateCheckedList(levelCheckedList, title);
     dispatch(setLevelFilterList(levelCheckedList));
 
-    if (levelCheckedList.length !== 0) {
-      params.level = levelCheckedList.join('-');
-    } else {
-      delete params.level;
-    }
+    // if (levelCheckedList.length !== 0) {
+    //   params.level = levelCheckedList.join('-');
+    // } else {
+    //   delete params.level;
+    // }
+    updateFilterParam(levelCheckedList, params, 'level');
     setSearchParams(params);
   }
 
