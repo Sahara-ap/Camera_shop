@@ -5,6 +5,7 @@ import { getParams } from '../../../utils/utils-functions';
 import { useEffect } from 'react';
 import { setLevelFilterList } from '../../../store/app-data-store/app-data-slice';
 import { TCameraLevel } from '../../../types/general-types';
+import { updateCheckedList } from '../filter-utils';
 
 enum LevelParam {
   zero = 'Нулевой',
@@ -35,6 +36,7 @@ const LEVELS: {
     },
   ];
 
+
 function FilterLevel(): JSX.Element {
   const dispatch = useAppDispatch();
   const levelFilterList = useAppSelector(getLevelFilterList);
@@ -48,23 +50,25 @@ function FilterLevel(): JSX.Element {
   }, []);
 
   function handleFilterToggle(title: TCameraLevel) {
-    const updatedCheckedList = [...levelFilterList];
+    const levelCheckedList = [...levelFilterList];
 
-    const currentIndex = updatedCheckedList.indexOf(title);
-    if (currentIndex === -1) {
-      updatedCheckedList.push(title);
-    } else {
-      updatedCheckedList.splice(currentIndex, 1);
-    }
-    dispatch(setLevelFilterList(updatedCheckedList));
+    // const currentIndex = updatedLevelCheckedList.indexOf(title);
+    // if (currentIndex === -1) {
+    //   updatedLevelCheckedList.push(title);
+    // } else {
+    //   updatedLevelCheckedList.splice(currentIndex, 1);
+    // }
+    updateCheckedList(levelCheckedList, title);
+    dispatch(setLevelFilterList(levelCheckedList));
 
-    if (updatedCheckedList.length !== 0) {
-      params.level = updatedCheckedList.join('-');
+    if (levelCheckedList.length !== 0) {
+      params.level = levelCheckedList.join('-');
     } else {
       delete params.level;
     }
     setSearchParams(params);
   }
+
 
   return (
     <fieldset className="catalog-filter__block">

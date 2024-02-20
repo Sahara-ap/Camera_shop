@@ -53,7 +53,6 @@ const getFilterCameras = createSelector(
         || camera.level === secondLevelValue
         || camera.level === thirdLevelValue)
     ));
-    console.log(filterByAllGroupsCameras);
 
     preparedCameraList.push(...filterByAllGroupsCameras);
 

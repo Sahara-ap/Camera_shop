@@ -5,6 +5,7 @@ import { getTypeFilterList } from '../../../store/app-data-store/app-data-select
 import { useEffect } from 'react';
 import { setCategoryFilterList, setTypeFilterList } from '../../../store/app-data-store/app-data-slice';
 import { TCameraType } from '../../../types/general-types';
+import { updateCheckedList } from '../filter-utils';
 
 enum TypeParam {
   Collection = 'Коллекционная',
@@ -55,24 +56,25 @@ function FilterType(): JSX.Element {
   }, []);
 
   function handleFilterToggle(title: TCameraType) {
-    const updatedCheckedList = [...typeFilterList];
+    const typeCheckedList = [...typeFilterList];
 
-    const currentIndex = updatedCheckedList.indexOf(title);
-    if (currentIndex === -1) {
-      updatedCheckedList.push(title);
-    } else {
-      updatedCheckedList.splice(currentIndex, 1);
-    }
-    dispatch(setTypeFilterList(updatedCheckedList));
+    // const currentIndex = updatedLevelCheckedList.indexOf(title);
+    // if (currentIndex === -1) {
+    //   updatedLevelCheckedList.push(title);
+    // } else {
+    //   updatedLevelCheckedList.splice(currentIndex, 1);
+    // }
+    updateCheckedList(typeCheckedList, title);
+    dispatch(setTypeFilterList(typeCheckedList));
 
-    if (updatedCheckedList.length !== 0) {
-      params.type = updatedCheckedList.join('-');
+    if (typeCheckedList.length !== 0) {
+      params.type = typeCheckedList.join('-');
     } else {
       delete params.type;
     }
     setSearchParams(params);
 
-    // if (updatedCheckedList.includes(TypeParam.Film)) {
+    // if (updatedLevelCheckedList.includes(TypeParam.Film)) {
     //   params.cat = 'Фотоаппарат';
     //   setSearchParams(params);
       // dispatch(setCategoryFilterList(['Фотоаппарат']));
@@ -82,7 +84,7 @@ function FilterType(): JSX.Element {
         // catList.splice(index, 1);
       // }
     // }
-    // if (updatedCheckedList.includes(TypeParam.Snap)) {
+    // if (updatedLevelCheckedList.includes(TypeParam.Snap)) {
     //   params.cat = params.cat = 'Фотоаппарат';
     //   setSearchParams(params);
       // dispatch(setCategoryFilterList(['Фотоаппарат']));

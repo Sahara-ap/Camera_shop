@@ -46,6 +46,15 @@ function filterCards(cards: TCard[], ...filterValues: TFilterValues[]) {
   ));
 }
 
+function updateCheckedList<T extends Array<string>, U extends string>(list: T, title: U) {
+  const currentIndex = list.indexOf(title);
+  if (currentIndex === -1) {
+    list.push(title);
+  } else {
+    list.splice(currentIndex, 1);
+  }
+}
+
 
 export {
   filterByPrice,
@@ -55,4 +64,6 @@ export {
 
   combineFilters,
   getFilterResult,
+
+  updateCheckedList,
 };

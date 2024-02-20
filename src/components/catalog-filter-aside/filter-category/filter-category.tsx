@@ -6,8 +6,9 @@ import { setCategoryFilterList } from '../../../store/app-data-store/app-data-sl
 import { getCategoryFilterList } from '../../../store/app-data-store/app-data-selectors';
 
 import { getParams } from '../../../utils/utils-functions';
-import { TCameraCategory } from '../../../types/general-types';
+import { TCameraCategory, TParamsCatalog } from '../../../types/general-types';
 import { TypeParam } from '../filter-type/filter-type';
+import { updateCheckedList } from '../filter-utils';
 
 enum FilterShortcutsList {
   Photo = 'photo',
@@ -57,20 +58,21 @@ function FilterCategory(): JSX.Element {
     dispatch(setCategoryFilterList(catParams));
   }, []);
 
-
+  
   function handleFilterToggle(title: TCameraCategory) {
-    const updatedCheckedList = [...categoryFilterList];
+    const categoryCheckedList = [...categoryFilterList];
 
-    const currentIndex = updatedCheckedList.indexOf(title);
-    if (currentIndex === -1) {
-      updatedCheckedList.push(title);
-    } else {
-      updatedCheckedList.splice(currentIndex, 1);
-    }
-    dispatch(setCategoryFilterList(updatedCheckedList));
+    // const currentIndex = updatedCheckedList.indexOf(title);
+    // if (currentIndex === -1) {
+    //   updatedCheckedList.push(title);
+    // } else {
+    //   updatedCheckedList.splice(currentIndex, 1);
+    // }
+    updateCheckedList(categoryCheckedList, title);
+    dispatch(setCategoryFilterList(categoryCheckedList));
 
-    if (updatedCheckedList.length !== 0) {
-      params.cat = updatedCheckedList.join('-');
+    if (categoryCheckedList.length !== 0) {
+      params.cat = categoryCheckedList.join('-');
     } else {
       delete params.cat;
     }
