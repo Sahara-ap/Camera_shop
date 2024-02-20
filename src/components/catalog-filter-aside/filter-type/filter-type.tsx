@@ -72,26 +72,26 @@ function FilterType(): JSX.Element {
     }
     setSearchParams(params);
 
-    if (updatedCheckedList.includes(TypeParam.Film)) {
-      params.cat = 'Фотоаппарат';
-      setSearchParams(params);
+    // if (updatedCheckedList.includes(TypeParam.Film)) {
+    //   params.cat = 'Фотоаппарат';
+    //   setSearchParams(params);
       // dispatch(setCategoryFilterList(['Фотоаппарат']));
       // const catList = params.cat?.split('-') || [];
       // const index = catList.indexOf('Видеокамера');
       // if (index !== -1) {
         // catList.splice(index, 1);
       // }
-    }
-    if (updatedCheckedList.includes(TypeParam.Snap)) {
-      params.cat = params.cat = 'Фотоаппарат';
-      setSearchParams(params);
+    // }
+    // if (updatedCheckedList.includes(TypeParam.Snap)) {
+    //   params.cat = params.cat = 'Фотоаппарат';
+    //   setSearchParams(params);
       // dispatch(setCategoryFilterList(['Фотоаппарат']));
       // const catList = params.cat?.split('-') || [];
       // const index = catList.indexOf('Видеокамера');
       // if (index !== -1) {
         // catList.splice(index, 1);
       // }
-    }
+    // }
   }
 
 
