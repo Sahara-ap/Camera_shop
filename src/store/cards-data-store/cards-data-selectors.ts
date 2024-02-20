@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { State } from '../../types/store';
 import { TCameraCategory, TCameraLevel, TCameraType, TCard } from '../../types/general-types';
-import { getCategoryFilterList, getTypeFilterList } from '../app-data-store/app-data-selectors';
+import { getCategoryFilterList, getLevelFilterList, getTypeFilterList } from '../app-data-store/app-data-selectors';
 
 import { NameSpace } from '../../consts';
 
@@ -21,35 +21,44 @@ const getMinAndMaxCameraPrices = createSelector([getSortedByPriceCameras], (came
   return [minPrice, maxPrice];
 });
 
-const getFilterCameras = createSelector([getCategoryFilterList, getTypeFilterList, getCameras], (categoryFilterList, typeFilterList, cameras) => {
-  const categoryFilters = categoryFilterList.length === 0 ? FULL_CATEGORY_FILTER_LIST : categoryFilterList;
-  const typeFilters = typeFilterList.length === 0 ? FULL_TYPE_FILTER_LIST : typeFilterList;
+const getFilterCameras = createSelector(
+  [getCategoryFilterList, getTypeFilterList, getLevelFilterList, getCameras],
+  (categoryFilterList, typeFilterList, levelFilterList, cameras) => {
 
-  const [firstCategoryValue, secondCategoryValue] = categoryFilters;
-  const [firstTypeValue, secondTypeValue, thirdTypeValue, forthTypeValue] = typeFilters;
-  //если categoryFilterList.length === 0 ,т.е пользователь не выбрал ни одну категорию
-  // то в набор нужно установить все значения, как если бы он выбрал все
+    const categoryFilters = categoryFilterList.length !== 0 ? categoryFilterList : FULL_CATEGORY_FILTER_LIST;
+    const typeFilters = typeFilterList.length !== 0 ? typeFilterList : FULL_TYPE_FILTER_LIST;
+    const levelFilters = levelFilterList.length !== 0 ? levelFilterList : FULL_LEVEL_FILTER_LIST;
 
-  // const isFilterValuesValid =
-  //   categoryFilterList.length !== 0
-  //   || typeFilterList.length !== 0;
+    const [firstCategoryValue, secondCategoryValue] = categoryFilters;
+    const [firstTypeValue, secondTypeValue, thirdTypeValue, forthTypeValue] = typeFilters;
+    const [firstLevelValue, secondLevelValue, thirdLevelValue] = levelFilters;
+    //если categoryFilterList.length === 0 ,т.е пользователь не выбрал ни одну категорию
+    // то в набор нужно установить все значения, как если бы он выбрал все
 
-  const preparedCameraList = [];
+    // const isFilterValuesValid =
+    //   categoryFilterList.length !== 0
+    //   || typeFilterList.length !== 0;
 
-  const filterByAllGroupsCameras = cameras.filter((camera) => (
-    (camera.category === firstCategoryValue || camera.category === secondCategoryValue)
-    &&
-    (camera.type === firstTypeValue
-      || camera.type === secondTypeValue
-      || camera.type === thirdTypeValue
-      || camera.type === forthTypeValue)
-  ));
-  console.log(filterByAllGroupsCameras);
+    const preparedCameraList = [];
 
-  preparedCameraList.push(...filterByAllGroupsCameras);
+    const filterByAllGroupsCameras = cameras.filter((camera) => (
+      (camera.category === firstCategoryValue || camera.category === secondCategoryValue)
+      &&
+      (camera.type === firstTypeValue
+        || camera.type === secondTypeValue
+        || camera.type === thirdTypeValue
+        || camera.type === forthTypeValue)
+      &&
+      (camera.level === firstLevelValue
+        || camera.level === secondLevelValue
+        || camera.level === thirdLevelValue)
+    ));
+    console.log(filterByAllGroupsCameras);
 
-  return preparedCameraList;
-});
+    preparedCameraList.push(...filterByAllGroupsCameras);
+
+    return preparedCameraList;
+  });
 
 export {
   getCameras,
