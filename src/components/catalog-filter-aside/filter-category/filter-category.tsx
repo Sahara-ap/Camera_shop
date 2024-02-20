@@ -6,8 +6,7 @@ import { setCategoryFilterList } from '../../../store/app-data-store/app-data-sl
 import { getCategoryFilterList } from '../../../store/app-data-store/app-data-selectors';
 
 import { getParams } from '../../../utils/utils-functions';
-import { TCameraCategory, TCameraLevel, TCameraType, TParamsCatalog } from '../../../types/general-types';
-import { TypeParam } from '../filter-type/filter-type';
+import { TCameraCategory } from '../../../types/general-types';
 import { updateCheckedList, updateFilterParam } from '../filter-utils';
 
 enum FilterShortcutsList {
@@ -59,7 +58,6 @@ function FilterCategory(): JSX.Element {
   }, []);
 
 
-
   function handleFilterToggle(title: TCameraCategory) {
     const categoryCheckedList = [...categoryFilterList];
 
@@ -76,7 +74,6 @@ function FilterCategory(): JSX.Element {
   // } else {
   //   updatedCheckedList.splice(currentIndex, 1);
   // }
-
 
 
   // if (categoryCheckedList.length !== 0) {

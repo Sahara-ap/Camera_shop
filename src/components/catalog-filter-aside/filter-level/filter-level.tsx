@@ -52,20 +52,9 @@ function FilterLevel(): JSX.Element {
   function handleFilterToggle(title: TCameraLevel) {
     const levelCheckedList = [...levelFilterList];
 
-    // const currentIndex = updatedLevelCheckedList.indexOf(title);
-    // if (currentIndex === -1) {
-    //   updatedLevelCheckedList.push(title);
-    // } else {
-    //   updatedLevelCheckedList.splice(currentIndex, 1);
-    // }
     updateCheckedList(levelCheckedList, title);
     dispatch(setLevelFilterList(levelCheckedList));
 
-    // if (levelCheckedList.length !== 0) {
-    //   params.level = levelCheckedList.join('-');
-    // } else {
-    //   delete params.level;
-    // }
     updateFilterParam(levelCheckedList, params, 'level');
     setSearchParams(params);
   }

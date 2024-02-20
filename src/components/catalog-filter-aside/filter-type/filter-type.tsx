@@ -3,7 +3,7 @@ import { getParams } from '../../../utils/utils-functions';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store-hooks';
 import { getTypeFilterList } from '../../../store/app-data-store/app-data-selectors';
 import { useEffect } from 'react';
-import { setCategoryFilterList, setTypeFilterList } from '../../../store/app-data-store/app-data-slice';
+import { setTypeFilterList } from '../../../store/app-data-store/app-data-slice';
 import { TCameraType } from '../../../types/general-types';
 import { updateCheckedList, updateFilterParam } from '../filter-utils';
 
@@ -58,44 +58,11 @@ function FilterType(): JSX.Element {
   function handleFilterToggle(title: TCameraType) {
     const typeCheckedList = [...typeFilterList];
 
-    // const currentIndex = updatedLevelCheckedList.indexOf(title);
-    // if (currentIndex === -1) {
-    //   updatedLevelCheckedList.push(title);
-    // } else {
-    //   updatedLevelCheckedList.splice(currentIndex, 1);
-    // }
     updateCheckedList(typeCheckedList, title);
     dispatch(setTypeFilterList(typeCheckedList));
 
     updateFilterParam(typeCheckedList, params, 'type');
-
-    // if (typeCheckedList.length !== 0) {
-    //   params.type = typeCheckedList.join('-');
-    // } else {
-    //   delete params.type;
-    // }
     setSearchParams(params);
-
-    // if (updatedLevelCheckedList.includes(TypeParam.Film)) {
-    //   params.cat = 'Фотоаппарат';
-    //   setSearchParams(params);
-      // dispatch(setCategoryFilterList(['Фотоаппарат']));
-      // const catList = params.cat?.split('-') || [];
-      // const index = catList.indexOf('Видеокамера');
-      // if (index !== -1) {
-        // catList.splice(index, 1);
-      // }
-    // }
-    // if (updatedLevelCheckedList.includes(TypeParam.Snap)) {
-    //   params.cat = params.cat = 'Фотоаппарат';
-    //   setSearchParams(params);
-      // dispatch(setCategoryFilterList(['Фотоаппарат']));
-      // const catList = params.cat?.split('-') || [];
-      // const index = catList.indexOf('Видеокамера');
-      // if (index !== -1) {
-        // catList.splice(index, 1);
-      // }
-    // }
   }
 
 
