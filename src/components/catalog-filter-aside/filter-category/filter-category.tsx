@@ -9,18 +9,6 @@ import { getParams } from '../../../utils/utils-functions';
 import { TCameraCategory } from '../../../types/general-types';
 import { updateCheckedList, updateFilterParam } from '../filter-utils';
 
-enum FilterShortcutsList {
-  Photo = 'photo',
-  Video = 'video',
-  Digital = 'digital',
-  Film = 'film',
-  Snap = 'snap',
-  Collection = 'colllection',
-  Zero = 'zero',
-  Professional = 'proffesional',
-  NonProffesional = 'nonproffecional'
-}
-
 enum CategoryParam {
   Video = 'Видеокамера',
   Photo = 'Фотоаппарат',

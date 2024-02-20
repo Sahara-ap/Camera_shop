@@ -1,36 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { getCameras, getFilterCameras, getIsCamerasLoading } from '../../store/cards-data-store/cards-data-selectors';
+import { getFilterCameras, getIsCamerasLoading } from '../../store/cards-data-store/cards-data-selectors';
 import { useAppSelector } from '../../hooks/store-hooks';
 
 import { CardList } from '../card-list/card-list';
 import { Loading } from '../loading/loading';
 import { CatalogPagination } from '../catalog-pagination/catalog-pagination';
-import { getFilterCategoryList } from '../../store/app-data-store/app-data-selectors';
 
 const DEFAULT_PAGE_NUMBER = 1;
 const CARDS_NUMBER_PER_PAGE = 9;
 const MIN_PAGES = 2;
 function CardListWithPagination(): JSX.Element {
   const isCamerasLoading = useAppSelector(getIsCamerasLoading);
-  // const cameras = useAppSelector(getCameras);
-  // const categoryFilters = useAppSelector(getFilterCategoryList);
-
-  // const [categoryValue] = categoryFilters;
-  // console.log('categoryValue', categoryValue);
-
-  // function isFilterValuesValid() {
-    // return (
-      // Boolean(categoryValue)
-    // );
-  // }
-
-  // const preparedCameraList = isFilterValuesValid() ? [] : cameras;
-  // if (categoryValue) {
-  //   const filterByCategoryCameras = cameras.filter((camera) => camera.category === categoryValue);
-  //   preparedCameraList.push(...filterByCategoryCameras);
-  // }
 
   const preparedCameraList = useAppSelector(getFilterCameras);
 
