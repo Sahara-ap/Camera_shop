@@ -92,7 +92,7 @@ function FilterCategory(): JSX.Element {
               checked={categoryFilterList.includes(it.title)}
               disabled={
                 ('cat' in params) && (params.cat !== it.title)
-                || (it.title === CategoryParam.Video) && (/Плёночная|Моментальная/.test(String(params.type)))
+                // || (it.title === CategoryParam.Video) && (/Плёночная|Моментальная/.test(String(params.type)))
               }
             />
             <span className="custom-checkbox__icon"></span>
