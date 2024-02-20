@@ -1,5 +1,3 @@
-import { TCameraCategory, TCameraLevel, TCameraType } from './types/general-types';
-
 enum APIRoute {
   Cameras = '/cameras',
   Banner = '/promo',
@@ -13,10 +11,6 @@ enum AppRoute {
   Product = '/product',
   NotFound = '*'
 }
-
-const CAMERA_CATEGORIES:TCameraCategory[] = ['Видеокамера', 'Фотоаппарат'];
-const CAMERA_LEVELS: TCameraLevel[] = ['Нулевой', 'Любительский', 'Профессиональный'];
-const CAMERA_TYPES: TCameraType[] = ['Коллекционная', 'Моментальная', 'Цифровая', 'Плёночная'];
 
 enum CategoryName {
   Photo = 'photocamera',
@@ -45,9 +39,6 @@ enum LoadingDataStatus {
 export {
   APIRoute,
   AppRoute,
-  CAMERA_CATEGORIES,
-  CAMERA_LEVELS,
-  CAMERA_TYPES,
   CategoryName,
   DELAY,
   NameSpace,

@@ -1,8 +1,13 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { NameSpace } from '../../consts';
 import { State } from '../../types/store';
-import { TCard } from '../../types/general-types';
+import { TCameraCategory, TCameraLevel, TCameraType, TCard } from '../../types/general-types';
 import { getCategoryFilterList, getTypeFilterList } from '../app-data-store/app-data-selectors';
+
+import { NameSpace } from '../../consts';
+
+const FULL_CATEGORY_FILTER_LIST: TCameraCategory[] = ['Видеокамера', 'Фотоаппарат'];
+const FULL_TYPE_FILTER_LIST: TCameraType[] = ['Коллекционная', 'Моментальная', 'Цифровая', 'Плёночная'];
+const FULL_LEVEL_FILTER_LIST: TCameraLevel[] = ['Нулевой', 'Любительский', 'Профессиональный'];
 
 const getCameras = (state: Pick<State, NameSpace.Cards>) => (state[NameSpace.Cards].cameras);
 const getIsCamerasLoading = (state: Pick<State, NameSpace.Cards>) => (state[NameSpace.Cards].isCamerasLoading);
@@ -16,10 +21,6 @@ const getMinAndMaxCameraPrices = createSelector([getSortedByPriceCameras], (came
   return [minPrice, maxPrice];
 });
 
-const FULL_CATEGORY_FILTER_LIST = ['Видеокамера', 'Фотокамера'];
-const FULL_TYPE_FILTER_LIST = ['Коллекционная', 'Цифровая', 'Плёночная', 'Моментальная'];
-const FULL_LEVEL_FILTER_LIST = ['Нулевой', 'Любительский', 'Профессиональный'];
-
 const getFilterCameras = createSelector([getCategoryFilterList, getTypeFilterList, getCameras], (categoryFilterList, typeFilterList, cameras) => {
   const categoryFilters = categoryFilterList.length === 0 ? FULL_CATEGORY_FILTER_LIST : categoryFilterList;
   const typeFilters = typeFilterList.length === 0 ? FULL_TYPE_FILTER_LIST : typeFilterList;
@@ -27,16 +28,15 @@ const getFilterCameras = createSelector([getCategoryFilterList, getTypeFilterLis
   const [firstCategoryValue, secondCategoryValue] = categoryFilters;
   const [firstTypeValue, secondTypeValue, thirdTypeValue, forthTypeValue] = typeFilters;
   //если categoryFilterList.length === 0 ,т.е пользователь не выбрал ни одну категорию
-  // то в набор нужно установить все значения
+  // то в набор нужно установить все значения, как если бы он выбрал все
 
-  const isFilterValuesValid =
-    categoryFilterList.length !== 0
-    || typeFilterList.length !== 0;
+  // const isFilterValuesValid =
+  //   categoryFilterList.length !== 0
+  //   || typeFilterList.length !== 0;
 
-  // const preparedCameraList = isFilterValuesValid ? [] : cameras;
   const preparedCameraList = [];
 
-  const filterByCategoryCameras = cameras.filter((camera) => (
+  const filterByAllGroupsCameras = cameras.filter((camera) => (
     (camera.category === firstCategoryValue || camera.category === secondCategoryValue)
     &&
     (camera.type === firstTypeValue
@@ -44,19 +44,9 @@ const getFilterCameras = createSelector([getCategoryFilterList, getTypeFilterLis
       || camera.type === thirdTypeValue
       || camera.type === forthTypeValue)
   ));
-  console.log(filterByCategoryCameras);
+  console.log(filterByAllGroupsCameras);
 
-  preparedCameraList.push(...filterByCategoryCameras);
-
-  // if (typeFilterList.length !== 0) {
-  //   const filterByTypeCameras = cameras.filter((camera) => (
-  //     camera.type === firstTypeValue
-  //     || camera.type === secondTypeValue
-  //     || camera.type === thirdTypeValue
-  //     || camera.type === forthTypeValue
-  //   ));
-  //   preparedCameraList.push(...filterByTypeCameras);
-  // }
+  preparedCameraList.push(...filterByAllGroupsCameras);
 
   return preparedCameraList;
 });
@@ -69,4 +59,8 @@ export {
   getMinAndMaxCameraPrices,
 
   getFilterCameras,
+
+  FULL_CATEGORY_FILTER_LIST,
+  FULL_TYPE_FILTER_LIST,
+  FULL_LEVEL_FILTER_LIST,
 };

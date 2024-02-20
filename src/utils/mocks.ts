@@ -1,9 +1,11 @@
 import { faker } from '@faker-js/faker';
 import { TBanner, TCard, TReview, TReviewPost, TSelectedCard, TSimilar } from '../types/general-types';
 import { pickRandomElement } from './utils-functions';
-import { CAMERA_CATEGORIES, CAMERA_LEVELS, CAMERA_TYPES, LoadingDataStatus, NameSpace } from '../consts';
 import { State } from '../types/store';
 import { Action } from '@reduxjs/toolkit';
+
+import { LoadingDataStatus, NameSpace } from '../consts';
+import { FULL_CATEGORY_FILTER_LIST, FULL_LEVEL_FILTER_LIST, FULL_TYPE_FILTER_LIST } from '../store/cards-data-store/cards-data-selectors';
 
 const extractActionTypes = (actions: Action<string>[]) => actions.map((action) => action.type);
 
@@ -20,10 +22,10 @@ const makeFakeCard = (): TCard => ({
   id: faker.number.int(),
   name: faker.lorem.words(3),
   vendorCode: faker.string.alpha(10),
-  type: pickRandomElement(CAMERA_TYPES),
-  category: pickRandomElement(CAMERA_CATEGORIES),
+  type: pickRandomElement(FULL_TYPE_FILTER_LIST),
+  category: pickRandomElement(FULL_CATEGORY_FILTER_LIST),
   description: faker.lorem.lines(1),
-  level: pickRandomElement(CAMERA_LEVELS),
+  level: pickRandomElement(FULL_LEVEL_FILTER_LIST),
   price: faker.number.int({ min: 0, max: 100000 }),
   rating: faker.number.int({ min: 0, max: 10 }),
   reviewCount: faker.number.int({ min: 0, max: 1000 }),
@@ -37,10 +39,10 @@ const makeFakeCards = (): TCard[] => new Array(3).fill(null).map(() => ({
   id: faker.number.int(),
   name: faker.lorem.words(3),
   vendorCode: faker.string.alpha(10),
-  type: pickRandomElement(CAMERA_TYPES),
-  category: pickRandomElement(CAMERA_CATEGORIES),
+  type: pickRandomElement(FULL_TYPE_FILTER_LIST),
+  category: pickRandomElement(FULL_CATEGORY_FILTER_LIST),
   description: faker.lorem.lines(1),
-  level: pickRandomElement(CAMERA_LEVELS),
+  level: pickRandomElement(FULL_LEVEL_FILTER_LIST),
   price: faker.number.int({ min: 0, max: 100000 }),
   rating: faker.number.int({ min: 0, max: 10 }),
   reviewCount: faker.number.int({ min: 0, max: 1000 }),
@@ -86,10 +88,10 @@ const makeFakeSimilars = (): TSimilar[] => new Array(5).fill(null).map(() => ({
   id: faker.number.int(),
   name: faker.lorem.words(3),
   vendorCode: faker.string.alpha(10),
-  type: pickRandomElement(CAMERA_TYPES),
-  category: pickRandomElement(CAMERA_CATEGORIES),
+  type: pickRandomElement(FULL_TYPE_FILTER_LIST),
+  category: pickRandomElement(FULL_CATEGORY_FILTER_LIST),
   description: faker.lorem.lines(1),
-  level: pickRandomElement(CAMERA_LEVELS),
+  level: pickRandomElement(FULL_LEVEL_FILTER_LIST),
   price: faker.number.int({ min: 0, max: 100000 }),
   rating: faker.number.int({ min: 0, max: 10 }),
   reviewCount: faker.number.int({ min: 0, max: 1000 }),
@@ -103,10 +105,10 @@ const makeFakeSelectedCard = (): TSelectedCard => ({
   id: faker.number.int(),
   name: faker.lorem.words(3),
   vendorCode: faker.string.alpha(10),
-  type: pickRandomElement(CAMERA_TYPES),
-  category: pickRandomElement(CAMERA_CATEGORIES),
+  type: pickRandomElement(FULL_TYPE_FILTER_LIST),
+  category: pickRandomElement(FULL_CATEGORY_FILTER_LIST),
   description: faker.lorem.lines(1),
-  level: pickRandomElement(CAMERA_LEVELS),
+  level: pickRandomElement(FULL_LEVEL_FILTER_LIST),
   price: faker.number.int({ min: 0, max: 100000 }),
   rating: faker.number.int({ min: 0, max: 10 }),
   reviewCount: faker.number.int({ min: 0, max: 1000 }),
