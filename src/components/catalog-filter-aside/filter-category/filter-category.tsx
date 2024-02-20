@@ -43,27 +43,33 @@ function FilterCategory(): JSX.Element {
   useEffect(() => {
     const catParams = params.cat?.split('-') as TCameraCategory[] || [];
     dispatch(setCategoryFilterList(catParams));
-  }, []);
+  }, [dispatch, params.cat]);
 
 
   function handleFilterToggle(title: TCameraCategory) {
     const categoryCheckedList = [...categoryFilterList];
 
-    const currentIndex = categoryCheckedList.indexOf(title);
-    if (currentIndex === -1) {
-      categoryCheckedList.push(title);
-    } else {
-      categoryCheckedList.splice(currentIndex, 1);
-    }
-    dispatch(setCategoryFilterList(categoryCheckedList));
+    updateCheckedList(categoryCheckedList, title);
+    // dispatch(setCategoryFilterList(categoryCheckedList));
 
-    if (categoryCheckedList.length !== 0) {
-      params.cat = categoryCheckedList.join('-');
-    } else {
-      delete params.cat;
-    }
+    updateFilterParam(params, 'cat', categoryCheckedList);
     setSearchParams(params);
   }
+
+  // const currentIndex = categoryCheckedList.indexOf(title);
+  // if (currentIndex === -1) {
+  //   categoryCheckedList.push(title);
+  // } else {
+  //   categoryCheckedList.splice(currentIndex, 1);
+  // }
+
+
+  // if (categoryCheckedList.length !== 0) {
+  //   params.cat = categoryCheckedList.join('-');
+  // } else {
+  //   delete params.cat;
+  // }
+
 
   return (
     <fieldset className="catalog-filter__block">
