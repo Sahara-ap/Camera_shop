@@ -38,6 +38,7 @@ type TParamsCatalog = {
   page?: string;
   priceMin?: string;
   priceMax?: string;
+  prices?: string;
 }
 
 type TReview = {
