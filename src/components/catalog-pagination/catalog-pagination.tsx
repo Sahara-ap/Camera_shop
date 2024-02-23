@@ -1,21 +1,17 @@
-import { Link, createSearchParams, useSearchParams } from 'react-router-dom';
+import { Link, createSearchParams } from 'react-router-dom';
 import cn from 'classnames';
 import { TParamsCatalog } from '../../types/general-types';
-import { getParams } from '../../utils/utils-functions';
 
 const STEP = 1;
 
 type TCatalogPaginationProps = {
   totalPages: number;
-  pageNumber: number;
-  // params: TParamsCatalog;
   onPaginationClick: (pageNumber: number) => void;
+  params: TParamsCatalog;
 }
-function CatalogPagination({ totalPages, pageNumber, onPaginationClick }: TCatalogPaginationProps): JSX.Element | null {
+function CatalogPagination({ totalPages, params, onPaginationClick }: TCatalogPaginationProps): JSX.Element | null {
   const lastPage = totalPages;
-
-  const [searchParams, setSearchParams] = useSearchParams();
-  const params = getParams(searchParams);
+  const pageNumber = Number(params.page) || 1;
 
   function getPaginationLength(pages: number) {
     switch (pages) {
@@ -45,22 +41,15 @@ function CatalogPagination({ totalPages, pageNumber, onPaginationClick }: TCatal
       default:
         result = (index - 1) + pageNumber;
     }
-    console.log('pageNumber', pageNumber);
 
 
     return result;
   });
-  console.log('length', length);
-  console.log('paginationRange', paginationRange);
   const previousPage = paginationRange[0] - STEP;
   const nextPage = paginationRange[paginationRange.length - 1] + STEP;
 
   function handlePaginationClick(page: number) {
     onPaginationClick(page);
-    params.page = String(page);
-    setSearchParams(params);
-    console.log((params.page));
-
   }
 
 
@@ -72,13 +61,12 @@ function CatalogPagination({ totalPages, pageNumber, onPaginationClick }: TCatal
             <Link
               className="pagination__link pagination__link--text"
               onClick={() => handlePaginationClick(previousPage)}
-              // to={{
-              //   search: createSearchParams({
-              //     ...params,
-              //     page: String(previousPage)
-              //   }).toString()
-              // }}
-              to={{ search: createSearchParams(params).toString() }}
+              to={{
+                search: createSearchParams({
+                  ...params,
+                  page: String(previousPage)
+                }).toString()
+              }}
             >Назад
             </Link>
           </li>}

@@ -9,9 +9,11 @@ import { Loading } from '../loading/loading';
 import { CatalogPagination } from '../catalog-pagination/catalog-pagination';
 import { getParams } from '../../utils/utils-functions';
 
+
 const DEFAULT_PAGE_NUMBER = 1;
 const CARDS_NUMBER_PER_PAGE = 9;
 const MIN_PAGES = 2;
+
 function CardListWithPagination(): JSX.Element {
   const isCamerasLoading = useAppSelector(getIsCamerasLoading);
 
@@ -23,11 +25,9 @@ function CardListWithPagination(): JSX.Element {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const params = getParams(searchParams);
-  // const page = searchParams.get('page');
-  const page = params.page;
+  const page = params.page || DEFAULT_PAGE_NUMBER;
 
-  const initialPageNumber = page || 1;
-  const [pageNumber, setPageNumber] = useState(Number(initialPageNumber));
+  const [pageNumber, setPageNumber] = useState(Number(page));
 
   const start = CARDS_NUMBER_PER_PAGE * (pageNumber - 1);
   const end = CARDS_NUMBER_PER_PAGE * pageNumber;
@@ -57,9 +57,8 @@ function CardListWithPagination(): JSX.Element {
       {totalPages >= MIN_PAGES &&
         <CatalogPagination
           totalPages={totalPages}
-          pageNumber={pageNumber}
           onPaginationClick={setPageNumber}
-          // params={params}
+          params={params}
         />}
 
     </>
