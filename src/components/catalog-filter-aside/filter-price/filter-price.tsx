@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store-hooks';
 import { getMinAndMaxCameraPrices } from '../../../store/cards-data-store/cards-data-selectors';
 
-import { format, formatPrice, formatStringToNumber, getParams } from '../../../utils/utils-functions';
+import { format, formatPrice, getParams } from '../../../utils/utils-functions';
 import { getPriceMaxFilter, getPriceMinFilter } from '../../../store/app-data-store/app-data-selectors';
 import { setPriceMaxFilter, setPriceMinFilter } from '../../../store/app-data-store/app-data-slice';
 
@@ -14,8 +14,8 @@ import { setPriceMaxFilter, setPriceMinFilter } from '../../../store/app-data-st
 function FilterPrice(): JSX.Element {
 
   const dispatch = useAppDispatch();
-  const minPriceFilter = useAppSelector(getPriceMinFilter);
-  const maxPriceFilter = useAppSelector(getPriceMaxFilter);
+  // const minPriceFilter = useAppSelector(getPriceMinFilter);
+  // const maxPriceFilter = useAppSelector(getPriceMaxFilter);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const params = getParams(searchParams);
@@ -38,20 +38,28 @@ function FilterPrice(): JSX.Element {
   const formatStartCameraPrice = formatPrice(startCameraPrice) || '';
   const formatEndCameraPrice = formatPrice(endCameraPrice) || '';
 
-  console.log('minPriceFilter', minPriceFilter);
-  console.log('maxPriceFilter', maxPriceFilter);
 
+  useEffect(() => {
+    const min = Number(params.priceMin);
+    const max = Number(params.priceMax);
+
+    if (max < min) {
+      params.priceMin = String(startCameraPrice);
+      params.priceMax = String(endCameraPrice);
+      setSearchParams(params);
+      setInputMin(String(startCameraPrice));
+      setInputMax(String(endCameraPrice));
+    }
+  }, [dispatch, endCameraPrice, params, setSearchParams, startCameraPrice]);
 
   function handleMinPriceBlur(event: React.ChangeEvent<HTMLInputElement>) {
 
     let inputValue = Number(event.target.value);
-    console.log('inputvalue', inputValue);
 
     if (inputValue < startCameraPrice) {
       inputValue = startCameraPrice;
       setInputMin(String(startCameraPrice));
     }
-
 
     if (!inputValue) {
       delete params.priceMin;
@@ -94,6 +102,7 @@ function FilterPrice(): JSX.Element {
               placeholder={`от ${formatStartCameraPrice}`}
               value={inputMin}
               onChange={(event) => setInputMin(event.target.value)}
+              // onChange={(event) => dispatch(setPriceMinFilter(event.target.value))}
               onBlur={handleMinPriceBlur}
             />
           </label>
@@ -106,6 +115,7 @@ function FilterPrice(): JSX.Element {
               placeholder={`до ${formatEndCameraPrice}`}
               value={inputMax}
               onChange={(event) => setInputMax(event.target.value)}
+              // onChange={(event) => dispatch(setPriceMaxFilter(event.target.value))}
               onBlur={handleMaxPriceBlur}
             />
           </label>
