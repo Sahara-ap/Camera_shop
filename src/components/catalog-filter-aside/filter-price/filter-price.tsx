@@ -6,8 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store-hooks';
 import { getMinAndMaxCameraPrices } from '../../../store/cards-data-store/cards-data-selectors';
 
-import { format, formatPrice, getParams } from '../../../utils/utils-functions';
-import { getPriceMaxFilter, getPriceMinFilter } from '../../../store/app-data-store/app-data-selectors';
+import { formatPrice, getParams } from '../../../utils/utils-functions';
 import { setPriceMaxFilter, setPriceMinFilter } from '../../../store/app-data-store/app-data-slice';
 
 
