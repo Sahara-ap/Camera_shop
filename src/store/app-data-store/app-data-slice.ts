@@ -8,7 +8,8 @@ type TAppDataState = {
   errorServerResponse: null | string;
   hasErrorWithConnection: boolean;
 
-  priceFilterList: string[];
+  priceMinFilter: string;
+  priceMaxFilter: string;
   categoryFilterList: TCameraCategory[];
   typeFilterList: TCameraType[];
   levelFilterList: TCameraLevel[];
@@ -18,7 +19,8 @@ const initialState: TAppDataState = {
   errorServerResponse: null,
   hasErrorWithConnection: false,
 
-  priceFilterList: [],
+  priceMinFilter: '',
+  priceMaxFilter: '',
   categoryFilterList: [],
   typeFilterList: [],
   levelFilterList: [],
@@ -32,8 +34,11 @@ const appDataSlice = createSlice({
       state.errorServerResponse = action.payload;
     },
 
-    setPriceFilterList: (state, action: PayloadAction<string[]>) => {
-      state.priceFilterList = action.payload;
+    setPriceMinFilter: (state, action: PayloadAction<string>) => {
+      state.priceMinFilter = action.payload;
+    },
+    setPriceMaxFilter: (state, action: PayloadAction<string>) => {
+      state.priceMaxFilter = action.payload;
     },
     setCategoryFilterList: (state, action: PayloadAction<TCameraCategory[]>) => {
       state.categoryFilterList = action.payload;
@@ -76,14 +81,15 @@ const appDataSlice = createSlice({
       });
   }
 });
-const {setErrorServerResponse, setPriceFilterList, setCategoryFilterList, setTypeFilterList, setLevelFilterList} = appDataSlice.actions;
+const {setErrorServerResponse, setPriceMinFilter, setPriceMaxFilter, setCategoryFilterList, setTypeFilterList, setLevelFilterList} = appDataSlice.actions;
 
 export {
   appDataSlice,
 
   setErrorServerResponse,
 
-  setPriceFilterList,
+  setPriceMinFilter,
+  setPriceMaxFilter,
   setCategoryFilterList,
   setTypeFilterList,
   setLevelFilterList,
