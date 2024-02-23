@@ -7,6 +7,7 @@ import { useAppSelector } from '../../hooks/store-hooks';
 import { CardList } from '../card-list/card-list';
 import { Loading } from '../loading/loading';
 import { CatalogPagination } from '../catalog-pagination/catalog-pagination';
+import { getParams } from '../../utils/utils-functions';
 
 const DEFAULT_PAGE_NUMBER = 1;
 const CARDS_NUMBER_PER_PAGE = 9;
@@ -21,8 +22,9 @@ function CardListWithPagination(): JSX.Element {
   const totalPages = Math.ceil(totalCardsLength / CARDS_NUMBER_PER_PAGE);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const params = Object.fromEntries(searchParams);
-  const page = searchParams.get('page');
+  const params = getParams(searchParams);
+  // const page = searchParams.get('page');
+  const page = params.page;
 
   const initialPageNumber = page || 1;
   const [pageNumber, setPageNumber] = useState(Number(initialPageNumber));
@@ -36,10 +38,8 @@ function CardListWithPagination(): JSX.Element {
     let isMounted = true;
 
     if (isMounted && (totalPages !== 0) && ((pageNumber > totalPages) || (pageNumber < 1))) {
-      setSearchParams({
-        ...params,
-        page: String(DEFAULT_PAGE_NUMBER)
-      });
+      params.page = String(DEFAULT_PAGE_NUMBER);
+      setSearchParams(params);
       setPageNumber(DEFAULT_PAGE_NUMBER);
     }
     return () => {
@@ -59,7 +59,7 @@ function CardListWithPagination(): JSX.Element {
           totalPages={totalPages}
           pageNumber={pageNumber}
           onPaginationClick={setPageNumber}
-          params={params}
+          // params={params}
         />}
 
     </>
