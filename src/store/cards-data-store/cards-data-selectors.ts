@@ -74,12 +74,12 @@ const getMinAndMaxCameraPricesInAllList = createSelector([getCameras], (cameras)
 
 const getFilterCameras = createSelector(
   [getPriceMinFilter, getPriceMaxFilter, getCategoryFilterList, getTypeFilterList, getLevelFilterList, getMinAndMaxCameraPricesInAllList, getCameras],
-  (minPriceFilter, maxPriceFilter, categoryFilterList, typeFilterList, levelFilterList, [minPriceInList, maxPriceInList], cameras) => {
+  (minPriceFilter, maxPriceFilter, categoryFilterList, typeFilterList, levelFilterList, [minPriceInAllList, maxPriceInAllList], cameras) => {
 
     // если цена не введена мы берем цены генеральной совокупности. Что означает фактически отсутствие фильтрации
-    //  технически я фильтрую, но на выходе получаю тот же массив, что на входе
-    const minPriceValue = minPriceFilter !== '' ? Number(minPriceFilter) : minPriceInList;
-    const maxPriceValue = maxPriceFilter !== '' ? Number(maxPriceFilter) : maxPriceInList;
+    //  Технически я фильтрую, но на выходе получаю тот же массив, что на входе
+    const minPriceValue = minPriceFilter !== '' ? Number(minPriceFilter) : minPriceInAllList;
+    const maxPriceValue = maxPriceFilter !== '' ? Number(maxPriceFilter) : maxPriceInAllList;
 
     const categoryFilters = categoryFilterList.length !== 0 ? categoryFilterList : FULL_CATEGORY_FILTER_LIST;
     const typeFilters = typeFilterList.length !== 0 ? typeFilterList : FULL_TYPE_FILTER_LIST;

@@ -1,26 +1,28 @@
 import './filter-price.css';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks/store-hooks';
-import { getCameras, getMinAndMaxCameraPrices } from '../../../store/cards-data-store/cards-data-selectors';
+import { getMinAndMaxCameraPrices } from '../../../store/cards-data-store/cards-data-selectors';
 
-import { formatPrice, getParams } from '../../../utils/utils-functions';
+import { format, formatPrice, formatStringToNumber, getParams } from '../../../utils/utils-functions';
 import { getPriceMaxFilter, getPriceMinFilter } from '../../../store/app-data-store/app-data-selectors';
 import { setPriceMaxFilter, setPriceMinFilter } from '../../../store/app-data-store/app-data-slice';
 
 
 function FilterPrice(): JSX.Element {
+
   const dispatch = useAppDispatch();
   const minPriceFilter = useAppSelector(getPriceMinFilter);
   const maxPriceFilter = useAppSelector(getPriceMaxFilter);
-  const cameras = useAppSelector(getCameras);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const params = getParams(searchParams);
-  const minPriceParam = params.priceMin || '';
-  const maxPriceParam = params.priceMax || '';
+
+  const [inputMin, setInputMin] = useState(params.priceMin || '');
+  const [inputMax, setInputMax] = useState(params.priceMax || '');
+
 
   useEffect(() => {
     const priceMinParam = params.priceMin || '';
@@ -29,7 +31,7 @@ function FilterPrice(): JSX.Element {
     dispatch(setPriceMinFilter(priceMinParam));
     dispatch(setPriceMaxFilter(priceMaxParam));
 
-  }, []);
+  }, [dispatch, params.priceMax, params.priceMin]);
 
   //для placeHolders
   const [startCameraPrice, endCameraPrice] = useAppSelector(getMinAndMaxCameraPrices);
@@ -40,76 +42,71 @@ function FilterPrice(): JSX.Element {
   console.log('maxPriceFilter', maxPriceFilter);
 
 
+  function handleMinPriceBlur(event: React.ChangeEvent<HTMLInputElement>) {
 
-  // const [minPriceState, setMinPriceState] = useState(minPriceParam || '');
-  // const [maxPriceState, setMaxPriceState] = useState(maxPriceParam || '');
+    let inputValue = Number(event.target.value);
+    console.log('inputvalue', inputValue);
 
-  function handleMinPriceChange(event: React.ChangeEvent<HTMLInputElement>) {
-    // let preparedInputValue = '';
-
-    // if (inputValue < startCameraPrice) {
-    //   preparedInputValue = startCameraPrice;
-    // }
-    // preparedInputValue = inputValue;
-
-    // if (preparedInputValue === "0") delete params.priceMin;
+    if (inputValue < startCameraPrice) {
+      inputValue = startCameraPrice;
+      setInputMin(String(startCameraPrice));
+    }
 
 
-    // код ниже дублирует условие кода выше
-    // if (inputValue < '0') {
-    //   inputValue = formatStartCameraPrice;
-    // }
-
-    const inputValue = event.target.value;
     if (!inputValue) {
       delete params.priceMin;
     } else {
-      params.priceMin = inputValue;
+      params.priceMin = String(inputValue);
     }
     setSearchParams(params);
-    dispatch(setPriceMinFilter(inputValue));
+    // dispatch(setPriceMinFilter(String(inputValue)));
 
   }
 
-  function handleMaxPriceChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const inputValue = event.target.value;
+  function handleMaxPriceBlur(event: React.ChangeEvent<HTMLInputElement>) {
+    let inputValue = Number(event.target.value);
+
+    if (inputValue > endCameraPrice) {
+      inputValue = endCameraPrice;
+      setInputMax(String(endCameraPrice));
+    }
+
     if (!inputValue) {
       delete params.priceMax;
     } else {
-      params.priceMax = inputValue;
+      params.priceMax = String(inputValue);
     }
     setSearchParams(params);
-    dispatch(setPriceMaxFilter(inputValue));
+    // dispatch(setPriceMaxFilter(String(inputValue)));
   }
-
 
 
   return (
     <fieldset className="catalog-filter__block">
-      <legend className="title title--h5">Цена, ₽</legend>
+      <legend className="title title--h5">Цена, ₽
+      </legend>
       <div className="catalog-filter__price-range">
         <div className="custom-input">
           <label>
             <input
-              type="number"
-              min={0}
+              type="text"
               name="price"
               placeholder={`от ${formatStartCameraPrice}`}
-              value={minPriceFilter}
-              // onBlur={handleMinPriceBlur}
-              // onChange={(event) => dispatch(setPriceFilterList([Number(event.target.value), 0]))}
-              onChange={handleMinPriceChange}
+              value={inputMin}
+              onChange={(event) => setInputMin(event.target.value)}
+              onBlur={handleMinPriceBlur}
             />
           </label>
         </div>
         <div className="custom-input">
           <label>
             <input
-              type="number"
+              type="text"
               name="priceUp"
               placeholder={`до ${formatEndCameraPrice}`}
-              value={maxPriceFilter}
-              onChange={handleMaxPriceChange}
+              value={inputMax}
+              onChange={(event) => setInputMax(event.target.value)}
+              onBlur={handleMaxPriceBlur}
             />
           </label>
         </div>
