@@ -1,27 +1,22 @@
 import './filter-price.css';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks/store-hooks';
 import { getMinAndMaxCameraPrices } from '../../../store/cards-data-store/cards-data-selectors';
 
-import { format, formatPrice, getParams } from '../../../utils/utils-functions';
-import { getPriceMaxFilter, getPriceMinFilter } from '../../../store/app-data-store/app-data-selectors';
+import { formatPrice, getParams } from '../../../utils/utils-functions';
 import { setPriceMaxFilter, setPriceMinFilter } from '../../../store/app-data-store/app-data-slice';
 
 
 function FilterPrice(): JSX.Element {
 
   const dispatch = useAppDispatch();
-  // const minPriceFilter = useAppSelector(getPriceMinFilter);
-  // const maxPriceFilter = useAppSelector(getPriceMaxFilter);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const params = getParams(searchParams);
 
-  // const [inputMin, setInputMin] = useState(params.priceMin || '');
-  // const [inputMax, setInputMax] = useState(params.priceMax || '');
   const inputMinRef = useRef<HTMLInputElement | null>(null);
   const inputMaxRef = useRef<HTMLInputElement | null>(null);
 
@@ -35,7 +30,6 @@ function FilterPrice(): JSX.Element {
 
   }, [dispatch, params.priceMax, params.priceMin]);
 
-  //для placeHolders
   const [startCameraPrice, endCameraPrice] = useAppSelector(getMinAndMaxCameraPrices);
   const formatStartCameraPrice = formatPrice(startCameraPrice) || '';
   const formatEndCameraPrice = formatPrice(endCameraPrice) || '';
@@ -49,10 +43,9 @@ function FilterPrice(): JSX.Element {
       params.priceMin = String(startCameraPrice);
       params.priceMax = String(endCameraPrice);
       setSearchParams(params);
+
       inputMinRef.current.value = String(startCameraPrice);
       inputMaxRef.current.value = String(endCameraPrice);
-      // setInputMin(String(startCameraPrice));
-      // setInputMax(String(endCameraPrice));
     }
   }, [dispatch, endCameraPrice, params, setSearchParams, startCameraPrice]);
 
@@ -62,7 +55,6 @@ function FilterPrice(): JSX.Element {
 
     if ((inputValue < startCameraPrice) && inputMinRef.current) {
       inputValue = startCameraPrice;
-      // setInputMin(String(startCameraPrice));
       inputMinRef.current.value = String(startCameraPrice);
     }
 
@@ -72,7 +64,6 @@ function FilterPrice(): JSX.Element {
       params.priceMin = String(inputValue);
     }
     setSearchParams(params);
-    // dispatch(setPriceMinFilter(String(inputValue)));
 
   }
 
@@ -82,7 +73,6 @@ function FilterPrice(): JSX.Element {
     if ((inputValue > endCameraPrice) && inputMaxRef.current) {
       inputValue = endCameraPrice;
       inputMaxRef.current.value = String(endCameraPrice);
-      // setInputMax(String(endCameraPrice));
     }
 
     if (!inputValue) {
@@ -91,7 +81,6 @@ function FilterPrice(): JSX.Element {
       params.priceMax = String(inputValue);
     }
     setSearchParams(params);
-    // dispatch(setPriceMaxFilter(String(inputValue)));
   }
 
 
@@ -106,9 +95,6 @@ function FilterPrice(): JSX.Element {
               type="text"
               name="price"
               placeholder={`от ${formatStartCameraPrice}`}
-              // value={inputMinRef.current?.value || ''}
-              // onChange={(event) => setInputMin(event.target.value)}
-              // onChange={(event) => dispatch(setPriceMinFilter(event.target.value))}
               onBlur={handleMinPriceBlur}
               ref={inputMinRef}
             />
@@ -120,9 +106,6 @@ function FilterPrice(): JSX.Element {
               type="text"
               name="priceUp"
               placeholder={`до ${formatEndCameraPrice}`}
-              // value={inputMaxRef.current?.value || ''}
-              // onChange={(event) => setInputMax(event.target.value)}
-              // onChange={(event) => dispatch(setPriceMaxFilter(event.target.value))}
               onBlur={handleMaxPriceBlur}
               ref={inputMaxRef}
             />
