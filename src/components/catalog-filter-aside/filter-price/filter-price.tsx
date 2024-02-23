@@ -19,27 +19,28 @@ function FilterPrice(): JSX.Element {
 
   const inputMinRef = useRef<HTMLInputElement | null>(null);
   const inputMaxRef = useRef<HTMLInputElement | null>(null);
-
+  const [startCameraPrice, endCameraPrice] = useAppSelector(getMinAndMaxCameraPrices);
 
   useEffect(() => {
     const priceMinParam = params.priceMin || '';
     const priceMaxParam = params.priceMax || '';
+
+    if (inputMinRef.current && inputMaxRef.current) {
+      inputMinRef.current.value = priceMinParam;
+      inputMaxRef.current.value = priceMaxParam;
+    }
 
     dispatch(setPriceMinFilter(priceMinParam));
     dispatch(setPriceMaxFilter(priceMaxParam));
 
   }, [dispatch, params.priceMax, params.priceMin]);
 
-  const [startCameraPrice, endCameraPrice] = useAppSelector(getMinAndMaxCameraPrices);
-  const formatStartCameraPrice = formatPrice(startCameraPrice) || '';
-  const formatEndCameraPrice = formatPrice(endCameraPrice) || '';
-
 
   useEffect(() => {
-    const min = Number(params.priceMin);
-    const max = Number(params.priceMax);
+    const priceMinParam = Number(params.priceMin);
+    const priceMaxParam = Number(params.priceMax);
 
-    if ((max < min) && inputMinRef.current && inputMaxRef.current) {
+    if ((priceMaxParam < priceMinParam) && inputMinRef.current && inputMaxRef.current) {
       params.priceMin = String(startCameraPrice);
       params.priceMax = String(endCameraPrice);
       setSearchParams(params);
@@ -47,13 +48,13 @@ function FilterPrice(): JSX.Element {
       inputMinRef.current.value = String(startCameraPrice);
       inputMaxRef.current.value = String(endCameraPrice);
     }
-  }, [dispatch, endCameraPrice, params, setSearchParams, startCameraPrice]);
+  }, [dispatch, setSearchParams, startCameraPrice, endCameraPrice, params.priceMin, params.priceMax, params]);
+
 
   function handleMinPriceBlur(event: React.ChangeEvent<HTMLInputElement>) {
-
     let inputValue = Number(event.target.value);
 
-    if ((inputValue < startCameraPrice) && inputMinRef.current) {
+    if ((inputValue < startCameraPrice) && (inputMinRef.current)) {
       inputValue = startCameraPrice;
       inputMinRef.current.value = String(startCameraPrice);
     }
@@ -94,7 +95,7 @@ function FilterPrice(): JSX.Element {
             <input
               type="text"
               name="price"
-              placeholder={`от ${formatStartCameraPrice}`}
+              placeholder={`от ${formatPrice(startCameraPrice) || ''}`}
               onBlur={handleMinPriceBlur}
               ref={inputMinRef}
             />
@@ -105,7 +106,7 @@ function FilterPrice(): JSX.Element {
             <input
               type="text"
               name="priceUp"
-              placeholder={`до ${formatEndCameraPrice}`}
+              placeholder={`до ${formatPrice(endCameraPrice) || ''}`}
               onBlur={handleMaxPriceBlur}
               ref={inputMaxRef}
             />
