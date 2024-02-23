@@ -26,23 +26,6 @@ function formatPrice(value: number | undefined) {
   }
 }
 
-// function formatStringToNumber(value: string) {
-//   if (value === '') {
-//     return '';
-//   }
-//   const result = Number(value.trim().replace(/\s+/g, ''));
-//   return result;
-// }
-
-// function format (value: string) {
-//   if (value) {
-//     const num = Number(value);
-//     return num.toLocaleString('ru');
-//   } else {
-//     return '';
-//   }
-// }
-
 function getParams(params: URLSearchParams): TParamsCatalog {
   return Object.fromEntries(params);
 }
@@ -60,8 +43,6 @@ export {
 
   formatDate,
   formatPrice,
-  formatStringToNumber,
-  format,
   getParams,
   pickRandomElement,
 
