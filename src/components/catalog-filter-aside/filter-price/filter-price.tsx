@@ -54,7 +54,11 @@ function FilterPrice(): JSX.Element {
   function handleMinPriceBlur(event: React.ChangeEvent<HTMLInputElement>) {
     let inputValue = Number(event.target.value);
 
-    if ((inputValue < startCameraPrice) && (inputMinRef.current)) {
+    if ((inputValue === 0) && (inputMinRef.current)) {
+      inputValue = 0;
+      inputMinRef.current.value = '';
+    }
+    if ((inputValue < startCameraPrice) && (inputValue !== 0) && (inputMinRef.current)) {
       inputValue = startCameraPrice;
       inputMinRef.current.value = String(startCameraPrice);
     }
