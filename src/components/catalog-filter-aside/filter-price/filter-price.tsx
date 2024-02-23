@@ -75,7 +75,7 @@ function FilterPrice(): JSX.Element {
   function handleMaxPriceBlur(event: React.ChangeEvent<HTMLInputElement>) {
     let inputValue = Number(event.target.value);
 
-    if ((inputValue > endCameraPrice) && inputMaxRef.current) {
+    if ((inputValue > endCameraPrice || inputValue < 0) && (inputMaxRef.current)) {
       inputValue = endCameraPrice;
       inputMaxRef.current.value = String(endCameraPrice);
     }
@@ -97,7 +97,7 @@ function FilterPrice(): JSX.Element {
         <div className="custom-input">
           <label>
             <input
-              type="text"
+              type="number"
               name="price"
               placeholder={`от ${formatPrice(startCameraPrice) || ''}`}
               onBlur={handleMinPriceBlur}
@@ -108,7 +108,7 @@ function FilterPrice(): JSX.Element {
         <div className="custom-input">
           <label>
             <input
-              type="text"
+              type="number"
               name="priceUp"
               placeholder={`до ${formatPrice(endCameraPrice) || ''}`}
               onBlur={handleMaxPriceBlur}
