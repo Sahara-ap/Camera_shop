@@ -12,6 +12,10 @@ function CatalogFilterAside(): JSX.Element {
   const params = getParams(searchParams);
 
   function handleResetClick() {
+    const hasSomeFiltersExceptPage = Object.keys(params).some((paramName) => paramName !== 'page');
+    if (hasSomeFiltersExceptPage) {
+      params.page = '1';
+    }
     delete params.cat;
     delete params.type;
     delete params.level;
