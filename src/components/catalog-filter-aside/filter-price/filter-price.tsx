@@ -1,6 +1,6 @@
 import './filter-price.css';
 
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks/store-hooks';
@@ -51,8 +51,9 @@ function FilterPrice(): JSX.Element {
   }, [dispatch, setSearchParams, startCameraPrice, endCameraPrice, params.priceMin, params.priceMax, params]);
 
 
-  function handleMinPriceBlur(event: React.ChangeEvent<HTMLInputElement>) {
-    let inputValue = Number(event.target.value);
+  function handleMinPriceBlur(eventValue: string) {
+    // let inputValue = Number(event.currentTarget.value);
+    let inputValue = Number(eventValue);
 
     if ((inputValue === 0) && (inputMinRef.current)) {
       inputValue = 0;
@@ -72,8 +73,8 @@ function FilterPrice(): JSX.Element {
 
   }
 
-  function handleMaxPriceBlur(event: React.ChangeEvent<HTMLInputElement>) {
-    let inputValue = Number(event.target.value);
+  function handleMaxPriceBlur(eventValue: string) {
+    let inputValue = Number(eventValue);
 
     if ((inputValue > endCameraPrice || inputValue < 0) && (inputMaxRef.current)) {
       inputValue = endCameraPrice;
@@ -88,6 +89,19 @@ function FilterPrice(): JSX.Element {
     setSearchParams(params);
   }
 
+  function handleMinPriceKeydown(event: React.KeyboardEvent<HTMLInputElement>) {
+    const eventValue = event.currentTarget.value;
+    if (event.key.startsWith('Enter')) {
+      handleMinPriceBlur(eventValue);
+    }
+  }
+
+  function handleMaxPriceKeydown(event: React.KeyboardEvent<HTMLInputElement>) {
+    const eventValue = event.currentTarget.value;
+    if (event.key.startsWith('Enter')) {
+      handleMaxPriceBlur(eventValue);
+    }
+  }
 
   return (
     <fieldset className="catalog-filter__block">
@@ -100,8 +114,9 @@ function FilterPrice(): JSX.Element {
               type="number"
               name="price"
               placeholder={`от ${formatPrice(startCameraPrice) || ''}`}
-              onBlur={handleMinPriceBlur}
+              onBlur={(event) => handleMinPriceBlur(event.currentTarget.value)}
               ref={inputMinRef}
+              onKeyDown={handleMinPriceKeydown}
             />
           </label>
         </div>
@@ -111,8 +126,9 @@ function FilterPrice(): JSX.Element {
               type="number"
               name="priceUp"
               placeholder={`до ${formatPrice(endCameraPrice) || ''}`}
-              onBlur={handleMaxPriceBlur}
+              onBlur={(event) => handleMaxPriceBlur(event.currentTarget.value)}
               ref={inputMaxRef}
+              onKeyDown={handleMaxPriceKeydown}
             />
           </label>
         </div>
