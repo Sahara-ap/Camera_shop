@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts';
-import { CatalogSearch } from '../catalog-search/catalog-search';
+import { SearchMain } from '../search/search-main/search-main';
 
 type HeaderProps = {
   page: AppRoute;
@@ -27,7 +27,7 @@ function Header({ page }: HeaderProps): JSX.Element {
             </li>
           </ul>
         </nav>
-        <CatalogSearch />
+        <SearchMain />
         <Link className="header__basket-link" to="#">
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
