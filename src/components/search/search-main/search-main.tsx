@@ -36,9 +36,10 @@ function SearchMain(): JSX.Element {
             placeholder="Поиск по сайту"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
+
           />
         </label>
-        <SearchList list={filterBySearchList} />
+        {isActive && <SearchList list={filterBySearchList} onSearchListClick={setSearch}/>}
       </form>
       <button
         className="form-search__reset"
