@@ -8,6 +8,7 @@ import { getMinAndMaxCameraPrices } from '../../../store/cards-data-store/cards-
 
 import { formatPrice, getParams } from '../../../utils/utils-functions';
 import { setPriceMaxFilter, setPriceMinFilter } from '../../../store/app-data-store/app-data-slice';
+import { isPriceEmpty, isUserPriceLowerThanPlaceholderValue } from '../filter-utils';
 
 
 function FilterPrice(): JSX.Element {
@@ -19,7 +20,10 @@ function FilterPrice(): JSX.Element {
 
   const inputMinRef = useRef<HTMLInputElement | null>(null);
   const inputMaxRef = useRef<HTMLInputElement | null>(null);
-  const [startCameraPrice, endCameraPrice] = useAppSelector(getMinAndMaxCameraPrices);
+  const [startPriceOfCameraList, endPriceOfCameraList] = useAppSelector(getMinAndMaxCameraPrices);
+
+  const placeholderStartValue = startPriceOfCameraList;
+  const placeholderEndValue = endPriceOfCameraList;
 
   useEffect(() => {
     const priceMinParam = params.priceMin || '';
@@ -40,51 +44,62 @@ function FilterPrice(): JSX.Element {
     const priceMinParam = Number(params.priceMin);
     const priceMaxParam = Number(params.priceMax);
 
-    if ((priceMaxParam < priceMinParam) && inputMinRef.current && inputMaxRef.current) {
-      params.priceMin = String(startCameraPrice);
-      params.priceMax = String(endCameraPrice);
+    if (
+      priceMaxParam < priceMinParam
+      && inputMinRef.current
+      && inputMaxRef.current
+    ) {
+
+      params.priceMin = String(placeholderStartValue);
+      params.priceMax = String(placeholderEndValue);
       setSearchParams(params);
 
-      inputMinRef.current.value = String(startCameraPrice);
-      inputMaxRef.current.value = String(endCameraPrice);
+      inputMinRef.current.value = String(placeholderStartValue);
+      inputMaxRef.current.value = String(placeholderEndValue);
     }
-  }, [dispatch, setSearchParams, startCameraPrice, endCameraPrice, params.priceMin, params.priceMax, params]);
+  }, [dispatch, setSearchParams, placeholderStartValue, placeholderEndValue, params.priceMin, params.priceMax, params]);
 
 
-  function handleMinPriceBlur(eventValue: string) {
-    // let inputValue = Number(event.currentTarget.value);
-    let inputValue = Number(eventValue);
+  function handleMinPriceBlur(price: string) {
+    let userMinPriceValue = Number(price);
 
-    if ((inputValue === 0) && (inputMinRef.current)) {
-      inputValue = 0;
+    if ((price === '') && (inputMinRef.current)) {
+      userMinPriceValue = 0;
       inputMinRef.current.value = '';
     }
-    if ((inputValue < startCameraPrice) && (inputValue !== 0) && (inputMinRef.current)) {
-      inputValue = startCameraPrice;
-      inputMinRef.current.value = String(startCameraPrice);
+    if (
+      isUserPriceLowerThanPlaceholderValue(userMinPriceValue, placeholderStartValue)
+      && !isPriceEmpty(price)
+      && (inputMinRef.current)
+    ) {
+      userMinPriceValue = placeholderStartValue;
+      inputMinRef.current.value = String(placeholderStartValue);
     }
 
-    if (!inputValue) {
+    if (!userMinPriceValue) {
       delete params.priceMin;
     } else {
-      params.priceMin = String(inputValue);
+      params.priceMin = String(userMinPriceValue);
     }
     setSearchParams(params);
 
   }
 
-  function handleMaxPriceBlur(eventValue: string) {
-    let inputValue = Number(eventValue);
+  function handleMaxPriceBlur(price: string) {
+    let userMaxPriceValue = Number(price);
 
-    if ((inputValue > endCameraPrice || inputValue < 0) && (inputMaxRef.current)) {
-      inputValue = endCameraPrice;
-      inputMaxRef.current.value = String(endCameraPrice);
+    if (
+      (userMaxPriceValue > placeholderEndValue || userMaxPriceValue < 0)
+      && (inputMaxRef.current)
+    ) {
+      userMaxPriceValue = placeholderEndValue;
+      inputMaxRef.current.value = String(placeholderEndValue);
     }
 
-    if (!inputValue) {
+    if (!userMaxPriceValue) {
       delete params.priceMax;
     } else {
-      params.priceMax = String(inputValue);
+      params.priceMax = String(userMaxPriceValue);
     }
     setSearchParams(params);
   }
@@ -112,8 +127,9 @@ function FilterPrice(): JSX.Element {
           <label>
             <input
               type="number"
+              min={0}
               name="price"
-              placeholder={`от ${formatPrice(startCameraPrice) || ''}`}
+              placeholder={`от ${formatPrice(placeholderStartValue) || ''}`}
               onBlur={(event) => handleMinPriceBlur(event.currentTarget.value)}
               ref={inputMinRef}
               onKeyDown={handleMinPriceKeydown}
@@ -124,8 +140,9 @@ function FilterPrice(): JSX.Element {
           <label>
             <input
               type="number"
+              min={0}
               name="priceUp"
-              placeholder={`до ${formatPrice(endCameraPrice) || ''}`}
+              placeholder={`до ${formatPrice(placeholderEndValue) || ''}`}
               onBlur={(event) => handleMaxPriceBlur(event.currentTarget.value)}
               ref={inputMaxRef}
               onKeyDown={handleMaxPriceKeydown}
