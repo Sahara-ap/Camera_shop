@@ -53,7 +53,6 @@ function FilterLevel(): JSX.Element {
     const levelCheckedList = [...levelFilterList];
 
     updateCheckedList(levelCheckedList, title);
-    // dispatch(setLevelFilterList(levelCheckedList));
 
     updateFilterParam(params, 'level', levelCheckedList);
     setSearchParams(params);

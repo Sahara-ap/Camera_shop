@@ -59,7 +59,6 @@ function FilterType(): JSX.Element {
     const typeCheckedList = [...typeFilterList];
 
     updateCheckedList(typeCheckedList, title);
-    // dispatch(setTypeFilterList(typeCheckedList));
 
     updateFilterParam(params, 'type', typeCheckedList);
     setSearchParams(params);
