@@ -5,7 +5,7 @@ import { getParams } from '../../../utils/utils-functions';
 import { useEffect } from 'react';
 import { setLevelFilterList } from '../../../store/app-data-store/app-data-slice';
 import { TCameraLevel } from '../../../types/general-types';
-import { updateCheckedList, updateFilterParam } from '../filter-utils';
+import { updateCheckedList, updateFilterParam } from '../utils/filter-utils';
 
 enum LevelParam {
   zero = 'Нулевой',

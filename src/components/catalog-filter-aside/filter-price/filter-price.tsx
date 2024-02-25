@@ -8,7 +8,7 @@ import { getMinAndMaxCameraPrices } from '../../../store/cards-data-store/cards-
 
 import { formatPrice, getParams } from '../../../utils/utils-functions';
 import { setPriceMaxFilter, setPriceMinFilter } from '../../../store/app-data-store/app-data-slice';
-import { isPriceEmpty, isUserPriceLowerThanPlaceholderValue } from '../filter-utils';
+import { isPriceEmpty, isUserPriceLowerThanPlaceholderValue } from '../utils/filter-utils';
 
 
 function FilterPrice(): JSX.Element {
