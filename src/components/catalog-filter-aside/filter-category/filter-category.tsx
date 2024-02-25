@@ -50,25 +50,10 @@ function FilterCategory(): JSX.Element {
     const categoryCheckedList = [...categoryFilterList];
 
     updateCheckedList(categoryCheckedList, title);
-    // dispatch(setCategoryFilterList(categoryCheckedList));
 
     updateFilterParam(params, 'cat', categoryCheckedList);
     setSearchParams(params);
   }
-
-  // const currentIndex = categoryCheckedList.indexOf(title);
-  // if (currentIndex === -1) {
-  //   categoryCheckedList.push(title);
-  // } else {
-  //   categoryCheckedList.splice(currentIndex, 1);
-  // }
-
-
-  // if (categoryCheckedList.length !== 0) {
-  //   params.cat = categoryCheckedList.join('-');
-  // } else {
-  //   delete params.cat;
-  // }
 
 
   return (
@@ -85,7 +70,6 @@ function FilterCategory(): JSX.Element {
               checked={categoryFilterList.includes(it.title)}
               disabled={
                 ('cat' in params) && (params.cat !== it.title)
-                // || (it.title === CategoryParam.Video) && (/Плёночная|Моментальная/.test(String(params.type)))
               }
             />
             <span className="custom-checkbox__icon"></span>
