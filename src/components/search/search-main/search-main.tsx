@@ -20,7 +20,7 @@ function SearchMain(): JSX.Element {
     return formatName.includes(formatSearchValue);
   });
 
-  const isActive = search.length >= 3;
+  const isActive = formatSearch(search).length >= 1;
 
   return (
     <div className={cn('form-search', { 'list-opened': isActive })}>
