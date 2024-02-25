@@ -1,3 +1,4 @@
+import './search-item.css';
 import { Link } from 'react-router-dom';
 import { TCard } from '../../../types/general-types';
 import { AppRoute } from '../../../consts';
