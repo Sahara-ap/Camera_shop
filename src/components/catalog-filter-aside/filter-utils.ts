@@ -18,8 +18,18 @@ function updateFilterParam(params: TParamsCatalog, paramKey: keyof TParamsCatalo
   }
 }
 
+function isUserPriceLowerThanPlaceholderValue (userPrice:number, placeholderValue: number) {
+  return userPrice < placeholderValue;
+}
+function isPriceEmpty (price: string) {
+  return price === '';
+}
+
 
 export {
   updateCheckedList,
   updateFilterParam,
+
+  isUserPriceLowerThanPlaceholderValue,
+  isPriceEmpty,
 };
