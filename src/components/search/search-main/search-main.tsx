@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { SearchList } from '../search-list/search-list';
+import cn from 'classnames';
+
 import { useAppSelector } from '../../../hooks/store-hooks';
 import { getCameras } from '../../../store/cards-data-store/cards-data-selectors';
 
-function formatSearch(searchValue: string) {
-  const result = searchValue.toLowerCase().replace(/\s+/g, '');
-  return result;
-}
+import { SearchList } from '../search-list/search-list';
+import { formatSearch } from '../utils/search-utils';
 
 
 function SearchMain(): JSX.Element {
@@ -21,9 +20,10 @@ function SearchMain(): JSX.Element {
     return formatName.includes(formatSearchValue);
   });
 
+  const isActive = search.length >= 3;
 
   return (
-    <div className="form-search">
+    <div className={cn('form-search', { 'list-opened': isActive })}>
       <form>
         <label>
           <svg className="form-search__icon" width="16" height="16" aria-hidden="true">
@@ -40,7 +40,11 @@ function SearchMain(): JSX.Element {
         </label>
         <SearchList list={filterBySearchList} />
       </form>
-      <button className="form-search__reset" type="reset">
+      <button
+        className="form-search__reset"
+        type="reset"
+        onClick={() => setSearch('')}
+      >
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>
         </svg><span className="visually-hidden">Сбросить поиск</span>
