@@ -3,7 +3,7 @@ import { SearchList } from '../search-list/search-list';
 import { useAppSelector } from '../../../hooks/store-hooks';
 import { getCameras } from '../../../store/cards-data-store/cards-data-selectors';
 
-function formatSearch (searchValue: string) {
+function formatSearch(searchValue: string) {
   const result = searchValue.toLowerCase().replace(/\s+/g, '');
   return result;
 }
@@ -14,18 +14,12 @@ function SearchMain(): JSX.Element {
   //TO DO: перейти на стор + всю логику поиска карточек перенести в селектор
   const [search, setSearch] = useState<string>('');
   const cameras = useAppSelector(getCameras);
-  const list = cameras.map((camera) => (  //форматирование имени + включение в "консерву" айдишки
-    {
-      name: formatSearch(camera.name),
-      id: camera.id
-    }
-  ));
 
-
-  const searchList = list.filter((item) => item.name.includes(formatSearch(search))); // формирую "кокроткий" список камер, у которых в имени есть поисковый запрос
-  const searchIdList = searchList.map((item) => item.id); // формирую список айдишек тех камер которые попали под фильтр
-
-  const filterBySearchList = cameras.filter((camera) => searchIdList.includes(camera.id));
+  const filterBySearchList = cameras.filter((item) => {
+    const formatName = formatSearch(item.name);
+    const formatSearchValue = formatSearch(search);
+    return formatName.includes(formatSearchValue);
+  });
 
 
   return (
