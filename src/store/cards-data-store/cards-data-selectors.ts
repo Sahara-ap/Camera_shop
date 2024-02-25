@@ -13,56 +13,6 @@ const getCameras = (state: Pick<State, NameSpace.Cards>) => (state[NameSpace.Car
 const getIsCamerasLoading = (state: Pick<State, NameSpace.Cards>) => (state[NameSpace.Cards].isCamerasLoading);
 
 
-
-
-const getFilterCamerasWithoutPrice = createSelector(
-  [getCategoryFilterList, getTypeFilterList, getLevelFilterList, getCameras],
-  (categoryFilterList, typeFilterList, levelFilterList, cameras) => {
-
-    const categoryFilters = categoryFilterList.length !== 0 ? categoryFilterList : FULL_CATEGORY_FILTER_LIST;
-    const typeFilters = typeFilterList.length !== 0 ? typeFilterList : FULL_TYPE_FILTER_LIST;
-    const levelFilters = levelFilterList.length !== 0 ? levelFilterList : FULL_LEVEL_FILTER_LIST;
-
-    const [firstCategoryValue, secondCategoryValue] = categoryFilters;
-    const [firstTypeValue, secondTypeValue, thirdTypeValue, forthTypeValue] = typeFilters;
-    const [firstLevelValue, secondLevelValue, thirdLevelValue] = levelFilters;
-    //если categoryFilterList.length === 0 ,т.е пользователь не выбрал ни одну категорию
-    // то в набор нужно установить все значения, как если бы он выбрал все
-
-    // const isFilterValuesValid =
-    //   categoryFilterList.length !== 0
-    //   || typeFilterList.length !== 0;
-
-    const preparedCameraList = [];
-
-    const filterByAllGroupsCameras = cameras.filter((camera) => (
-      (camera.category === firstCategoryValue || camera.category === secondCategoryValue)
-      &&
-      (camera.type === firstTypeValue
-        || camera.type === secondTypeValue
-        || camera.type === thirdTypeValue
-        || camera.type === forthTypeValue)
-      &&
-      (camera.level === firstLevelValue
-        || camera.level === secondLevelValue
-        || camera.level === thirdLevelValue)
-    ));
-
-    preparedCameraList.push(...filterByAllGroupsCameras);
-
-    return preparedCameraList;
-  });
-
-
-const getSortedByPriceCameras = createSelector([getFilterCamerasWithoutPrice], (cameras) => cameras.slice().sort((cameraA, cameraB) => cameraA.price - cameraB.price));
-const getMinAndMaxCameraPrices = createSelector([getSortedByPriceCameras], (cameras) => {
-  const sortedPriceList: TCard['price'][] = cameras.map((camera) => camera.price);
-  const minPrice = sortedPriceList.at(0) as number;
-  const maxPrice = sortedPriceList.at(-1) as number;
-
-  return [minPrice, maxPrice];
-});
-
 const getMinAndMaxCameraPricesInAllList = createSelector([getCameras], (cameras) => {
   const prices = cameras.map((camera) => camera.price);
   const minPrice = Math.min(...prices);
@@ -76,8 +26,6 @@ const getFilterCameras = createSelector(
   [getPriceMinFilter, getPriceMaxFilter, getCategoryFilterList, getTypeFilterList, getLevelFilterList, getMinAndMaxCameraPricesInAllList, getCameras],
   (minPriceFilter, maxPriceFilter, categoryFilterList, typeFilterList, levelFilterList, [minPriceInAllList, maxPriceInAllList], cameras) => {
 
-    // если цена не введена мы берем цены генеральной совокупности. Что означает фактически отсутствие фильтрации
-    //  Технически я фильтрую, но на выходе получаю тот же массив, что на входе
     const minPriceValue = minPriceFilter !== '' ? Number(minPriceFilter) : minPriceInAllList;
     const maxPriceValue = maxPriceFilter !== '' ? Number(maxPriceFilter) : maxPriceInAllList;
 
@@ -88,12 +36,6 @@ const getFilterCameras = createSelector(
     const [firstCategoryValue, secondCategoryValue] = categoryFilters;
     const [firstTypeValue, secondTypeValue, thirdTypeValue, forthTypeValue] = typeFilters;
     const [firstLevelValue, secondLevelValue, thirdLevelValue] = levelFilters;
-    //если categoryFilterList.length === 0 ,т.е пользователь не выбрал ни одну категорию
-    // то в набор нужно установить все значения, как если бы он выбрал все
-
-    // const isFilterValuesValid =
-    //   categoryFilterList.length !== 0
-    //   || typeFilterList.length !== 0;
 
     const preparedCameraList = [];
 
@@ -116,6 +58,16 @@ const getFilterCameras = createSelector(
 
     return preparedCameraList;
   });
+
+
+const getSortedByPriceCameras = createSelector([getFilterCameras], (cameras) => cameras.slice().sort((cameraA, cameraB) => cameraA.price - cameraB.price));
+const getMinAndMaxCameraPrices = createSelector([getSortedByPriceCameras], (cameras) => {
+  const sortedPriceList: TCard['price'][] = cameras.map((camera) => camera.price);
+  const minPrice = sortedPriceList.at(0) as number;
+  const maxPrice = sortedPriceList.at(-1) as number;
+
+  return [minPrice, maxPrice];
+});
 
 export {
   getCameras,
