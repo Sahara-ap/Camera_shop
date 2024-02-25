@@ -7,7 +7,7 @@ import { getCategoryFilterList } from '../../../store/app-data-store/app-data-se
 
 import { getParams } from '../../../utils/utils-functions';
 import { TCameraCategory } from '../../../types/general-types';
-import { updateCheckedList, updateFilterParam } from '../filter-utils';
+import { updateCheckedList, updateFilterParam } from '../utils/filter-utils';
 
 enum CategoryParam {
   Video = 'Видеокамера',

@@ -5,7 +5,7 @@ import { getTypeFilterList } from '../../../store/app-data-store/app-data-select
 import { useEffect } from 'react';
 import { setTypeFilterList } from '../../../store/app-data-store/app-data-slice';
 import { TCameraType } from '../../../types/general-types';
-import { updateCheckedList, updateFilterParam } from '../filter-utils';
+import { updateCheckedList, updateFilterParam } from '../utils/filter-utils';
 
 enum TypeParam {
   Collection = 'Коллекционная',

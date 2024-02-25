@@ -1,4 +1,4 @@
-import { TCameraCategory, TCameraLevel, TCameraType, TParamsCatalog } from '../../types/general-types';
+import { TCameraCategory, TCameraLevel, TCameraType, TParamsCatalog } from '../../../types/general-types';
 
 function updateCheckedList<T extends Array<string>, U extends string>(list: T, title: U) {
   const currentIndex = list.indexOf(title);
