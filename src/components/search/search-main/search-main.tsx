@@ -6,15 +6,17 @@ import { getCameras } from '../../../store/cards-data-store/cards-data-selectors
 
 import { SearchList } from '../search-list/search-list';
 import { formatSearch } from '../utils/search-utils';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute } from '../../../consts';
 
 
 function SearchMain(): JSX.Element {
 
   //TO DO: перейти на стор + всю логику поиска карточек перенести в селектор
   const [search, setSearch] = useState<string>('');
-  const [searchLineIndex, setSearchLineIndex] = useState(0);
-  // const searchLineIndexRef = useRef(-1)
+  const [searchLineIndex, setSearchLineIndex] = useState(-1);
   const cameras = useAppSelector(getCameras);
+  const navigate = useNavigate();
 
   const filterBySearchList = cameras.filter((item) => {
     const formatName = formatSearch(item.name);
@@ -27,23 +29,27 @@ function SearchMain(): JSX.Element {
   function handleKeydown(event: React.KeyboardEvent) {
     const isUpKey = event.key.startsWith('ArrowUp');
     const isDownKey = event.key.startsWith('ArrowDown');
+    const isEnter = event.key.startsWith('Enter');
 
     if (isDownKey) {
       event.preventDefault();
-      setSearchLineIndex(prev => prev + 1);
-      // searchLineIndexRef.current = searchLineIndexRef.current + 1;
+      const lastIndexInList = filterBySearchList.length - 1;
+      setSearchLineIndex((prev) => prev < lastIndexInList ? (prev + 1) : prev);
       console.log(searchLineIndex);
     }
     if (isUpKey) {
       event.preventDefault();
-      setSearchLineIndex(prev => prev - 1);
-      // searchLineIndexRef.current = searchLineIndexRef.current - 1;
+      setSearchLineIndex((prev) => prev > 0 ? prev - 1 : prev);
       console.log(searchLineIndex);
     }
+    
   }
 
   const searchListRef = useRef<HTMLDivElement>(null);
-  const closeSearchList = setSearch;
+  const closeSearchList = () => {
+    setSearch('');
+    setSearchLineIndex(-1);
+  };
 
 
   // закрытие поиска по клику outside
@@ -51,7 +57,7 @@ function SearchMain(): JSX.Element {
     event.preventDefault();
     const element = searchListRef.current;
     if (element && !element.contains(event.target as Element)) {
-      closeSearchList('');
+      closeSearchList();
     }
 
   }
@@ -90,12 +96,12 @@ function SearchMain(): JSX.Element {
 
           />
         </label>
-        {isActive && <SearchList list={filterBySearchList} onSearchListClick={setSearch} searchLineIndex={searchLineIndex}/>}
+        {isActive && <SearchList list={filterBySearchList} searchLineIndex={searchLineIndex}/>}
       </form>
       <button
         className="form-search__reset"
         type="reset"
-        onClick={() => setSearch('')}
+        onClick={() => closeSearchList()}
       >
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>
