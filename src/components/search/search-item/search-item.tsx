@@ -13,8 +13,6 @@ function SearchItem({ item, isSelected }: TSearchItemProps): JSX.Element {
   if (isSelected && liRef.current) {
     liRef.current.focus();
   }
-  console.log(isSelected, item.name, document.activeElement);
-
 
   return (
     <Link

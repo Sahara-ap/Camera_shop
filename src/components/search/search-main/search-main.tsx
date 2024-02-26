@@ -32,24 +32,20 @@ function SearchMain(): JSX.Element {
     const isTabKey = event.key.startsWith('Tab');
     const isEnter = event.key.startsWith('Enter');
 
-    // event.preventDefault();
 
     if (isDownKey) {
       event.preventDefault();
       const lastIndexInList = filterBySearchList.length - 1;
       setSearchLineIndex((prev) => prev < lastIndexInList ? (prev + 1) : prev);
-      console.log(searchLineIndex);
     }
     if (isUpKey) {
       event.preventDefault();
       setSearchLineIndex((prev) => prev > 0 ? prev - 1 : prev);
-      console.log(searchLineIndex);
     }
     if (isTabKey) {
       event.preventDefault();
       const lastIndexInList = filterBySearchList.length - 1;
       setSearchLineIndex((prev) => prev < lastIndexInList ? (prev + 1) : prev);
-      console.log(searchLineIndex);
     }
     if (isEnter && searchLineIndex >= 0) {
       navigate(`${AppRoute.Product}/${filterBySearchList[searchLineIndex].id}`);
@@ -88,7 +84,6 @@ function SearchMain(): JSX.Element {
   });
 
 
-  console.log('SearchLineIndex', searchLineIndex);
   function removeFocusFromSearchItem () {
     setSearchLineIndex(-1);
   }

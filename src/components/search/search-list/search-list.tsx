@@ -6,12 +6,6 @@ type TSearchListProps = {
   searchLineIndex: number;
 }
 function SearchList({ list, searchLineIndex }: TSearchListProps): JSX.Element {
-  const extendedList = list.map((item, index) => ({
-    ...item,
-    id: index,
-    isActive: false
-  }));
-  console.log('переданный индекс', searchLineIndex)
 
   return (
     <ul
