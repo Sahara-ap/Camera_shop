@@ -29,7 +29,10 @@ function SearchMain(): JSX.Element {
   function handleKeydown(event: React.KeyboardEvent) {
     const isUpKey = event.key.startsWith('ArrowUp');
     const isDownKey = event.key.startsWith('ArrowDown');
+    const isTabKey = event.key.startsWith('Tab');
     const isEnter = event.key.startsWith('Enter');
+
+    // event.preventDefault();
 
     if (isDownKey) {
       event.preventDefault();
@@ -40,6 +43,12 @@ function SearchMain(): JSX.Element {
     if (isUpKey) {
       event.preventDefault();
       setSearchLineIndex((prev) => prev > 0 ? prev - 1 : prev);
+      console.log(searchLineIndex);
+    }
+    if (isTabKey) {
+      event.preventDefault();
+      const lastIndexInList = filterBySearchList.length - 1;
+      setSearchLineIndex((prev) => prev < lastIndexInList ? (prev + 1) : prev);
       console.log(searchLineIndex);
     }
     if (isEnter && searchLineIndex >= 0) {
