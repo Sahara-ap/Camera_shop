@@ -42,7 +42,10 @@ function SearchMain(): JSX.Element {
       setSearchLineIndex((prev) => prev > 0 ? prev - 1 : prev);
       console.log(searchLineIndex);
     }
-    
+    if (isEnter && searchLineIndex >= 0) {
+      navigate(`${AppRoute.Product}/${filterBySearchList[searchLineIndex].id}`);
+    }
+
   }
 
   const searchListRef = useRef<HTMLDivElement>(null);
