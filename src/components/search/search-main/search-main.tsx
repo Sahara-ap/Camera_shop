@@ -25,6 +25,8 @@ function SearchMain(): JSX.Element {
   });
 
   const isActive = formatSearch(search).length >= 1;
+  const isFocusOnSearchList = searchLineIndex >= 0;
+
 
   function handleKeydown(event: React.KeyboardEvent) {
     const isUpKey = event.key.startsWith('ArrowUp');
@@ -47,11 +49,12 @@ function SearchMain(): JSX.Element {
       const lastIndexInList = filterBySearchList.length - 1;
       setSearchLineIndex((prev) => prev < lastIndexInList ? (prev + 1) : prev);
     }
-    if (isEnter && searchLineIndex >= 0) {
+    if (isEnter && isFocusOnSearchList) {
       navigate(`${AppRoute.Product}/${filterBySearchList[searchLineIndex].id}`);
     }
 
   }
+
 
   const searchListRef = useRef<HTMLDivElement>(null);
   const closeSearchList = () => {
