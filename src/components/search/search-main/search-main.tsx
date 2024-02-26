@@ -87,6 +87,16 @@ function SearchMain(): JSX.Element {
     };
   });
 
+
+  console.log('SearchLineIndex', searchLineIndex);
+  function removeFocusFromSearchItem () {
+    setSearchLineIndex(-1);
+  }
+  function handleSearchBarFocus () {
+    removeFocusFromSearchItem();
+  }
+
+
   return (
     <div
       className={cn('form-search', { 'list-opened': isActive })}
@@ -105,6 +115,7 @@ function SearchMain(): JSX.Element {
             placeholder="Поиск по сайту"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
+            onFocus={handleSearchBarFocus}
 
           />
         </label>
