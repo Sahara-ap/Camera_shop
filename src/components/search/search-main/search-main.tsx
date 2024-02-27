@@ -62,7 +62,6 @@ function SearchMain(): JSX.Element {
   };
 
 
-  // закрытие поиска по клику outside
   function handleOutsideClick(event: MouseEvent) {
     const element = searchListRef.current;
     if (element && !element.contains(event.target as Element)) {
