@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { TCard } from '../../../types/general-types';
 
 function formatSearch(searchValue: string) {

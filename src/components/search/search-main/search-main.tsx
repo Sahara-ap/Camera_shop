@@ -11,13 +11,12 @@ import { AppRoute } from '../../../consts';
 
 
 function SearchMain(): JSX.Element {
-
+  const navigate = useNavigate();
+  const searchListRef = useRef<HTMLDivElement>(null);
 
   const [search, setSearch] = useState<string>('');
   const [searchLineIndex, setSearchLineIndex] = useState(-1);
-  const searchListRef = useRef<HTMLDivElement>(null);
   const cameras = useAppSelector(getCameras);
-  const navigate = useNavigate();
 
   function closeSearchList() {
     setSearch('');
@@ -27,15 +26,7 @@ function SearchMain(): JSX.Element {
   function removeFocusFromSearchItem() {
     setSearchLineIndex(-1);
   }
-
-  // const filterBySearchList = cameras.filter((item) => {
-  //   const formatName = formatSearch(item.name);
-  //   const formatSearchValue = formatSearch(search);
-
-  //   return formatName.includes(formatSearchValue);
-  // });
   const filterCards = filterBySearch(cameras, search);
-
   const isActive = formatSearch(search).length >= 1;
 
 
@@ -60,12 +51,6 @@ function SearchMain(): JSX.Element {
       closeSearchList();
     }
   }
-
-
-  function handleSearchBarFocus() {
-    removeFocusFromSearchItem();
-  }
-
   useEffect(() => {
     let isMounted = true;
     const element = searchListRef.current;
@@ -79,6 +64,10 @@ function SearchMain(): JSX.Element {
       window.removeEventListener('click', handleOutsideClick);
     };
   });
+
+  function handleSearchBarFocus() {
+    removeFocusFromSearchItem();
+  }
 
 
   return (
