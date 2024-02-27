@@ -27,7 +27,7 @@ function SearchMain(): JSX.Element {
     setSearchLineIndex(-1);
   }
   const filterCards = filterBySearch(cameras, search);
-  const isActive = formatSearch(search).length >= 1;
+  const isActive = formatSearch(search).length >= 3;
 
 
   function handleKeydown(event: React.KeyboardEvent) {
