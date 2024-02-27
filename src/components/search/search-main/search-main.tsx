@@ -1,11 +1,11 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 
 import { useAppSelector } from '../../../hooks/store-hooks';
 import { getCameras } from '../../../store/cards-data-store/cards-data-selectors';
 
 import { SearchList } from '../search-list/search-list';
-import { formatSearch } from '../utils/search-utils';
+import { activateDownKey, activateTabKey, activateUpKey, formatSearch, useEnter } from '../utils/search-utils';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../../consts';
 
@@ -24,50 +24,28 @@ function SearchMain(): JSX.Element {
   });
 
   const isActive = formatSearch(search).length >= 1;
+
+
+  const path = `${AppRoute.Product}/${filterBySearchList[searchLineIndex]?.id}`;
+  const isEnterKeyPressed = useEnter();
   const isFocusOnSearchList = searchLineIndex >= 0;
 
-  type TSetState = Dispatch<SetStateAction<number>>
-  function activateDownKey (event: React.KeyboardEvent, index: number, cb: TSetState) {
-    const isDownKey = event.key.startsWith('ArrowDown');
-
-    if (isDownKey) {
-      event.preventDefault();
-      const lastIndexInUl = index;
-      cb((prev) => prev < lastIndexInUl ? (prev + 1) : prev);
-      // setSearchLineIndex((prev) => prev < lastIndexInList ? (prev + 1) : prev);
+  useEffect(() => {
+    if (isEnterKeyPressed && isFocusOnSearchList) {
+      navigate(path);
     }
-  }
-
+  }, [isEnterKeyPressed, isFocusOnSearchList, navigate, path]);
 
   function handleKeydown(event: React.KeyboardEvent) {
-    activateDownKey(event, filterBySearchList.length - 1, setSearchLineIndex);
-    activateUpKey(event, filterBySearchList.length - 1, setSearchLineIndex);
-    activateTabKey(event, filterBySearchList.length - 1, setSearchLineIndex);
-    activateEnterKey(event, filterBySearchList.length - 1, setSearchLineIndex);
+    const lastIndexInUl = filterBySearchList.length - 1;
 
-    const isUpKey = event.key.startsWith('ArrowUp');
-    // const isDownKey = event.key.startsWith('ArrowDown');
-    const isTabKey = event.key.startsWith('Tab');
-    const isEnter = event.key.startsWith('Enter');
+    activateDownKey(event,lastIndexInUl , setSearchLineIndex);
+    activateUpKey(event, setSearchLineIndex);
+    activateTabKey(event, lastIndexInUl, setSearchLineIndex);
 
-
-    // if (isDownKey) {
-    //   event.preventDefault();
-    //   const lastIndexInList = filterBySearchList.length - 1;
-    //   setSearchLineIndex((prev) => prev < lastIndexInList ? (prev + 1) : prev);
+    // if (isEnter && isFocusOnSearchList) {
+    //   navigate(`${AppRoute.Product}/${filterBySearchList[searchLineIndex].id}`);
     // }
-    if (isUpKey) {
-      event.preventDefault();
-      setSearchLineIndex((prev) => prev > 0 ? prev - 1 : prev);
-    }
-    if (isTabKey) {
-      event.preventDefault();
-      const lastIndexInList = filterBySearchList.length - 1;
-      setSearchLineIndex((prev) => prev < lastIndexInList ? (prev + 1) : prev);
-    }
-    if (isEnter && isFocusOnSearchList) {
-      navigate(`${AppRoute.Product}/${filterBySearchList[searchLineIndex].id}`);
-    }
 
   }
 
@@ -103,8 +81,11 @@ function SearchMain(): JSX.Element {
   });
 
 
- 
-  function handleSearchBarFocus () {
+  function removeFocusFromSearchItem() {
+    setSearchLineIndex(-1);
+  }
+
+  function handleSearchBarFocus() {
     removeFocusFromSearchItem();
   }
 
@@ -131,7 +112,7 @@ function SearchMain(): JSX.Element {
 
           />
         </label>
-        {isActive && <SearchList list={filterBySearchList} searchLineIndex={searchLineIndex}/>}
+        {isActive && <SearchList list={filterBySearchList} searchLineIndex={searchLineIndex} />}
       </form>
       <button
         className="form-search__reset"
