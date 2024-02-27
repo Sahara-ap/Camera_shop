@@ -12,7 +12,6 @@ import { AppRoute } from '../../../consts';
 
 function SearchMain(): JSX.Element {
 
-  //TO DO: перейти на стор + всю логику поиска карточек перенести в селектор
   const [search, setSearch] = useState<string>('');
   const [searchLineIndex, setSearchLineIndex] = useState(-1);
   const cameras = useAppSelector(getCameras);
@@ -65,7 +64,6 @@ function SearchMain(): JSX.Element {
 
   // закрытие поиска по клику outside
   function handleOutsideClick(event: MouseEvent) {
-    event.preventDefault();
     const element = searchListRef.current;
     if (element && !element.contains(event.target as Element)) {
       closeSearchList();
