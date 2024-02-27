@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { TCard } from '../../../types/general-types';
 
 function formatSearch(searchValue: string) {
   const result = searchValue.toLowerCase().replace(/\s+/g, '');
@@ -33,35 +34,13 @@ function activateTabKey(event: React.KeyboardEvent, lastIndexInUl: number, cb: T
   }
 }
 
-function useEnter() {
-  const [isEnterPressed, setIsEnterPressed] = useState(false);
-
-  function handleKeydown(event: KeyboardEvent) {
-    if (event.key.startsWith('Enter')) {
-      event.preventDefault();
-      setIsEnterPressed(true);
-    }
-  }
-
-
-  function handleKeyup(event: KeyboardEvent) {
-    if (event.key.startsWith('Enter')) {
-      event.preventDefault();
-      setIsEnterPressed(false);
-    }
-  }
-
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeydown);
-    window.addEventListener('keyup', handleKeyup);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeydown);
-      window.removeEventListener('keyup', handleKeyup);
-    };
-  }, []);
-
-  return isEnterPressed;
+function filterBySearch(cameras: TCard[], searchValue: string) {
+  const result = cameras.filter((item) => {
+    const formatName = formatSearch(item.name);
+    const formatSearchValue = formatSearch(searchValue);
+    return formatName.includes(formatSearchValue);
+  });
+  return result;
 }
 
 
@@ -71,5 +50,7 @@ export {
   activateDownKey,
   activateUpKey,
   activateTabKey,
-  useEnter,
+
+  filterBySearch
+
 };

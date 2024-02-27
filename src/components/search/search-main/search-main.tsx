@@ -5,65 +5,65 @@ import { useAppSelector } from '../../../hooks/store-hooks';
 import { getCameras } from '../../../store/cards-data-store/cards-data-selectors';
 
 import { SearchList } from '../search-list/search-list';
-import { activateDownKey, activateTabKey, activateUpKey, formatSearch, useEnter } from '../utils/search-utils';
+import { activateDownKey, activateTabKey, activateUpKey, filterBySearch, formatSearch } from '../utils/search-utils';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../../consts';
 
 
 function SearchMain(): JSX.Element {
 
+
   const [search, setSearch] = useState<string>('');
   const [searchLineIndex, setSearchLineIndex] = useState(-1);
+  const searchListRef = useRef<HTMLDivElement>(null);
   const cameras = useAppSelector(getCameras);
   const navigate = useNavigate();
 
-  const filterBySearchList = cameras.filter((item) => {
-    const formatName = formatSearch(item.name);
-    const formatSearchValue = formatSearch(search);
-    return formatName.includes(formatSearchValue);
-  });
+  function closeSearchList() {
+    setSearch('');
+    setSearchLineIndex(-1);
+  }
+
+  function removeFocusFromSearchItem() {
+    setSearchLineIndex(-1);
+  }
+
+  // const filterBySearchList = cameras.filter((item) => {
+  //   const formatName = formatSearch(item.name);
+  //   const formatSearchValue = formatSearch(search);
+
+  //   return formatName.includes(formatSearchValue);
+  // });
+  const filterCards = filterBySearch(cameras, search);
 
   const isActive = formatSearch(search).length >= 1;
 
 
-  const path = `${AppRoute.Product}/${filterBySearchList[searchLineIndex]?.id}`;
-  const isEnterKeyPressed = useEnter();
-  const isFocusOnSearchList = searchLineIndex >= 0;
-
-  useEffect(() => {
-    if (isEnterKeyPressed && isFocusOnSearchList) {
-      navigate(path);
-    }
-  }, [isEnterKeyPressed, isFocusOnSearchList, navigate, path]);
-
   function handleKeydown(event: React.KeyboardEvent) {
-    const lastIndexInUl = filterBySearchList.length - 1;
+    const lastIndexInUl = filterCards.length - 1;
 
-    activateDownKey(event,lastIndexInUl , setSearchLineIndex);
+    activateDownKey(event, lastIndexInUl, setSearchLineIndex);
     activateUpKey(event, setSearchLineIndex);
     activateTabKey(event, lastIndexInUl, setSearchLineIndex);
 
-    // if (isEnter && isFocusOnSearchList) {
-    //   navigate(`${AppRoute.Product}/${filterBySearchList[searchLineIndex].id}`);
-    // }
-
+    const isEnter = event.key.startsWith('Enter');
+    const isFocusOnSearchList = searchLineIndex >= 0;
+    if (isEnter && isFocusOnSearchList) {
+      const path = `${AppRoute.Product}/${filterCards[searchLineIndex].id}`;
+      navigate(path);
+    }
   }
 
-
-  const searchListRef = useRef<HTMLDivElement>(null);
-  const closeSearchList = () => {
-    setSearch('');
-    setSearchLineIndex(-1);
-  };
-
-
-  // закрытие поиска по клику outside
   function handleOutsideClick(event: MouseEvent) {
     const element = searchListRef.current;
     if (element && !element.contains(event.target as Element)) {
       closeSearchList();
     }
+  }
 
+
+  function handleSearchBarFocus() {
+    removeFocusFromSearchItem();
   }
 
   useEffect(() => {
@@ -71,23 +71,14 @@ function SearchMain(): JSX.Element {
     const element = searchListRef.current;
 
     if (isMounted && element) {
-      document.addEventListener('click', handleOutsideClick);
+      window.addEventListener('click', handleOutsideClick);
     }
 
     return () => {
       isMounted = false;
-      document.removeEventListener('click', handleOutsideClick);
+      window.removeEventListener('click', handleOutsideClick);
     };
   });
-
-
-  function removeFocusFromSearchItem() {
-    setSearchLineIndex(-1);
-  }
-
-  function handleSearchBarFocus() {
-    removeFocusFromSearchItem();
-  }
 
 
   return (
@@ -112,7 +103,7 @@ function SearchMain(): JSX.Element {
 
           />
         </label>
-        {isActive && <SearchList list={filterBySearchList} searchLineIndex={searchLineIndex} />}
+        {isActive && <SearchList list={filterCards} searchLineIndex={searchLineIndex} />}
       </form>
       <button
         className="form-search__reset"
