@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 
 import { useAppSelector } from '../../../hooks/store-hooks';
@@ -26,19 +26,36 @@ function SearchMain(): JSX.Element {
   const isActive = formatSearch(search).length >= 1;
   const isFocusOnSearchList = searchLineIndex >= 0;
 
+  type TSetState = Dispatch<SetStateAction<number>>
+  function activateDownKey (event: React.KeyboardEvent, index: number, cb: TSetState) {
+    const isDownKey = event.key.startsWith('ArrowDown');
+
+    if (isDownKey) {
+      event.preventDefault();
+      const lastIndexInUl = index;
+      cb((prev) => prev < lastIndexInUl ? (prev + 1) : prev);
+      // setSearchLineIndex((prev) => prev < lastIndexInList ? (prev + 1) : prev);
+    }
+  }
+
 
   function handleKeydown(event: React.KeyboardEvent) {
+    activateDownKey(event, filterBySearchList.length - 1, setSearchLineIndex);
+    activateUpKey(event, filterBySearchList.length - 1, setSearchLineIndex);
+    activateTabKey(event, filterBySearchList.length - 1, setSearchLineIndex);
+    activateEnterKey(event, filterBySearchList.length - 1, setSearchLineIndex);
+
     const isUpKey = event.key.startsWith('ArrowUp');
-    const isDownKey = event.key.startsWith('ArrowDown');
+    // const isDownKey = event.key.startsWith('ArrowDown');
     const isTabKey = event.key.startsWith('Tab');
     const isEnter = event.key.startsWith('Enter');
 
 
-    if (isDownKey) {
-      event.preventDefault();
-      const lastIndexInList = filterBySearchList.length - 1;
-      setSearchLineIndex((prev) => prev < lastIndexInList ? (prev + 1) : prev);
-    }
+    // if (isDownKey) {
+    //   event.preventDefault();
+    //   const lastIndexInList = filterBySearchList.length - 1;
+    //   setSearchLineIndex((prev) => prev < lastIndexInList ? (prev + 1) : prev);
+    // }
     if (isUpKey) {
       event.preventDefault();
       setSearchLineIndex((prev) => prev > 0 ? prev - 1 : prev);
@@ -70,6 +87,7 @@ function SearchMain(): JSX.Element {
     }
 
   }
+
   useEffect(() => {
     let isMounted = true;
     const element = searchListRef.current;
@@ -85,9 +103,7 @@ function SearchMain(): JSX.Element {
   });
 
 
-  function removeFocusFromSearchItem () {
-    setSearchLineIndex(-1);
-  }
+ 
   function handleSearchBarFocus () {
     removeFocusFromSearchItem();
   }
