@@ -1,3 +1,5 @@
+import { SortingOrder, SortingType } from '../consts';
+
 type TBanner = {
   id: number;
   name: string;
@@ -39,6 +41,8 @@ type TParamsCatalog = {
   priceMin?: string;
   priceMax?: string;
   prices?: string;
+  sortType?: SortingType;
+  sortOrder?: SortingOrder;
 }
 
 type TReview = {

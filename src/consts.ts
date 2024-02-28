@@ -36,6 +36,15 @@ enum LoadingDataStatus {
   Error = 'ERROR',
 }
 
+enum SortingType {
+  Price = 'price',
+  Popular = 'popular',
+}
+enum SortingOrder {
+  Up = 'up',
+  Down = 'down',
+}
+
 export {
   APIRoute,
   AppRoute,
@@ -43,4 +52,7 @@ export {
   DELAY,
   NameSpace,
   LoadingDataStatus,
+
+  SortingType,
+  SortingOrder,
 };
