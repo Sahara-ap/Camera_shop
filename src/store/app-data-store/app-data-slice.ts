@@ -13,6 +13,9 @@ type TAppDataState = {
   categoryFilterList: TCameraCategory[];
   typeFilterList: TCameraType[];
   levelFilterList: TCameraLevel[];
+
+  sortType: string;
+  sortOrder: string;
 }
 
 const initialState: TAppDataState = {
@@ -24,6 +27,9 @@ const initialState: TAppDataState = {
   categoryFilterList: [],
   typeFilterList: [],
   levelFilterList: [],
+
+  sortType: '',
+  sortOrder: ''
 };
 
 const appDataSlice = createSlice({
@@ -48,7 +54,14 @@ const appDataSlice = createSlice({
     },
     setLevelFilterList: (state, action: PayloadAction<TCameraLevel[]>) => {
       state.levelFilterList = action.payload;
-    }
+    },
+
+    setSortType: (state, action: PayloadAction<string>) => {
+      state.sortType = action.payload;
+    },
+    setSortOrder: (state, action: PayloadAction<string>) => {
+      state.sortOrder = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -81,7 +94,11 @@ const appDataSlice = createSlice({
       });
   }
 });
-const {setErrorServerResponse, setPriceMinFilter, setPriceMaxFilter, setCategoryFilterList, setTypeFilterList, setLevelFilterList} = appDataSlice.actions;
+const {
+  setErrorServerResponse,
+  setPriceMinFilter, setPriceMaxFilter, setCategoryFilterList, setTypeFilterList, setLevelFilterList,
+  setSortType, setSortOrder,
+} = appDataSlice.actions;
 
 export {
   appDataSlice,
@@ -93,5 +110,8 @@ export {
   setCategoryFilterList,
   setTypeFilterList,
   setLevelFilterList,
+
+  setSortType,
+  setSortOrder,
 };
 

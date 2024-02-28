@@ -10,6 +10,9 @@ const getCategoryFilterList = (state: Pick<State, NameSpace.App>) => state[NameS
 const getTypeFilterList = (state: Pick<State, NameSpace.App>) => state[NameSpace.App].typeFilterList;
 const getLevelFilterList = (state: Pick<State, NameSpace.App>) => state[NameSpace.App].levelFilterList;
 
+const getSortType = (state: Pick<State, NameSpace.App>) => state[NameSpace.App].sortType;
+const getSortOrder = (state: Pick<State, NameSpace.App>) => state[NameSpace.App].sortOrder;
+
 export {
   getErrorServerResponse,
   getHasErrorWithConnection,
@@ -19,4 +22,7 @@ export {
   getCategoryFilterList,
   getTypeFilterList,
   getLevelFilterList,
+
+  getSortType,
+  getSortOrder,
 };
