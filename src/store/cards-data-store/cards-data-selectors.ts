@@ -59,10 +59,14 @@ const getFilterCameras = createSelector(
     return preparedCameraList;
   });
 
+const getSortedByPopularityCameras = createSelector([getFilterCameras], (cameras) => cameras.sort((cameraA, cameraB) => cameraA.rating - cameraB.rating));
+const getSortedByPriceCameras = createSelector([getFilterCameras], (cameras) => cameras.sort((cameraA, cameraB) => cameraA.price - cameraB.price));
 
-const getSortedByPriceCameras = createSelector([getFilterCameras], (cameras) => cameras.slice().sort((cameraA, cameraB) => cameraA.price - cameraB.price));
-const getMinAndMaxCameraPrices = createSelector([getSortedByPriceCameras], (cameras) => {
-  const sortedPriceList: TCard['price'][] = cameras.map((camera) => camera.price);
+const getMinAndMaxCameraPrices = createSelector([getFilterCameras], (cameras) => {
+  const copiedCameras = cameras.slice();
+  const sortedByPriceCameras = copiedCameras.sort((cameraA, cameraB) => cameraA.price - cameraB.price);
+
+  const sortedPriceList: TCard['price'][] = sortedByPriceCameras.map((camera) => camera.price);
   const minPrice = sortedPriceList.at(0) as number;
   const maxPrice = sortedPriceList.at(-1) as number;
 
@@ -73,6 +77,7 @@ export {
   getCameras,
   getIsCamerasLoading,
 
+  getSortedByPopularityCameras,
   getSortedByPriceCameras,
   getMinAndMaxCameraPrices,
 
