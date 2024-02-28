@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getParams } from '../../utils/utils-functions';
 import { SortingOrder, SortingType } from '../../consts';
+import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
+import { getSortOrder, getSortType } from '../../store/app-data-store/app-data-selectors';
+import { setSortOrder, setSortType } from '../../store/app-data-store/app-data-slice';
 
 function CatalogSort(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -9,30 +12,37 @@ function CatalogSort(): JSX.Element {
   const sortTypeParam = params.sortType || '';
   const sortOrderParam = params.sortOrder || '';
 
-  const [sortType, setSortType] = useState(sortTypeParam);
-  const [sortOrder, setSortOrder] = useState(sortOrderParam);
+  // const [sortType, setSortType] = useState(sortTypeParam);
+  // const [sortOrder, setSortOrder] = useState(sortOrderParam);
+  const dispatch = useAppDispatch();
+  const sortType = useAppSelector(getSortType) || sortTypeParam;
+  const sortOrder = useAppSelector(getSortOrder) || sortOrderParam;
 
   function handleSortPriceChange () {
     params.sortType = SortingType.Price;
     setSearchParams(params);
-    setSortType(SortingType.Price);
+    // setSortType(SortingType.Price);
+    dispatch(setSortType(SortingType.Price));
   }
 
   function handleSortPopularChange () {
     params.sortType = SortingType.Popular;
     setSearchParams(params);
-    setSortType(SortingType.Popular);
+    // setSortType(SortingType.Popular);
+    dispatch(setSortType(SortingType.Popular));
   }
 
   function handleSortOrderUpChange () {
     params.sortOrder = SortingOrder.Up;
     setSearchParams(params);
-    setSortOrder(SortingOrder.Up);
+    // setSortOrder(SortingOrder.Up);
+    dispatch(setSortOrder(SortingOrder.Up));
   }
   function handleSortOrderDownChange () {
     params.sortOrder = SortingOrder.Down;
     setSearchParams(params);
-    setSortOrder(SortingOrder.Down);
+    // setSortOrder(SortingOrder.Down);
+    dispatch(setSortOrder(SortingOrder.Down));
   }
 
 

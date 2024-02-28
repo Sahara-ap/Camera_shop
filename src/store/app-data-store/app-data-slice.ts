@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { fetchCamerasAction, fetchSelectedCameraAction, fetchSimilars } from '../api-actions/card-actions';
-import { NameSpace } from '../../consts';
+import { NameSpace, SortingOrder, SortingType } from '../../consts';
 import { fetchReviews } from '../api-actions/reviews-action';
 import { TCameraCategory, TCameraLevel, TCameraType } from '../../types/general-types';
 
@@ -56,10 +56,10 @@ const appDataSlice = createSlice({
       state.levelFilterList = action.payload;
     },
 
-    setSortType: (state, action: PayloadAction<string>) => {
+    setSortType: (state, action: PayloadAction<SortingType>) => {
       state.sortType = action.payload;
     },
-    setSortOrder: (state, action: PayloadAction<string>) => {
+    setSortOrder: (state, action: PayloadAction<SortingOrder>) => {
       state.sortOrder = action.payload;
     },
   },
