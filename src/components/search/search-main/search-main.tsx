@@ -1,3 +1,4 @@
+import './saerch-main.css';
 import { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 
@@ -27,7 +28,8 @@ function SearchMain(): JSX.Element {
     setSearchLineIndex(-1);
   }
   const filterCards = filterBySearch(cameras, search);
-  const isActive = formatSearch(search).length >= 3;
+  const isActiveUl = formatSearch(search).length >= 3;
+  const isActiveButton = formatSearch(search).length >= 1;
 
 
   function handleKeydown(event: React.KeyboardEvent) {
@@ -72,7 +74,7 @@ function SearchMain(): JSX.Element {
 
   return (
     <div
-      className={cn('form-search', { 'list-opened': isActive })}
+      className={cn('form-search', { 'list-opened': isActiveUl })}
       onKeyDown={handleKeydown}
       ref={searchListRef}
     >
@@ -92,17 +94,18 @@ function SearchMain(): JSX.Element {
 
           />
         </label>
-        {isActive && <SearchList list={filterCards} searchLineIndex={searchLineIndex} />}
+        {isActiveUl && <SearchList list={filterCards} searchLineIndex={searchLineIndex} />}
       </form>
-      <button
-        className="form-search__reset"
-        type="reset"
-        onClick={() => closeSearchList()}
-      >
-        <svg width="10" height="10" aria-hidden="true">
-          <use xlinkHref="#icon-close"></use>
-        </svg><span className="visually-hidden">Сбросить поиск</span>
-      </button>
+      {isActiveButton &&
+        <button
+          className="form-search__reset"
+          type="reset"
+          onClick={() => closeSearchList()}
+        >
+          <svg width="10" height="10" aria-hidden="true">
+            <use xlinkHref="#icon-close"></use>
+          </svg><span className="visually-hidden">Сбросить поиск</span>
+        </button>}
     </div>
   );
 }

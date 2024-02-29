@@ -21,7 +21,7 @@ const getMinAndMaxCameraPricesInAllList = createSelector([getCameras], (cameras)
   return [minPrice, maxPrice];
 });
 
-const getSortedAndFilteredCameras = createSelector([getCameras, getSortType, getSortOrder], (cameras, sortingType, sortingOrder) => {
+const getSortedCameras = createSelector([getCameras, getSortType, getSortOrder], (cameras, sortingType, sortingOrder) => {
   const sortingCallbacks: Record<string, (a: TCard, b: TCard) => number> = {
     'Up': (cameraA, cameraB) => cameraA.price - cameraB.price,
     'Down': (cameraA, cameraB) => cameraB.price - cameraA.price,
@@ -41,8 +41,8 @@ const getSortedAndFilteredCameras = createSelector([getCameras, getSortType, get
 });
 
 
-const getFilterCameras = createSelector(
-  [getPriceMinFilter, getPriceMaxFilter, getCategoryFilterList, getTypeFilterList, getLevelFilterList, getMinAndMaxCameraPricesInAllList, getSortedAndFilteredCameras],
+const getFilteredAndSortedCameras = createSelector(
+  [getPriceMinFilter, getPriceMaxFilter, getCategoryFilterList, getTypeFilterList, getLevelFilterList, getMinAndMaxCameraPricesInAllList, getSortedCameras],
   (minPriceFilter, maxPriceFilter, categoryFilterList, typeFilterList, levelFilterList, [minPriceInAllList, maxPriceInAllList], cameras) => {
 
     const minPriceValue = minPriceFilter !== '' ? Number(minPriceFilter) : minPriceInAllList;
@@ -78,7 +78,7 @@ const getFilterCameras = createSelector(
     return preparedCameraList;
   });
 
-const getMinAndMaxCameraPrices = createSelector([getFilterCameras], (cameras) => {
+const getMinAndMaxCameraPrices = createSelector([getFilteredAndSortedCameras], (cameras) => {
   const copiedCameras = cameras.slice();
   const sortedByPriceCameras = copiedCameras.sort((cameraA, cameraB) => cameraA.price - cameraB.price);
 
@@ -93,10 +93,10 @@ export {
   getCameras,
   getIsCamerasLoading,
 
-  getSortedAndFilteredCameras,
+  getSortedCameras,
   getMinAndMaxCameraPrices,
 
-  getFilterCameras,
+  getFilteredAndSortedCameras,
 
   FULL_CATEGORY_FILTER_LIST,
   FULL_TYPE_FILTER_LIST,
