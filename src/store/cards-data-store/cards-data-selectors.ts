@@ -25,6 +25,8 @@ const getSortedCameras = createSelector([getCameras, getSortType, getSortOrder],
   const sortingCallbacks: Record<string, (a: TCard, b: TCard) => number> = {
     'Up': (cameraA, cameraB) => cameraA.price - cameraB.price,
     'Down': (cameraA, cameraB) => cameraB.price - cameraA.price,
+    'price': (cameraA, cameraB) => cameraA.price - cameraB.price,
+    'popular': (cameraA, cameraB) => cameraA.rating - cameraB.rating,
     'priceUp': (cameraA, cameraB) => cameraA.price - cameraB.price,
     'priceDown': (cameraA, cameraB) => cameraB.price - cameraA.price,
     'popularUp': (cameraA, cameraB) => cameraA.rating - cameraB.rating,
@@ -32,6 +34,7 @@ const getSortedCameras = createSelector([getCameras, getSortType, getSortOrder],
     default: () => 0
   };
   const sortValue = `${sortingType}${sortingOrder}`;
+
 
   const defaultSort = sortingCallbacks.default;
   const sort = sortingCallbacks[sortValue] || defaultSort;
