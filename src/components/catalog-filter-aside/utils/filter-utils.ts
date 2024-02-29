@@ -21,8 +21,11 @@ function updateFilterParam(params: TParamsCatalog, paramKey: keyof TParamsCatalo
 function isUserPriceLowerThanPlaceholderValue (userPrice:number, placeholderValue: number) {
   return userPrice < placeholderValue;
 }
-function isPriceEmpty (price: string) {
-  return price === '';
+// function isPriceEmpty (price: string) {
+//   return price === '';
+// }
+function isSomethingInputed (price: string) {
+  return price !== '';
 }
 
 
@@ -31,5 +34,5 @@ export {
   updateFilterParam,
 
   isUserPriceLowerThanPlaceholderValue,
-  isPriceEmpty,
+  isSomethingInputed,
 };

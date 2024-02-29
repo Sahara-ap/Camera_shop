@@ -13,14 +13,6 @@ const getCameras = (state: Pick<State, NameSpace.Cards>) => (state[NameSpace.Car
 const getIsCamerasLoading = (state: Pick<State, NameSpace.Cards>) => (state[NameSpace.Cards].isCamerasLoading);
 
 
-const getMinAndMaxCameraPricesInAllList = createSelector([getCameras], (cameras) => {
-  const prices = cameras.map((camera) => camera.price);
-  const minPrice = Math.min(...prices);
-  const maxPrice = Math.max(...prices);
-
-  return [minPrice, maxPrice];
-});
-
 const getSortedCameras = createSelector([getCameras, getSortType, getSortOrder], (cameras, sortingType, sortingOrder) => {
   const sortingCallbacks: Record<string, (a: TCard, b: TCard) => number> = {
     'Up': (cameraA, cameraB) => cameraA.price - cameraB.price,
@@ -43,6 +35,13 @@ const getSortedCameras = createSelector([getCameras, getSortType, getSortOrder],
   return result;
 });
 
+const getMinAndMaxCameraPricesInAllList = createSelector([getCameras], (cameras) => {
+  const prices = cameras.map((camera) => camera.price);
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+
+  return [minPrice, maxPrice];
+});
 
 const getFilteredAndSortedCameras = createSelector(
   [getPriceMinFilter, getPriceMaxFilter, getCategoryFilterList, getTypeFilterList, getLevelFilterList, getMinAndMaxCameraPricesInAllList, getSortedCameras],

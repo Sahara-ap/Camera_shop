@@ -1,6 +1,6 @@
 import './filter-price.css';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks/store-hooks';
@@ -8,7 +8,7 @@ import { getMinAndMaxCameraPrices } from '../../../store/cards-data-store/cards-
 
 import { formatPrice, getParams } from '../../../utils/utils-functions';
 import { setPriceMaxFilter, setPriceMinFilter } from '../../../store/app-data-store/app-data-slice';
-import { isPriceEmpty, isUserPriceLowerThanPlaceholderValue } from '../utils/filter-utils';
+import { isSomethingInputed, isUserPriceLowerThanPlaceholderValue } from '../utils/filter-utils';
 
 
 function FilterPrice(): JSX.Element {
@@ -25,7 +25,7 @@ function FilterPrice(): JSX.Element {
   const placeholderStartValue = startPriceOfCameraList;
   const placeholderEndValue = endPriceOfCameraList;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const priceMinParam = params.priceMin || '';
     const priceMaxParam = params.priceMax || '';
 
@@ -40,7 +40,7 @@ function FilterPrice(): JSX.Element {
   }, [dispatch, params.priceMax, params.priceMin]);
 
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const priceMinParam = Number(params.priceMin);
     const priceMaxParam = Number(params.priceMax);
 
@@ -69,7 +69,7 @@ function FilterPrice(): JSX.Element {
     }
     if (
       isUserPriceLowerThanPlaceholderValue(userMinPriceValue, placeholderStartValue)
-      && !isPriceEmpty(price)
+      && isSomethingInputed(price)
       && (inputMinRef.current)
     ) {
       userMinPriceValue = placeholderStartValue;
