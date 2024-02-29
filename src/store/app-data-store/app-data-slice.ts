@@ -14,8 +14,8 @@ type TAppDataState = {
   typeFilterList: TCameraType[];
   levelFilterList: TCameraLevel[];
 
-  sortType: string;
-  sortOrder: string;
+  sortType: SortingType;
+  sortOrder: SortingOrder;
 }
 
 const initialState: TAppDataState = {
@@ -28,8 +28,8 @@ const initialState: TAppDataState = {
   typeFilterList: [],
   levelFilterList: [],
 
-  sortType: '',
-  sortOrder: ''
+  sortType: SortingType.Non,
+  sortOrder: SortingOrder.Up
 };
 
 const appDataSlice = createSlice({

@@ -4,6 +4,7 @@ import { SortingOrder, SortingType } from '../../consts';
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { getSortOrder, getSortType } from '../../store/app-data-store/app-data-selectors';
 import { setSortOrder, setSortType } from '../../store/app-data-store/app-data-slice';
+import { useEffect } from 'react';
 
 function CatalogSort(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -15,29 +16,30 @@ function CatalogSort(): JSX.Element {
   const sortType = useAppSelector(getSortType) || sortTypeParam;
   const sortOrder = useAppSelector(getSortOrder) || sortOrderParam;
 
-  function handleSortPriceChange () {
-    params.sortType = SortingType.Price;
+  useEffect(() => {
+    if (params.sortType) {
+      dispatch(setSortType(params.sortType));
+    }
+  }, [dispatch, params.sortType]);
+
+  useEffect(() => {
+    if (params.sortOrder) {
+      dispatch(setSortOrder(params.sortOrder));
+    }
+  }, [dispatch, params.sortOrder]);
+
+
+  function handleSortTypeChange(sortingType: SortingType) {
+    params.sortType = sortingType;
     setSearchParams(params);
-    dispatch(setSortType(SortingType.Price));
+    // dispatch(setSortType(sortingType));
   }
 
-  function handleSortPopularChange () {
-    params.sortType = SortingType.Popular;
+  function handleSortOrderChange(sortingOrder: SortingOrder) {
+    params.sortOrder = sortingOrder;
     setSearchParams(params);
-    dispatch(setSortType(SortingType.Popular));
+    // dispatch(setSortOrder(sortingOrder));
   }
-
-  function handleSortOrderUpChange () {
-    params.sortOrder = SortingOrder.Up;
-    setSearchParams(params);
-    dispatch(setSortOrder(SortingOrder.Up));
-  }
-  function handleSortOrderDownChange () {
-    params.sortOrder = SortingOrder.Down;
-    setSearchParams(params);
-    dispatch(setSortOrder(SortingOrder.Down));
-  }
-
 
   return (
     <div className="catalog-sort" data-testid="catalogSortDiv">
@@ -51,7 +53,7 @@ function CatalogSort(): JSX.Element {
                 id="sortPrice"
                 name="sort"
                 checked={sortType === SortingType.Price}
-                onChange={handleSortPriceChange}
+                onChange={() => handleSortTypeChange(SortingType.Price)}
               />
               <label htmlFor="sortPrice">по цене</label>
             </div>
@@ -61,7 +63,7 @@ function CatalogSort(): JSX.Element {
                 id="sortPopular"
                 name="sort"
                 checked={sortType === SortingType.Popular}
-                onChange={handleSortPopularChange}
+                onChange={() => handleSortTypeChange(SortingType.Popular)}
               />
               <label htmlFor="sortPopular">по популярности</label>
             </div>
@@ -75,7 +77,7 @@ function CatalogSort(): JSX.Element {
                 name="sort-icon"
                 aria-label="По возрастанию"
                 checked={sortOrder === SortingOrder.Up}
-                onChange={handleSortOrderUpChange}
+                onChange={() => handleSortOrderChange(SortingOrder.Up)}
               />
               <label htmlFor="up">
                 <svg width="16" height="14" aria-hidden="true">
@@ -90,7 +92,7 @@ function CatalogSort(): JSX.Element {
                 name="sort-icon"
                 aria-label="По убыванию"
                 checked={sortOrder === SortingOrder.Down}
-                onChange={handleSortOrderDownChange}
+                onChange={() => handleSortOrderChange(SortingOrder.Down)}
               />
               <label htmlFor="down">
                 <svg width="16" height="14" aria-hidden="true">

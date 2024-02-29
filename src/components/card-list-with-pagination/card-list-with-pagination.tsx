@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { getFilterCameras, getIsCamerasLoading } from '../../store/cards-data-store/cards-data-selectors';
+import { getFilterCameras, getIsCamerasLoading, getSortedAndFilteredCameras } from '../../store/cards-data-store/cards-data-selectors';
 import { useAppSelector } from '../../hooks/store-hooks';
 
 import { CardList } from '../card-list/card-list';
@@ -15,9 +15,13 @@ const CARDS_NUMBER_PER_PAGE = 9;
 const MIN_PAGES = 2;
 
 function CardListWithPagination(): JSX.Element {
+// TO DO: получить из стора сортировку
+// TO DO: применить сортировку к данным
+
   const isCamerasLoading = useAppSelector(getIsCamerasLoading);
 
-  const preparedCameraList = useAppSelector(getFilterCameras);
+  // const preparedCameraList = useAppSelector(getFilterCameras);
+  const preparedCameraList = useAppSelector(getSortedAndFilteredCameras);
 
 
   const totalCardsLength = preparedCameraList.length;

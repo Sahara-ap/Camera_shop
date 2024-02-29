@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { State } from '../../types/store';
 import { TCameraCategory, TCameraLevel, TCameraType, TCard } from '../../types/general-types';
-import { getCategoryFilterList, getLevelFilterList, getPriceMaxFilter, getPriceMinFilter, getTypeFilterList } from '../app-data-store/app-data-selectors';
+import { getCategoryFilterList, getLevelFilterList, getPriceMaxFilter, getPriceMinFilter, getSortOrder, getSortType, getTypeFilterList } from '../app-data-store/app-data-selectors';
 
 import { NameSpace } from '../../consts';
 
@@ -59,8 +59,24 @@ const getFilterCameras = createSelector(
     return preparedCameraList;
   });
 
-const getSortedByPopularityCameras = createSelector([getFilterCameras], (cameras) => cameras.sort((cameraA, cameraB) => cameraA.rating - cameraB.rating));
-const getSortedByPriceCameras = createSelector([getFilterCameras], (cameras) => cameras.sort((cameraA, cameraB) => cameraA.price - cameraB.price));
+// const getSortedByPopularityCameras = createSelector([getFilterCameras], (cameras) => cameras.sort((cameraA, cameraB) => cameraA.rating - cameraB.rating));
+// const getSortedByPriceCameras = createSelector([getFilterCameras], (cameras) => cameras.sort((cameraA, cameraB) => cameraA.price - cameraB.price));
+const getSortedAndFilteredCameras = createSelector([getFilterCameras, getSortType, getSortOrder], (filteredCameras, sortingType, sortingOrder) => {
+  const sortingCallbacks: Record< string, (a: TCard, b: TCard) => number > = {
+    'priceUp': (cameraA, cameraB) => cameraB.price - cameraA.price,
+    'priceDown': (cameraA, cameraB) => cameraA.price - cameraB.price,
+    'popularUp': (cameraA, cameraB) => cameraB.rating - cameraA.rating,
+    'popularDown': (cameraA, cameraB) => cameraA.rating - cameraB.rating,
+    default: () => 0
+  };
+  const sortValue = `${sortingType}${sortingOrder}`;
+  console.log('sortValue', sortValue);
+
+  const defaultSort = sortingCallbacks.default;
+  const sort = sortingCallbacks[sortValue] || defaultSort;
+  console.log('sort', sort);
+  return filteredCameras.sort(sort);
+});
 
 const getMinAndMaxCameraPrices = createSelector([getFilterCameras], (cameras) => {
   const copiedCameras = cameras.slice();
@@ -77,8 +93,9 @@ export {
   getCameras,
   getIsCamerasLoading,
 
-  getSortedByPopularityCameras,
-  getSortedByPriceCameras,
+  getSortedAndFilteredCameras,
+  // getSortedByPopularityCameras,
+  // getSortedByPriceCameras,
   getMinAndMaxCameraPrices,
 
   getFilterCameras,

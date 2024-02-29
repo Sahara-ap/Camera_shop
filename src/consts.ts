@@ -39,10 +39,11 @@ enum LoadingDataStatus {
 enum SortingType {
   Price = 'price',
   Popular = 'popular',
+  Non = ''
 }
 enum SortingOrder {
-  Up = 'up',
-  Down = 'down',
+  Up = 'Up',
+  Down = 'Down',
 }
 
 export {
