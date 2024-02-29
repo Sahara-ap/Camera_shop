@@ -52,7 +52,7 @@ function CatalogSort(): JSX.Element {
                 type="radio"
                 id="sortPrice"
                 name="sort"
-                checked={sortType === SortingType.Price}
+                checked={sortType === SortingType.Price || (sortType === SortingType.Non && sortOrder !== SortingOrder.Non)}
                 onChange={() => handleSortTypeChange(SortingType.Price)}
               />
               <label htmlFor="sortPrice">по цене</label>
