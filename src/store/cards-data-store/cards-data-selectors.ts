@@ -21,11 +21,6 @@ const getMinAndMaxCameraPricesInAllList = createSelector([getCameras], (cameras)
   return [minPrice, maxPrice];
 });
 
-
-
-
-// const getSortedByPopularityCameras = createSelector([getFilterCameras], (cameras) => cameras.sort((cameraA, cameraB) => cameraA.rating - cameraB.rating));
-// const getSortedByPriceCameras = createSelector([getFilterCameras], (cameras) => cameras.sort((cameraA, cameraB) => cameraA.price - cameraB.price));
 const getSortedAndFilteredCameras = createSelector([getCameras, getSortType, getSortOrder], (cameras, sortingType, sortingOrder) => {
   const sortingCallbacks: Record<string, (a: TCard, b: TCard) => number> = {
     'Up': (cameraA, cameraB) => cameraA.price - cameraB.price,
@@ -37,17 +32,13 @@ const getSortedAndFilteredCameras = createSelector([getCameras, getSortType, get
     default: () => 0
   };
   const sortValue = `${sortingType}${sortingOrder}`;
-  console.log('sortValue', sortValue);
 
   const defaultSort = sortingCallbacks.default;
   const sort = sortingCallbacks[sortValue] || defaultSort;
-  console.log('sort', sort);
   const result = cameras.slice().sort(sort);
-  console.log('sortedCameras', result);
 
   return result;
 });
-
 
 
 const getFilterCameras = createSelector(
@@ -103,8 +94,6 @@ export {
   getIsCamerasLoading,
 
   getSortedAndFilteredCameras,
-  // getSortedByPopularityCameras,
-  // getSortedByPriceCameras,
   getMinAndMaxCameraPrices,
 
   getFilterCameras,

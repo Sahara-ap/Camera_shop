@@ -38,7 +38,6 @@ function CatalogSort(): JSX.Element {
     setSearchParams(params);
     // dispatch(setSortOrder(sortingOrder));
   }
-  console.log('sortOrder', sortOrder);
 
 
   return (
