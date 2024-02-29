@@ -10,9 +10,9 @@ function updateCheckedList<T extends Array<string>, U extends string>(list: T, t
 }
 
 type TCameraFilters = TCameraCategory | TCameraType | TCameraLevel
-function updateFilterParam(params: TParamsCatalog, paramKey: keyof TParamsCatalog, checkedFilterList: TCameraFilters[]) {
-  if (checkedFilterList.length !== 0){
-    params[paramKey] = checkedFilterList.join('-');
+function updateFilterParam<T extends TParamsCatalog, U extends keyof T>(params: T, paramKey: U, checkedFilterList: TCameraFilters[]) {
+  if (checkedFilterList.length !== 0) {
+    params[paramKey] = checkedFilterList.join('-') as T[U];
   } else {
     delete params[paramKey];
   }
@@ -21,9 +21,7 @@ function updateFilterParam(params: TParamsCatalog, paramKey: keyof TParamsCatalo
 function isUserPriceLowerThanPlaceholderValue (userPrice:number, placeholderValue: number) {
   return userPrice < placeholderValue;
 }
-// function isPriceEmpty (price: string) {
-//   return price === '';
-// }
+
 function isSomethingInputed (price: string) {
   return price !== '';
 }
