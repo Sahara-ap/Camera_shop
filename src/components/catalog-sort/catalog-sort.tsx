@@ -9,23 +9,21 @@ import { useEffect } from 'react';
 function CatalogSort(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   const params = getParams(searchParams);
-  const sortTypeParam = params.sortType || '';
-  const sortOrderParam = params.sortOrder || '';
 
   const dispatch = useAppDispatch();
-  const sortType = useAppSelector(getSortType) || sortTypeParam;
-  const sortOrder = useAppSelector(getSortOrder) || sortOrderParam;
+  const sortType = useAppSelector(getSortType);
+  // const sortOrder = useAppSelector(getSortOrder) || sortOrderParam;
+  const sortOrder = useAppSelector(getSortOrder);
 
   useEffect(() => {
-    if (params.sortType) {
-      dispatch(setSortType(params.sortType));
-    }
+    const sortTypeParam = params.sortType || SortingType.Non;
+    dispatch(setSortType(sortTypeParam));
+
   }, [dispatch, params.sortType]);
 
   useEffect(() => {
-    if (params.sortOrder) {
-      dispatch(setSortOrder(params.sortOrder));
-    }
+    const sortOrderParam = params.sortOrder || SortingOrder.Non;
+    dispatch(setSortOrder(sortOrderParam));
   }, [dispatch, params.sortOrder]);
 
 
@@ -40,6 +38,8 @@ function CatalogSort(): JSX.Element {
     setSearchParams(params);
     // dispatch(setSortOrder(sortingOrder));
   }
+  console.log('sortOrder', sortOrder);
+
 
   return (
     <div className="catalog-sort" data-testid="catalogSortDiv">

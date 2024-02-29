@@ -29,7 +29,7 @@ const initialState: TAppDataState = {
   levelFilterList: [],
 
   sortType: SortingType.Non,
-  sortOrder: SortingOrder.Up
+  sortOrder: SortingOrder.Non
 };
 
 const appDataSlice = createSlice({

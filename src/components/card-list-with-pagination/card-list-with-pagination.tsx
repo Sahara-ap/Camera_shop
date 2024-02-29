@@ -20,8 +20,8 @@ function CardListWithPagination(): JSX.Element {
 
   const isCamerasLoading = useAppSelector(getIsCamerasLoading);
 
-  // const preparedCameraList = useAppSelector(getFilterCameras);
-  const preparedCameraList = useAppSelector(getSortedAndFilteredCameras);
+  const preparedCameraList = useAppSelector(getFilterCameras);
+  // const preparedCameraList = useAppSelector(getSortedAndFilteredCameras);
 
 
   const totalCardsLength = preparedCameraList.length;

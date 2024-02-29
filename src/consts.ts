@@ -44,6 +44,7 @@ enum SortingType {
 enum SortingOrder {
   Up = 'Up',
   Down = 'Down',
+  Non = '',
 }
 
 export {

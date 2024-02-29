@@ -22,8 +22,36 @@ const getMinAndMaxCameraPricesInAllList = createSelector([getCameras], (cameras)
 });
 
 
+
+
+// const getSortedByPopularityCameras = createSelector([getFilterCameras], (cameras) => cameras.sort((cameraA, cameraB) => cameraA.rating - cameraB.rating));
+// const getSortedByPriceCameras = createSelector([getFilterCameras], (cameras) => cameras.sort((cameraA, cameraB) => cameraA.price - cameraB.price));
+const getSortedAndFilteredCameras = createSelector([getCameras, getSortType, getSortOrder], (cameras, sortingType, sortingOrder) => {
+  const sortingCallbacks: Record<string, (a: TCard, b: TCard) => number> = {
+    'Up': (cameraA, cameraB) => cameraA.price - cameraB.price,
+    'Down': (cameraA, cameraB) => cameraB.price - cameraA.price,
+    'priceUp': (cameraA, cameraB) => cameraA.price - cameraB.price,
+    'priceDown': (cameraA, cameraB) => cameraB.price - cameraA.price,
+    'popularUp': (cameraA, cameraB) => cameraA.rating - cameraB.rating,
+    'popularDown': (cameraA, cameraB) => cameraB.rating - cameraA.rating,
+    default: () => 0
+  };
+  const sortValue = `${sortingType}${sortingOrder}`;
+  console.log('sortValue', sortValue);
+
+  const defaultSort = sortingCallbacks.default;
+  const sort = sortingCallbacks[sortValue] || defaultSort;
+  console.log('sort', sort);
+  const result = cameras.slice().sort(sort);
+  console.log('sortedCameras', result);
+
+  return result;
+});
+
+
+
 const getFilterCameras = createSelector(
-  [getPriceMinFilter, getPriceMaxFilter, getCategoryFilterList, getTypeFilterList, getLevelFilterList, getMinAndMaxCameraPricesInAllList, getCameras],
+  [getPriceMinFilter, getPriceMaxFilter, getCategoryFilterList, getTypeFilterList, getLevelFilterList, getMinAndMaxCameraPricesInAllList, getSortedAndFilteredCameras],
   (minPriceFilter, maxPriceFilter, categoryFilterList, typeFilterList, levelFilterList, [minPriceInAllList, maxPriceInAllList], cameras) => {
 
     const minPriceValue = minPriceFilter !== '' ? Number(minPriceFilter) : minPriceInAllList;
@@ -58,25 +86,6 @@ const getFilterCameras = createSelector(
 
     return preparedCameraList;
   });
-
-// const getSortedByPopularityCameras = createSelector([getFilterCameras], (cameras) => cameras.sort((cameraA, cameraB) => cameraA.rating - cameraB.rating));
-// const getSortedByPriceCameras = createSelector([getFilterCameras], (cameras) => cameras.sort((cameraA, cameraB) => cameraA.price - cameraB.price));
-const getSortedAndFilteredCameras = createSelector([getFilterCameras, getSortType, getSortOrder], (filteredCameras, sortingType, sortingOrder) => {
-  const sortingCallbacks: Record< string, (a: TCard, b: TCard) => number > = {
-    'priceUp': (cameraA, cameraB) => cameraB.price - cameraA.price,
-    'priceDown': (cameraA, cameraB) => cameraA.price - cameraB.price,
-    'popularUp': (cameraA, cameraB) => cameraB.rating - cameraA.rating,
-    'popularDown': (cameraA, cameraB) => cameraA.rating - cameraB.rating,
-    default: () => 0
-  };
-  const sortValue = `${sortingType}${sortingOrder}`;
-  console.log('sortValue', sortValue);
-
-  const defaultSort = sortingCallbacks.default;
-  const sort = sortingCallbacks[sortValue] || defaultSort;
-  console.log('sort', sort);
-  return filteredCameras.sort(sort);
-});
 
 const getMinAndMaxCameraPrices = createSelector([getFilterCameras], (cameras) => {
   const copiedCameras = cameras.slice();
