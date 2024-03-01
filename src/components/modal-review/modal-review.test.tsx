@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { withStore } from '../../utils/mock-components';
-import { extractActionTypes, makeFakeModalAndProductAndReviewSlice } from '../../utils/mocks';
+import { extractActionTypes, makeFakeState } from '../../utils/mocks';
 import { ModalReview } from './modal-review';
 import userEvent from '@testing-library/user-event';
 import { setIsReviewModalActive } from '../../store/modal-windows-store/modal-windows-slice';
 
 describe('Component: ModalReview', () => {
-  const mockState = makeFakeModalAndProductAndReviewSlice();
+  const mockState = makeFakeState();
   mockState.MODALS.isReviewModalActive = true;
   const { withStoreComponent, mockStore } = withStore(<ModalReview />, mockState);
 

@@ -7,10 +7,10 @@ describe('Component: CatalogPagination', () => {
   it('should render correctly', () => {
     const expectedElement = 'catalogPaginationDiv';
     const mockTotalPages = 1;
-    const mockpageNumber = 1;
+    const mockParams = {};
     const mockCb = vi.fn();
 
-    const { withStoreComponent } = withStore(<CatalogPagination totalPages={mockTotalPages} pageNumber={mockpageNumber} onPaginationClick={mockCb}/>);
+    const { withStoreComponent } = withStore(<CatalogPagination totalPages={mockTotalPages} params={mockParams} onPaginationClick={mockCb}/>);
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);

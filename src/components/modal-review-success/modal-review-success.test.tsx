@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../utils/mock-components';
 import userEvent from '@testing-library/user-event';
-import { extractActionTypes, makeFakeModalSlice } from '../../utils/mocks';
+import { extractActionTypes, makeFakeState } from '../../utils/mocks';
 import { ModalReviewSuccess } from './modal-review-success';
 import { setIsReviewModalSuccessActive } from '../../store/modal-windows-store/modal-windows-slice';
 
 describe('Component: ModalReviewSuccess', () => {
-  const mockState = makeFakeModalSlice();
+  const mockState = makeFakeState();
   mockState.MODALS.isReviewModalSuccessActive = true;
   const { withStoreComponent, mockStore } = withStore(<ModalReviewSuccess />, mockState);
   const preparedComponent = withHistory(withStoreComponent);

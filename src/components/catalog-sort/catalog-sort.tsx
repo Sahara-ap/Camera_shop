@@ -12,7 +12,6 @@ function CatalogSort(): JSX.Element {
 
   const dispatch = useAppDispatch();
   const sortType = useAppSelector(getSortType);
-  // const sortOrder = useAppSelector(getSortOrder) || sortOrderParam;
   const sortOrder = useAppSelector(getSortOrder);
 
   useEffect(() => {
@@ -30,13 +29,11 @@ function CatalogSort(): JSX.Element {
   function handleSortTypeChange(sortingType: SortingType) {
     params.sortType = sortingType;
     setSearchParams(params);
-    // dispatch(setSortType(sortingType));
   }
 
   function handleSortOrderChange(sortingOrder: SortingOrder) {
     params.sortOrder = sortingOrder;
     setSearchParams(params);
-    // dispatch(setSortOrder(sortingOrder));
   }
 
 

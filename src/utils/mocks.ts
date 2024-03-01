@@ -119,99 +119,87 @@ const makeFakeSelectedCard = (): TSelectedCard => ({
 });
 
 
-const makeFakeBannerSlice = (initialState?: Partial<State>) => ({
-  [NameSpace.Banner]: {
-    bannerCards: makeFakeBanners(),
-    isBannerCardLoading: false,
-    isBannerError: false,
-  },
-  ...initialState ?? {}
-});
-const makeFakeCardsSlice = (initialState?: Partial<State>) => ({
-  [NameSpace.Cards]: {
-    cameras: makeFakeCards(),
-    isCamerasLoading: false
-  },
-  ...initialState ?? {}
-});
+// const makeFakeBannerSlice = (initialState?: Partial<State>) => ({
+//   [NameSpace.Banner]: {
+//     bannerCards: makeFakeBanners(),
+//     isBannerCardLoading: false,
+//     isBannerError: false,
+//   },
+//   ...initialState ?? {}
+// });
+// const makeFakeCardsSlice = (initialState?: Partial<State>) => ({
+//   [NameSpace.Cards]: {
+//     cameras: makeFakeCards(),
+//     isCamerasLoading: false
+//   },
+//   ...initialState ?? {}
+// });
 
-const makeFakeCardsAndProductSlice = (initialState?: Partial<State>) => ({
-  [NameSpace.Cards]: {
-    cameras: makeFakeCards(),
-    isCamerasLoading: false
-  },
-  [NameSpace.SelectedCard]: {
-    selectedCamera: makeFakeSelectedCard(),
-    isSelectedCameraLoading: false
-  },
-  ...initialState ?? {}
-});
+// const makeFakeCardsAndProductSlice = (initialState?: Partial<State>) => ({
+//   [NameSpace.Cards]: {
+//     cameras: makeFakeCards(),
+//     isCamerasLoading: false
+//   },
+//   [NameSpace.SelectedCard]: {
+//     selectedCamera: makeFakeSelectedCard(),
+//     isSelectedCameraLoading: false
+//   },
+//   ...initialState ?? {}
+// });
 
-const makeFakeModalAndProductSlice = (initialState?: Partial<State>) => ({
-  [NameSpace.Modals]: {
-    isBuyProductActive: false,
-    productData: null,
+// const makeFakeModalAndProductSlice = (initialState?: Partial<State>) => ({
+//   [NameSpace.Modals]: {
+//     isBuyProductActive: false,
+//     productData: null,
 
-    isReviewModalActive: false,
-    isReviewModalSuccessActive: false,
-  },
-  [NameSpace.SelectedCard]: {
-    selectedCamera: makeFakeSelectedCard(),
-    isSelectedCameraLoading: false
-  },
-  ...initialState ?? {}
-});
+//     isReviewModalActive: false,
+//     isReviewModalSuccessActive: false,
+//   },
+//   [NameSpace.SelectedCard]: {
+//     selectedCamera: makeFakeSelectedCard(),
+//     isSelectedCameraLoading: false
+//   },
+//   ...initialState ?? {}
+// });
 
-const makeFakeModalAndProductAndReviewSlice = (initialState?: Partial<State>) => ({
-  [NameSpace.Modals]: {
-    isBuyProductActive: false,
-    productData: null,
+// const makeFakeModalAndProductAndReviewSlice = (initialState?: Partial<State>) => ({
+//   [NameSpace.Modals]: {
+//     isBuyProductActive: false,
+//     productData: null,
 
-    isReviewModalActive: false,
-    isReviewModalSuccessActive: false,
-  },
-  [NameSpace.SelectedCard]: {
-    selectedCamera: makeFakeSelectedCard(),
-    isSelectedCameraLoading: false
-  },
-  [NameSpace.Reviews]: {
-    reviews: makeFakeReviews(),
-    isReviewLoading: false,
-    reviewSendingStatus: LoadingDataStatus.Unsent,
-  },
-  ...initialState ?? {}
-});
-const makeFakeReviewSlice = (initialState?: Partial<State>) => ({
-  [NameSpace.Reviews]: {
-    reviews: makeFakeReviews(),
-    isReviewLoading: false,
-    reviewSendingStatus: LoadingDataStatus.Unsent,
-  },
-  ...initialState ?? {}
-});
+//     isReviewModalActive: false,
+//     isReviewModalSuccessActive: false,
+  // },
+  // [NameSpace.SelectedCard]: {
+  //   selectedCamera: makeFakeSelectedCard(),
+  //   isSelectedCameraLoading: false
+  // },
+  // [NameSpace.Reviews]: {
+  //   reviews: makeFakeReviews(),
+  //   isReviewLoading: false,
+  //   reviewSendingStatus: LoadingDataStatus.Unsent,
+  // },
+  // ...initialState ?? {}
+// });
+// const makeFakeReviewSlice = (initialState?: Partial<State>) => ({
+//   [NameSpace.Reviews]: {
+//     reviews: makeFakeReviews(),
+//     isReviewLoading: false,
+//     reviewSendingStatus: LoadingDataStatus.Unsent,
+//   },
+//   ...initialState ?? {}
+// });
 
-const makeFakeModalSlice = (initialState?: Partial<State>) => ({
-  [NameSpace.Modals]: {
-    isBuyProductActive: false,
-    productData: null,
+// const makeFakeModalSlice = (initialState?: Partial<State>) => ({
+//   [NameSpace.Modals]: {
+//     isBuyProductActive: false,
+//     productData: null,
 
-    isReviewModalActive: false,
-    isReviewModalSuccessActive: false,
-  },
-  ...initialState ?? {}
-});
-
-const makeFakeSimilarAndAppSlice = (initialState?: Partial<State>) => ({
-  [NameSpace.App]: {
-    errorServerResponse: null,
-    hasErrorWithConnection: false,
-  },
-  [NameSpace.Similar]: {
-    similars: makeFakeSimilars(),
-    isSimilarsLoading: false,
-  },
-  ...initialState ?? {}
-});
+//     isReviewModalActive: false,
+//     isReviewModalSuccessActive: false,
+//   },
+//   ...initialState ?? {}
+// });
 
 const makeFakeState = (initialState?: Partial<State>) => ({
   [NameSpace.App]: {
@@ -274,14 +262,14 @@ export {
   makeFakeSelectedCard,
   makeFakeSimilars,
 
-  makeFakeBannerSlice,
-  makeFakeCardsSlice,
-  makeFakeCardsAndProductSlice,
-  makeFakeModalAndProductSlice,
-  makeFakeModalAndProductAndReviewSlice,
-  makeFakeReviewSlice,
-  makeFakeModalSlice,
-  makeFakeSimilarAndAppSlice,
-
+  // makeFakeBannerSlice,
+  // makeFakeCardsSlice,
+  // makeFakeCardsAndProductSlice,
+  // makeFakeModalAndProductSlice,
+  // makeFakeModalAndProductAndReviewSlice,
+  // makeFakeModalSlice,
   makeFakeState,
 };
+// makeFakeCardsAndProductSlice
+// makeFakeCardsSlice
+// makeFakeBannerSlice

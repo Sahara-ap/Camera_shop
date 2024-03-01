@@ -1,3 +1,4 @@
+import { SortingOrder, SortingType } from '../../consts';
 import { makeFakeCards, makeFakeReviews, makeFakeSelectedCard, makeFakeSimilars } from '../../utils/mocks';
 import { fetchCamerasAction, fetchSelectedCameraAction, fetchSimilars } from '../api-actions/card-actions';
 import { fetchReviews } from '../api-actions/reviews-action';
@@ -7,6 +8,15 @@ describe('app-data-slice', () => {
   const initialState = {
     errorServerResponse: null,
     hasErrorWithConnection: false,
+
+    priceMinFilter: '',
+    priceMaxFilter: '',
+    categoryFilterList: [],
+    typeFilterList: [],
+    levelFilterList: [],
+
+    sortType: SortingType.Non,
+    sortOrder: SortingOrder.Non,
   };
   describe('general tests', () => {
     it('should return initial state with empty action',

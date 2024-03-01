@@ -5,7 +5,7 @@ import { SelectedProductInfoTabs } from './selected-product-info-tabs';
 
 describe('Component: SelectedProductInfoTabs', () => {
   const mockSelectedCard = makeFakeSelectedCard();
-  const { withStoreComponent, } = withStore(<SelectedProductInfoTabs info={mockSelectedCard}/>);
+  const { withStoreComponent } = withStore(<SelectedProductInfoTabs info={mockSelectedCard}/>);
   const preparedComponent = withHistory(withStoreComponent);
 
   it('should render correctly', () => {

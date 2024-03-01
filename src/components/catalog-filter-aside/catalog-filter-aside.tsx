@@ -26,7 +26,7 @@ function CatalogFilterAside(): JSX.Element {
   }
   return (
     <div className="catalog__aside">
-      <div className="catalog-filter">
+      <div data-testid="catalogFilterAsideDivElement" className="catalog-filter">
         <form
           action="#"
           ref={formRef}
