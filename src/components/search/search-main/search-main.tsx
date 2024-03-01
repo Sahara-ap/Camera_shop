@@ -77,6 +77,7 @@ function SearchMain(): JSX.Element {
       className={cn('form-search', { 'list-opened': isActiveUl })}
       onKeyDown={handleKeydown}
       ref={searchListRef}
+      data-testid={'searchMainDiv'}
     >
       <form>
         <label>

@@ -60,7 +60,7 @@ function FilterLevel(): JSX.Element {
 
 
   return (
-    <fieldset className="catalog-filter__block">
+    <fieldset className="catalog-filter__block" data-testid="filterLevelElement">
       <legend className="title title--h5">Уровень</legend>
       {LEVELS.map((level) => (
         <div key={level.id} className="custom-checkbox catalog-filter__item">

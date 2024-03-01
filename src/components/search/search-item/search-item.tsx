@@ -22,6 +22,7 @@ function SearchItem({ item, isSelected }: TSearchItemProps): JSX.Element {
         ref={liRef}
         className="form-search__select-item"
         tabIndex={isSelected ? 0 : -1}
+        data-testid="searchItemElement"
       >
         {item.name}
       </li>

@@ -119,7 +119,7 @@ function FilterPrice(): JSX.Element {
   }
 
   return (
-    <fieldset className="catalog-filter__block">
+    <fieldset className="catalog-filter__block" data-testid="filterPriceElement">
       <legend className="title title--h5">Цена, ₽
       </legend>
       <div className="catalog-filter__price-range">

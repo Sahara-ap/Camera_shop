@@ -57,7 +57,7 @@ function FilterCategory(): JSX.Element {
 
 
   return (
-    <fieldset className="catalog-filter__block">
+    <fieldset className="catalog-filter__block" data-testid="filterCategoryElement">
       <legend className="title title--h5">Категория</legend>
 
       {CATEGORIES.map((it) => (

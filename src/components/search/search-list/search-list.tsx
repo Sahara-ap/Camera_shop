@@ -10,6 +10,7 @@ function SearchList({ list, searchLineIndex }: TSearchListProps): JSX.Element {
   return (
     <ul
       className="form-search__select-list"
+      data-testid="searchListUl"
 
     >
       {list.map((item, index) => (

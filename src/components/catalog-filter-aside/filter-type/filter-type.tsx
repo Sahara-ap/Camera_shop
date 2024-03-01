@@ -66,7 +66,7 @@ function FilterType(): JSX.Element {
 
 
   return (
-    <fieldset className="catalog-filter__block">
+    <fieldset className="catalog-filter__block" data-testid="filterTypeElement">
       <legend className="title title--h5">Тип камеры</legend>
 
       {TYPES.map((type) => (
