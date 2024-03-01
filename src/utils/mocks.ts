@@ -4,7 +4,7 @@ import { pickRandomElement } from './utils-functions';
 import { State } from '../types/store';
 import { Action } from '@reduxjs/toolkit';
 
-import { LoadingDataStatus, NameSpace } from '../consts';
+import { LoadingDataStatus, NameSpace, SortingOrder, SortingType } from '../consts';
 import { FULL_CATEGORY_FILTER_LIST, FULL_LEVEL_FILTER_LIST, FULL_TYPE_FILTER_LIST } from '../store/cards-data-store/cards-data-selectors';
 
 const extractActionTypes = (actions: Action<string>[]) => actions.map((action) => action.type);
@@ -213,6 +213,52 @@ const makeFakeSimilarAndAppSlice = (initialState?: Partial<State>) => ({
   ...initialState ?? {}
 });
 
+const makeFakeState = (initialState?: Partial<State>) => ({
+  [NameSpace.App]: {
+    errorServerResponse: null,
+    hasErrorWithConnection: false,
+
+    priceMinFilter: '',
+    priceMaxFilter: '',
+    categoryFilterList: [],
+    typeFilterList: [],
+    levelFilterList: [],
+
+    sortType: SortingType.Non,
+    sortOrder: SortingOrder.Non
+  },
+  [NameSpace.Banner]: {
+    bannerCards: makeFakeBanners(),
+    isBannerCardLoading: false,
+    isBannerError: false
+  },
+  [NameSpace.Cards]: {
+    cameras: makeFakeCards(),
+    isCamerasLoading: false
+  },
+  [NameSpace.Modals]: {
+    isBuyProductActive: false,
+    productData: null,
+
+    isReviewModalActive: false,
+    isReviewModalSuccessActive: false,
+  },
+  [NameSpace.Reviews]: {
+    reviews: makeFakeReviews(),
+    isReviewLoading: false,
+    reviewSendingStatus: LoadingDataStatus.Unsent,
+  },
+  [NameSpace.SelectedCard]: {
+    selectedCamera: makeFakeSelectedCard(),
+    isSelectedCameraLoading: false
+  },
+  [NameSpace.Similar]: {
+    similars: makeFakeSimilars(),
+    isSimilarsLoading: false,
+  },
+  ...initialState ?? {}
+});
+
 
 export {
   extractActionTypes,
@@ -235,5 +281,7 @@ export {
   makeFakeModalAndProductAndReviewSlice,
   makeFakeReviewSlice,
   makeFakeModalSlice,
-  makeFakeSimilarAndAppSlice
+  makeFakeSimilarAndAppSlice,
+
+  makeFakeState,
 };
