@@ -11,10 +11,16 @@
   width: 15px;
   height: 15px;
   margin: 0 5px;
+  bottom: 15px;
+  left: -15px;
 
 }
 
 .sample-swiper .swiper-pagination-bullet-active {
   background-color: rgb(110, 110, 240);
   opacity: 1;
+}
+
+.swiper-horizontal > .swiper-pagination-bullets {
+  left: -30px;
 }

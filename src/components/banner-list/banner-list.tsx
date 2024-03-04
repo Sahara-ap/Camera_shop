@@ -1,8 +1,8 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
-import 'swiper/css';
 import './banner-list.css';
 import 'swiper/css/bundle';
+import 'swiper/css';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { getBannerCards, getIsBannerError } from '../../store/banner-store/banner-selectors';
