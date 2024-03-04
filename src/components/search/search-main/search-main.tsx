@@ -14,14 +14,18 @@ import { AppRoute } from '../../../consts';
 function SearchMain(): JSX.Element {
   const navigate = useNavigate();
   const searchListRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const [search, setSearch] = useState<string>('');
   const [searchLineIndex, setSearchLineIndex] = useState(-1);
   const cameras = useAppSelector(getCameras);
 
-  function closeSearchList() {
+  function closeSearchListAndFocus() {
     setSearch('');
     setSearchLineIndex(-1);
+    const formElement = formRef.current;
+    const input = formElement?.search as HTMLInputElement;
+    input.focus();
   }
 
   function removeFocusFromSearchItem() {
@@ -50,7 +54,8 @@ function SearchMain(): JSX.Element {
   function handleOutsideClick(event: MouseEvent) {
     const element = searchListRef.current;
     if (element && !element.contains(event.target as Element)) {
-      closeSearchList();
+      setSearch('');
+      setSearchLineIndex(-1);
     }
   }
   useEffect(() => {
@@ -78,13 +83,15 @@ function SearchMain(): JSX.Element {
       onKeyDown={handleKeydown}
       ref={searchListRef}
       data-testid={'searchMainDiv'}
+
     >
-      <form>
+      <form ref={formRef}>
         <label>
           <svg className="form-search__icon" width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-lens"></use>
           </svg>
           <input
+            name='search'
             className="form-search__input"
             type="text"
             autoComplete="off"
@@ -101,7 +108,7 @@ function SearchMain(): JSX.Element {
         <button
           className="form-search__reset"
           type="reset"
-          onClick={() => closeSearchList()}
+          onClick={() => closeSearchListAndFocus()}
         >
           <svg width="10" height="10" aria-hidden="true">
             <use xlinkHref="#icon-close"></use>
