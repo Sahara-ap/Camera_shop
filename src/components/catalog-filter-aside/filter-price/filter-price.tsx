@@ -51,11 +51,11 @@ function FilterPrice(): JSX.Element {
     ) {
 
       params.priceMin = String(placeholderStartValue);
-      params.priceMax = String(placeholderEndValue);
+      params.priceMax = String(placeholderStartValue);
       setSearchParams(params);
 
       inputMinRef.current.value = String(placeholderStartValue);
-      inputMaxRef.current.value = String(placeholderEndValue);
+      inputMaxRef.current.value = String(placeholderStartValue);
     }
   }, [dispatch, setSearchParams, placeholderStartValue, placeholderEndValue, params.priceMin, params.priceMax, params]);
 
