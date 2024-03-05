@@ -11,22 +11,29 @@ import { updateCheckedList, updateFilterParam } from '../utils/filter-utils';
 
 enum CategoryParam {
   Video = 'Видеокамера',
+  Photo = 'Фотокамера',
+}
+enum CategoryTitleFromServer {
+  Video = 'Видеокамера',
   Photo = 'Фотоаппарат',
 }
 
 const CATEGORIES: {
   title: CategoryParam;
+  titleFromServer: CategoryTitleFromServer;
   name: 'photocamera' | 'videocamera';
   id: number;
 }[] =
   [
     {
       title: CategoryParam.Photo,
+      titleFromServer: CategoryTitleFromServer.Photo,
       name: 'photocamera',
       id: 11
     },
     {
       title: CategoryParam.Video,
+      titleFromServer: CategoryTitleFromServer.Video,
       name: 'videocamera',
       id: 12
     },
@@ -66,10 +73,10 @@ function FilterCategory(): JSX.Element {
             <input
               type="checkbox"
               name={it.name}
-              onChange={() => handleFilterToggle(it.title)}
-              checked={categoryFilterList.includes(it.title)}
+              onChange={() => handleFilterToggle(it.titleFromServer)}
+              checked={categoryFilterList.includes(it.titleFromServer)}
               disabled={
-                ('cat' in params) && (params.cat !== it.title)
+                ('cat' in params) && (params.cat !== it.titleFromServer)
               }
             />
             <span className="custom-checkbox__icon"></span>

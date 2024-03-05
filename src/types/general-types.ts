@@ -25,7 +25,7 @@ type TCard = {
   previewImgWebp: string;
   previewImgWebp2x: string;
 }
-type TCameraCategory = 'Видеокамера' | 'Фотоаппарат'
+type TCameraCategory = 'Видеокамера' | 'Фотокамера' | 'Фотоаппарат'
 type TCameraLevel = 'Нулевой' | 'Любительский' | 'Профессиональный'
 type TCameraType = 'Коллекционная' | 'Моментальная' | 'Цифровая' | 'Плёночная'
 
