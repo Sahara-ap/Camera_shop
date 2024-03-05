@@ -72,7 +72,7 @@ function CatalogSort(): JSX.Element {
                 id="up"
                 name="sort-icon"
                 aria-label="По возрастанию"
-                checked={sortOrder === SortingOrder.Up}
+                checked={(sortOrder === SortingOrder.Up) || (sortType !== SortingType.Non && sortOrder !== SortingOrder.Down)}
                 onChange={() => handleSortOrderChange(SortingOrder.Up)}
               />
               <label htmlFor="up">
