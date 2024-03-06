@@ -21,6 +21,9 @@ function updateFilterParam<T extends TParamsCatalog, U extends keyof T>(params: 
 function isUserPriceLowerThanPlaceholderValue (userPrice:number, placeholderValue: number) {
   return userPrice < placeholderValue;
 }
+function isUserPriceMoreThanPlaceholderValue (userPrice:number, placeholderValue: number) {
+  return userPrice > placeholderValue;
+}
 
 function isSomethingInputed (price: string) {
   return price !== '';
@@ -32,5 +35,6 @@ export {
   updateFilterParam,
 
   isUserPriceLowerThanPlaceholderValue,
+  isUserPriceMoreThanPlaceholderValue,
   isSomethingInputed,
 };
