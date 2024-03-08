@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { getIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-selectors';
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
 import { disableScrollLock, enableScrollLock, formatPrice } from '../../utils/utils-functions';
-import { setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
+import { setIsAddProductToCartSuccess, setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
 import { useEffect, useRef} from 'react';
 
 function ModalAddItem(): JSX.Element | null {
@@ -14,18 +14,22 @@ function ModalAddItem(): JSX.Element | null {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
 
-  function handleCloseButtonClick() {
+  function closeModal() {
     dispatch(setIsBuyProductActive(false));
   }
 
+  function handleCloseButtonClick() {
+    closeModal();
+  }
+
   function handleOverlayClick() {
-    dispatch(setIsBuyProductActive(false));
+    closeModal();
   }
 
   function handleModalWindowKeydown(event: React.KeyboardEvent) {
     event.preventDefault();
     if (event.key.startsWith('Esc')) {
-      dispatch(setIsBuyProductActive(false));
+      closeModal();
     }
   }
   useEffect(() => {
@@ -39,6 +43,11 @@ function ModalAddItem(): JSX.Element | null {
       disableScrollLock();
     };
   });
+
+  function handleAddButtonClick () {
+    closeModal();
+    dispatch(setIsAddProductToCartSuccess(true));
+  }
 
 
   if (!productData) {
@@ -86,6 +95,7 @@ function ModalAddItem(): JSX.Element | null {
               tabIndex={0}
               className="btn btn--purple modal__btn modal__btn--fit-width" type="button"
               ref={buttonRef}
+              onClick={handleAddButtonClick}
             >
               <svg width="24" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-add-basket"></use>
