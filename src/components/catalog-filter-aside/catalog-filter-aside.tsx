@@ -12,9 +12,9 @@ function CatalogFilterAside(): JSX.Element {
   const params = getParams(searchParams);
 
   function handleResetClick() {
-    const hasSomeFilters = Object.keys(params).some((paramName) => paramName.includes('price') || paramName.includes('level') || paramName.includes('cat') || paramName.includes('type'));
+    const hasSomeFiltersInParams = Object.keys(params).some((paramName) => paramName.includes('price') || paramName.includes('level') || paramName.includes('cat') || paramName.includes('type'));
 
-    if (hasSomeFilters) {
+    if (hasSomeFiltersInParams) {
       delete params.page;
     }
     delete params.cat;
