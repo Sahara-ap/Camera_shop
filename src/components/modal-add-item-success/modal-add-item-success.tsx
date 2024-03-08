@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { disableScrollLock, enableScrollLock } from '../../utils/utils-functions';
+import { AppRoute } from '../../consts';
 
 type TModalAddItemSuccessProps = {
   onLinkClick: () => void;
@@ -60,7 +61,7 @@ function ModalAddItemSuccess({ onLinkClick }: TModalAddItemSuccessProps): JSX.El
           <div className="modal__buttons">
             <Link
               className="btn btn--transparent modal__btn"
-              to="#"
+              to={AppRoute.Catalog}
               onClick={handleGoOnShoppingLinkClick}
             >
               Продолжить покупки
