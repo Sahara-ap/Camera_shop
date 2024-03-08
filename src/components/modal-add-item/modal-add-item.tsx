@@ -34,7 +34,8 @@ function ModalAddItem(): JSX.Element | null {
     if (isBuyProductActive) {
       enableScrollLock();
 
-      setTimeout(() => buttonRef.current?.focus(), DELAY);
+      // setTimeout(() => buttonRef.current?.focus(), DELAY);
+      buttonRef.current?.focus();
     }
 
     return () => {
@@ -48,7 +49,8 @@ function ModalAddItem(): JSX.Element | null {
   }
   return (
     <div
-      className={cn('modal', { 'is-active': isBuyProductActive })}
+      // className={cn('modal', { 'is-active': isBuyProductActive })}
+      className={'modal is-active'}
       tabIndex={-1}
       data-testid="modalAddItemDiv"
       onKeyDown={handleModalWindowKeydown}
