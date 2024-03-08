@@ -1,10 +1,11 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 
 import { getIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-selectors';
-import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
 import { disableScrollLock, enableScrollLock, formatPrice } from '../../utils/utils-functions';
 import { setIsAddProductToCartSuccess, setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
 import { useEffect, useRef} from 'react';
+import { addToBasketList } from '../../store/basket-store/basket-slice';
+import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
 
 function ModalAddItem(): JSX.Element | null {
 
@@ -14,22 +15,25 @@ function ModalAddItem(): JSX.Element | null {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
 
-  function closeModal() {
+  function closeAddModal() {
     dispatch(setIsBuyProductActive(false));
+  }
+  function openSuccessModal() {
+    dispatch(setIsAddProductToCartSuccess(true));
   }
 
   function handleCloseButtonClick() {
-    closeModal();
+    closeAddModal();
   }
 
   function handleOverlayClick() {
-    closeModal();
+    closeAddModal();
   }
 
   function handleModalWindowKeydown(event: React.KeyboardEvent) {
     event.preventDefault();
     if (event.key.startsWith('Esc')) {
-      closeModal();
+      closeAddModal();
     }
   }
   useEffect(() => {
@@ -45,8 +49,11 @@ function ModalAddItem(): JSX.Element | null {
   });
 
   function handleAddButtonClick () {
-    closeModal();
-    dispatch(setIsAddProductToCartSuccess(true));
+    closeAddModal();
+    openSuccessModal();
+    if (productData) {
+      dispatch(addToBasketList(productData));
+    }
   }
 
 

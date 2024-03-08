@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts';
 import { SearchMain } from '../search/search-main/search-main';
+import { useAppSelector } from '../../hooks/store-hooks';
+import { getBasketCount } from '../../store/basket-store/basket-selectors';
 
 type HeaderProps = {
   page: AppRoute;
 }
 
 function Header({ page }: HeaderProps): JSX.Element {
+  const basketCount = useAppSelector(getBasketCount);
   return (
     <header className="header" id="header" data-testid="headerDivElement">
       <div className="container">
@@ -32,7 +35,7 @@ function Header({ page }: HeaderProps): JSX.Element {
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
           </svg>
-          {page === AppRoute.Product && <span className="header__basket-count">3</span>}
+          {page === AppRoute.Product && <span className="header__basket-count">{basketCount}</span>}
         </Link>
       </div>
     </header>

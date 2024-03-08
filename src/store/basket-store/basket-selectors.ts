@@ -7,8 +7,10 @@ const getBasketListId = createSelector([getBasketList], (basketList) => {
   const idList = basketList.map((item) => item.id);
   return idList;
 });
+const getBasketCount = createSelector([getBasketList], (basketList) => basketList.length);
 
 export {
   getBasketList,
   getBasketListId,
+  getBasketCount,
 };
