@@ -1,4 +1,3 @@
-import cn from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 
 import { getIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-selectors';
@@ -6,7 +5,6 @@ import { getSelectedCamera } from '../../store/selected-card-data-store/selected
 import { disableScrollLock, enableScrollLock, formatPrice } from '../../utils/utils-functions';
 import { setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
 import { useEffect, useRef} from 'react';
-import { DELAY } from '../../consts';
 
 function ModalAddItem(): JSX.Element | null {
 
@@ -34,7 +32,6 @@ function ModalAddItem(): JSX.Element | null {
     if (isBuyProductActive) {
       enableScrollLock();
 
-      // setTimeout(() => buttonRef.current?.focus(), DELAY);
       buttonRef.current?.focus();
     }
 
@@ -49,7 +46,6 @@ function ModalAddItem(): JSX.Element | null {
   }
   return (
     <div
-      // className={cn('modal', { 'is-active': isBuyProductActive })}
       className={'modal is-active'}
       tabIndex={-1}
       data-testid="modalAddItemDiv"
