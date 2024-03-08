@@ -16,7 +16,6 @@ import { Loading } from '../../components/loading/loading';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { ErrorConnection } from '../../components/error-connection/error-connection';
 
-import { AppRoute } from '../../consts';
 import { fetchReviews } from '../../store/api-actions/reviews-action';
 import { ModalReview } from '../../components/modal-review/modal-review';
 import { ModalReviewSuccess } from '../../components/modal-review-success/modal-review-success';
@@ -59,7 +58,7 @@ function SelectedProductPage(): JSX.Element {
     <>
       <Helmet><title>{'Продукт - Фотошоп'}</title></Helmet>
       <div className="wrapper">
-        <Header page={AppRoute.Product} />
+        <Header />
         <main>
           <div className="page-content">
             <Breadcrumbs page='product' productName={cameraName} />

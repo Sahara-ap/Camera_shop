@@ -10,7 +10,6 @@ import { CardListWithPagination } from '../../components/card-list-with-paginati
 import { getHasErrorWithConnection } from '../../store/app-data-store/app-data-selectors';
 
 import { useAppSelector } from '../../hooks/store-hooks';
-import { AppRoute } from '../../consts';
 import { Helmet } from 'react-helmet-async';
 import { ModalWrapper } from '../../components/modal-wrapper/modal-wrapper';
 
@@ -22,7 +21,7 @@ function CatalogPage(): JSX.Element {
     <>
       <Helmet><title>{'Каталог - Фотошоп'}</title></Helmet>
       <div className="wrapper">
-        <Header page={AppRoute.Catalog} />
+        <Header />
         <main>
           <BannerList />
           <div className="page-content">
