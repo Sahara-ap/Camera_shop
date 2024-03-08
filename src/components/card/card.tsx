@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
-import { useAppDispatch } from '../../hooks/store-hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { setSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-slice';
 import { setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
 
@@ -9,6 +9,7 @@ import { formatPrice } from '../../utils/utils-functions';
 import { AppRoute } from '../../consts';
 import { TCard } from '../../types/general-types';
 import { RatingStars } from '../rating-stars/rating-stars';
+import { getBasketListId } from '../../store/basket-store/basket-selectors';
 
 
 type TCardProps = {
@@ -17,6 +18,8 @@ type TCardProps = {
 }
 function Card({ cardData, page }: TCardProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const basketListId = useAppSelector(getBasketListId);
+  const includedInBasket = basketListId.includes(cardData.id);
 
   function handleButtonClick() {
     dispatch(setIsBuyProductActive(true));
@@ -52,14 +55,24 @@ function Card({ cardData, page }: TCardProps): JSX.Element {
       </div>
 
       <div className="product-card__buttons">
-        <button
-          onClick={handleButtonClick}
-          className="btn btn--purple product-card__btn"
-          type="button"
-          data-testid="buttonElement"
-        >
-          Купить
-        </button>
+        {!includedInBasket
+          ?
+          (
+            <button
+              onClick={handleButtonClick}
+              className="btn btn--purple product-card__btn"
+              type="button"
+              data-testid="buttonElement"
+            >
+              Купить
+            </button>
+          )
+          :
+          <Link className="btn btn--purple-border product-card__btn product-card__btn--in-cart" to="#">
+            <svg width="16" height="16" aria-hidden="true">
+              <use xlinkHref="#icon-basket"></use>
+            </svg>В корзине
+          </Link>}
         <Link
           className="btn btn--transparent"
           to={`${AppRoute.Product}/${cardData.id}`}
