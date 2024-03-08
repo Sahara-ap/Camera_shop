@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 function ModalAddItemSuccess(): JSX.Element {
+
   return (
     <div className="modal is-active modal--narrow">
       <div className="modal__wrapper">

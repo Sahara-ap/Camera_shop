@@ -13,6 +13,8 @@ import { useAppSelector } from '../../hooks/store-hooks';
 import { AppRoute } from '../../consts';
 import { Helmet } from 'react-helmet-async';
 import { ModalAddItem } from '../../components/modal-add-item/modal-add-item';
+import { ModalWrapper } from '../../components/modal-wrapper/modal-wrapper';
+import { ModalAddItemSuccess } from '../../components/modal-add-item-success/modal-add-item-success';
 
 
 function CatalogPage(): JSX.Element {
@@ -44,7 +46,11 @@ function CatalogPage(): JSX.Element {
             </section>
           </div>
         </main>
-        <ModalAddItem />
+        <ModalWrapper >
+          <ModalAddItem />
+          <ModalAddItemSuccess />
+        </ModalWrapper>
+
         <Footer />
       </div>
     </>
