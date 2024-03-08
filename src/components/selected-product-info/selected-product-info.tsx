@@ -3,7 +3,7 @@ import { setIsBuyProductActive } from '../../store/modal-windows-store/modal-win
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
 
 import { formatPrice } from '../../utils/utils-functions';
-import { ModalAddItem } from '../modal-add-item/modal-add-item';
+import { ModalWrapper } from '../modal-wrapper/modal-wrapper';
 import { RatingStars } from '../rating-stars/rating-stars';
 import { SelectedProductInfoTabs } from '../selected-product-info-tabs/selected-product-info-tabs';
 
@@ -51,7 +51,7 @@ function SelectedProductInfo(): JSX.Element | null {
           </div>
         </div>
       </section>
-      <ModalAddItem />
+      <ModalWrapper />
     </div>
 
   );
