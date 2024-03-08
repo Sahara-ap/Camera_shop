@@ -22,6 +22,7 @@ const DELAY = 100;
 enum NameSpace {
   App = 'APP',
   Banner = 'BANNER',
+  Basket = 'BASKET',
   Cards = 'CARDS',
   Modals = 'MODALS',
   Reviews = 'REVIEWS',

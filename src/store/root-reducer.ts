@@ -9,10 +9,12 @@ import { selectedCardDataSlice } from './selected-card-data-store/selected-card-
 import { NameSpace } from '../consts';
 import { similarsSlice } from './similars-store/similars-slice';
 import { reviewsSlice } from './reviews-store/reviews-slice';
+import { basketSlice } from './basket-store/basket-slice';
 
 const rootReducer = combineReducers({
   [NameSpace.App]: appDataSlice.reducer,
   [NameSpace.Banner]: bannerSlice.reducer,
+  [NameSpace.Basket]: basketSlice.reducer,
   [NameSpace.Cards]: cardsDataSlice.reducer,
   [NameSpace.Modals]: modalWindowsSlice.reducer,
   [NameSpace.Reviews]: reviewsSlice.reducer,
