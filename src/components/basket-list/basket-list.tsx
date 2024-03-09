@@ -1,8 +1,8 @@
-import { TSelectedCard } from '../../types/general-types';
+import { TBasketCard } from '../../types/general-types';
 import { BasketItem } from '../basket-item/basket-item';
 
 type TBasketListProps = {
-  basketList: TSelectedCard[];
+  basketList: TBasketCard[];
 }
 function BasketList({ basketList }: TBasketListProps): JSX.Element {
   return (

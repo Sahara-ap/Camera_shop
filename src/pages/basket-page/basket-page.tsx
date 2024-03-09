@@ -26,7 +26,7 @@ function BasketPage(): JSX.Element {
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>
 
-              <BasketList basketList={extendedUniques} />
+              <BasketList basketList={basketList} />
 
               <div className="basket__summary">
                 <div className="basket__promo">

@@ -9,6 +9,10 @@ type TBanner = {
   previewImgWebp2x: string;
 }
 
+type TBasketCard = TSelectedCard & {
+  count: number;
+}
+
 type TCard = {
   id: number;
   name: string;
@@ -65,7 +69,6 @@ type TReviewPost = {
   rating: number;
 }
 
-
 type TSelectedCard = {
   id: number;
   name: string;
@@ -82,6 +85,7 @@ type TSelectedCard = {
   previewImgWebp: string;
   previewImgWebp2x: string;
 }
+
 
 type TSimilar = {
   id: number;
@@ -102,6 +106,7 @@ type TSimilar = {
 
 export type {
   TBanner,
+  TBasketCard,
   TCard,
   TCameraType,
   TCameraId,

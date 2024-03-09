@@ -1,10 +1,14 @@
-import { TSelectedCard } from '../../types/general-types';
+import { useAppDispatch } from '../../hooks/store-hooks';
+import { decrementBasketItem, deleteBasketItem, incrementBasketItem } from '../../store/basket-store/basket-slice';
+import { TBasketCard } from '../../types/general-types';
 import { formatPrice, reduceFirstLetter } from '../../utils/utils-functions';
 
 type TBasketItemProps = {
-  card: TSelectedCard;
+  card: TBasketCard;
 }
 function BasketItem({ card }: TBasketItemProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   return (
     <li className="basket-item">
       <div className="basket-item__img">
@@ -28,6 +32,7 @@ function BasketItem({ card }: TBasketItemProps): JSX.Element {
         <button
           className="btn-icon btn-icon--prev"
           aria-label="уменьшить количество товара"
+          onClick={() => dispatch(decrementBasketItem({id: card.id, count: 1}))}
         >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
@@ -38,7 +43,8 @@ function BasketItem({ card }: TBasketItemProps): JSX.Element {
         <input
           type="number"
           id="counter1"
-          defaultValue={card.count}
+          value={card.count}
+          onChange={()=> {}}
           min="1" max="99"
           aria-label="количество товара"
         />
@@ -46,6 +52,7 @@ function BasketItem({ card }: TBasketItemProps): JSX.Element {
         <button
           className="btn-icon btn-icon--next"
           aria-label="увеличить количество товара"
+          onClick={() => dispatch(incrementBasketItem({id: card.id, count: 1}))}
         >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
@@ -53,11 +60,12 @@ function BasketItem({ card }: TBasketItemProps): JSX.Element {
         </button>
 
       </div>
-      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{formatPrice(card.getTotalPrice())} ₽</div>
+      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{formatPrice(card.price * card.count)} ₽</div>
       <button
         className="cross-btn"
         type="button"
         aria-label="Удалить товар"
+        onClick={() => dispatch(deleteBasketItem(card.id))}
       >
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>

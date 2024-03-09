@@ -30,14 +30,12 @@ const getBasketListWithUniqueItems = createSelector([getBasketList, getBasketLis
     }
   });
 
+
   //сделаем расширенный уникальный список камер
   const extendedUniqueCameraList = uniqueCameraList.map((camera) => (
     {
       ...camera,
       count: idCounter[camera.id],
-      getTotalPrice() {
-        return this.count * this.price;
-      },
     }
   ));
 
