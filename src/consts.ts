@@ -8,6 +8,7 @@ enum APIRoute {
 
 enum AppRoute {
   Catalog = '/',
+  Basket = '/basket',
   Product = '/product',
   NotFound = '*'
 }

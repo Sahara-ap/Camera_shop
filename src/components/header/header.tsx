@@ -29,11 +29,14 @@ function Header(): JSX.Element {
           </ul>
         </nav>
         <SearchMain />
-        <Link className="header__basket-link" to="#">
+        <Link
+          className="header__basket-link"
+          to={AppRoute.Basket}
+        >
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
           </svg>
-          { basketCount !== 0 && <span className="header__basket-count">{basketCount}</span>}
+          {basketCount !== 0 && <span className="header__basket-count">{basketCount}</span>}
         </Link>
       </div>
     </header>

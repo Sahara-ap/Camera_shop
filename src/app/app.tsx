@@ -10,6 +10,7 @@ import browserHistory from '../browser-history';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../hooks/store-hooks';
 import { fetchCamerasAction } from '../store/api-actions/card-actions';
+import { BasketPage } from '../pages/basket-page/basket-page';
 
 
 function App(): JSX.Element {
@@ -24,6 +25,7 @@ function App(): JSX.Element {
         <Routes>
           <Route path={AppRoute.Catalog} element={<CatalogPage />} />
           <Route path={`${AppRoute.Product}/:cardId`} element={<SelectedProductPage />} />
+          <Route path={AppRoute.Basket} element={<BasketPage />} />
           <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
         </Routes>
       </HistoryRouter>
