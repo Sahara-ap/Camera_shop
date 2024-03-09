@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { disableScrollLock, enableScrollLock } from '../../utils/utils-functions';
 import { AppRoute } from '../../consts';
 
@@ -9,10 +9,16 @@ type TModalAddItemSuccessProps = {
 function ModalAddItemSuccess({ onLinkClick }: TModalAddItemSuccessProps): JSX.Element {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const closeModal = onLinkClick;
+  const navigate = useNavigate();
 
 
   function handleGoOnShoppingLinkClick() {
     closeModal();
+  }
+  function handleToBasketClick () {
+    closeModal();
+    navigate(AppRoute.Basket);
+
   }
 
   function handleCloseButtonClick() {
@@ -38,6 +44,7 @@ function ModalAddItemSuccess({ onLinkClick }: TModalAddItemSuccessProps): JSX.El
       disableScrollLock();
     };
   });
+
 
   return (
     <div
@@ -70,6 +77,7 @@ function ModalAddItemSuccess({ onLinkClick }: TModalAddItemSuccessProps): JSX.El
             <button
               className="btn btn--purple modal__btn modal__btn--fit-width"
               ref={buttonRef}
+              onClick={handleToBasketClick}
             >
               Перейти в корзину
             </button>
