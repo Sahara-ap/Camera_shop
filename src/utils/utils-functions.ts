@@ -35,6 +35,10 @@ function pickRandomElement<T>(items: T[]) {
   return items[randomIndex];
 }
 
+function reduceFirstLetter(word: string) {
+  return word[0].toLocaleLowerCase() + word.slice(1);
+}
+
 export {
   convertDateInMs,
 
@@ -45,5 +49,7 @@ export {
   formatPrice,
   getParams,
   pickRandomElement,
+
+  reduceFirstLetter,
 
 };
