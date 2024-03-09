@@ -4,7 +4,7 @@ import { getIsBuyProductActive } from '../../store/modal-windows-store/modal-win
 import { disableScrollLock, enableScrollLock, formatPrice } from '../../utils/utils-functions';
 import { setIsAddProductToCartSuccess, setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
 import { useEffect, useRef} from 'react';
-import { addToBasketList } from '../../store/basket-store/basket-slice';
+import { addItemToBasketList } from '../../store/basket-store/basket-slice';
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
 
 function ModalAddItem(): JSX.Element | null {
@@ -52,7 +52,7 @@ function ModalAddItem(): JSX.Element | null {
     closeAddModal();
     openSuccessModal();
     if (productData) {
-      dispatch(addToBasketList(productData));
+      dispatch(addItemToBasketList(productData));
     }
   }
 

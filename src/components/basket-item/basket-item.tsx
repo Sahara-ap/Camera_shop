@@ -38,7 +38,7 @@ function BasketItem({ card }: TBasketItemProps): JSX.Element {
         <input
           type="number"
           id="counter1"
-          defaultValue="2"
+          defaultValue={card.count}
           min="1" max="99"
           aria-label="количество товара"
         />
@@ -53,7 +53,7 @@ function BasketItem({ card }: TBasketItemProps): JSX.Element {
         </button>
 
       </div>
-      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>37 940 ₽</div>
+      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{formatPrice(card.getTotalPrice())} ₽</div>
       <button
         className="cross-btn"
         type="button"

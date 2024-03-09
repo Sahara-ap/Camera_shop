@@ -3,11 +3,14 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { useAppSelector } from '../../hooks/store-hooks';
-import { getBasketList } from '../../store/basket-store/basket-selectors';
+import { getBasketList, getBasketListWithUniqueItems } from '../../store/basket-store/basket-selectors';
 import { BasketList } from '../../components/basket-list/basket-list';
 
 function BasketPage(): JSX.Element {
   const basketList = useAppSelector(getBasketList);
+  const extendedUniques = useAppSelector(getBasketListWithUniqueItems);
+  console.log('extendedUniques', extendedUniques);
+
   console.log('basketList', basketList);
 
   return (
@@ -23,7 +26,7 @@ function BasketPage(): JSX.Element {
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>
 
-              <BasketList basketList={basketList} />
+              <BasketList basketList={extendedUniques} />
 
               <div className="basket__summary">
                 <div className="basket__promo">
