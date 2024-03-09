@@ -26,7 +26,7 @@ function Breadcrumbs({ page, productName }: TBreadcrumbsProps): JSX.Element {
               </span>
             </li>}
 
-          {page === 'product' &&
+          {page !== 'catalog' &&
             <>
               <li className="breadcrumbs__item">
                 <Link className="breadcrumbs__link" to={AppRoute.Catalog}>Каталог
@@ -35,11 +35,15 @@ function Breadcrumbs({ page, productName }: TBreadcrumbsProps): JSX.Element {
                   </svg>
                 </Link>
               </li>
-              <li className="breadcrumbs__item">
-                <span className="breadcrumbs__link breadcrumbs__link--active">
-                  {productName}
-                </span>
-              </li>
+              {page === 'product' &&
+                <li className="breadcrumbs__item">
+                  <span className="breadcrumbs__link breadcrumbs__link--active">
+                    {productName}
+                  </span>
+                </li>}
+              {page === 'basket' &&
+                <li className="breadcrumbs__item"><span className="breadcrumbs__link breadcrumbs__link--active">Корзина</span>
+                </li>}
             </>}
 
         </ul>

@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
+import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
 
 function BasketPage(): JSX.Element {
   return (
@@ -9,29 +10,7 @@ function BasketPage(): JSX.Element {
       <Header />
       <main>
         <div className="page-content">
-          {/* Хлебные крошки */}
-          <div className="breadcrumbs">
-            <div className="container">
-              <ul className="breadcrumbs__list">
-                <li className="breadcrumbs__item">
-                  <a className="breadcrumbs__link" href="index.html">Главная
-                    <svg width="5" height="8" aria-hidden="true">
-                      <use xlinkHref="#icon-arrow-mini"></use>
-                    </svg>
-                  </a>
-                </li>
-                <li className="breadcrumbs__item">
-                  <a className="breadcrumbs__link" href="catalog.html">Каталог
-                    <svg width="5" height="8" aria-hidden="true">
-                      <use xlinkHref="#icon-arrow-mini"></use>
-                    </svg>
-                  </a>
-                </li>
-                <li className="breadcrumbs__item"><span className="breadcrumbs__link breadcrumbs__link--active">Корзина</span>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <Breadcrumbs page='basket' />
 
           {/* Корзина */}
           <section className="basket">

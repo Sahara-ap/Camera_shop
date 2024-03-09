@@ -31,7 +31,7 @@ type TCameraType = 'Коллекционная' | 'Моментальная' | '
 
 type TCameraId = string
 
-type TPage = 'catalog' | 'product'
+type TPage = 'catalog' | 'product' | 'basket'
 
 type TParamsCatalog = {
   cat?: TCameraCategory | string;
