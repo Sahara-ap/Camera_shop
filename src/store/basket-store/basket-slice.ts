@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-return */
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { TBasketCard, TSelectedCard } from '../../types/general-types';
 import { NameSpace } from '../../consts';
@@ -40,17 +41,34 @@ const basketSlice = createSlice({
     },
     decrementBasketItem: (state, action: PayloadAction<{ id: TBasketCard['id']; count: number }>) => {
       const index = state.basketList.findIndex((camera) => camera.id === action.payload.id);
-      state.basketList[index].count -= action.payload.count;
+      const stateCount = state.basketList[index].count;
+      if (stateCount === 0) {
+        return;
+      } else {
+        state.basketList[index].count -= action.payload.count;
+      }
     },
     incrementBasketItem: (state, action: PayloadAction<{ id: TBasketCard['id']; count: number }>) => {
       const index = state.basketList.findIndex((camera) => camera.id === action.payload.id);
-      state.basketList[index].count += action.payload.count;
+      const stateCount = state.basketList[index].count;
+      if (stateCount === 99) {
+        return;
+      } else {
+        state.basketList[index].count += action.payload.count;
+      }
     },
     setItemCount: (state, action: PayloadAction<{ id: TBasketCard['id']; count: string }>) => {
       const formatedCount = Number(action.payload.count);
+      let result = formatedCount;
+      if (formatedCount > 99) {
+        result = 99;
+      }
+      if (formatedCount < 0) {
+        result = 0;
+      }
 
       const index = state.basketList.findIndex((camera) => camera.id === action.payload.id);
-      state.basketList[index].count = formatedCount;
+      state.basketList[index].count = result;
     }
   }
 });
