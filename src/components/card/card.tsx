@@ -9,7 +9,8 @@ import { formatPrice } from '../../utils/utils-functions';
 import { AppRoute } from '../../consts';
 import { TCard } from '../../types/general-types';
 import { RatingStars } from '../rating-stars/rating-stars';
-import { getBasketListId, getBasketListUpgrade } from '../../store/basket-store/basket-selectors';
+import { getBasketListId, getBasketListUpgrade, getItemCount } from '../../store/basket-store/basket-selectors';
+import { basketSlice } from '../../store/basket-store/basket-slice';
 
 
 type TCardProps = {
@@ -18,12 +19,8 @@ type TCardProps = {
 }
 function Card({ cardData, page }: TCardProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const basketListId = useAppSelector(getBasketListId);
-  // TODO: Реализовать переключение состояния кнопки купить --> в корзине (готово)
-  const basketList = useAppSelector(getBasketListUpgrade);
-  const countItem = basketList.find((camera) => camera.id === cardData.id)?.count || 0;
+  const countItem = useAppSelector(getItemCount(cardData.id));
 
-  const includedInBasket = basketListId.includes(cardData.id);
 
   function handleButtonClick() {
     dispatch(setIsBuyProductActive(true));

@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { NameSpace } from '../../consts';
 import { State } from '../../types/store';
-import { TBasketCard, TCard, TSelectedCard } from '../../types/general-types';
+import { TBasketCard, TSelectedCard } from '../../types/general-types';
 
 const getBasketList = (state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket].basketList;
 const getBasketListId = createSelector([getBasketList], (basketList) => {
@@ -29,7 +29,18 @@ const getTotalCount = createSelector([getBasketListUpgrade], (basketList) => {
   return totalCount;
 });
 
-// const getItemId =
+
+// const getItemCount = (id: number) => createSelector([getBasketListUpgrade], (basketList) => {
+//   const result = basketList.find((camera) => camera.id === id)?.count || 0;
+//   return result;
+// });
+
+const getItemCount = (id: number) => (state: Pick<State, NameSpace.Basket>) => {
+  const basketList = state[NameSpace.Basket].basketList;
+  const result = basketList.find((camera) => camera.id === id)?.count || 0;
+  return result;
+};
+
 // const getItemCount = createSelector([getBasketListUpgrade], (basketList) => {
 
 // });
@@ -76,5 +87,7 @@ export {
   getBasketListWithUniqueItems,
   getBasketListUpgrade,
   getTotalCount,
-
+  getItemCount,
 };
+
+
