@@ -15,17 +15,20 @@ const basketSlice = createSlice({
   reducers: {
 
     addItemToBasketList: (state, action: PayloadAction<TSelectedCard>) => {
+      const card = action.payload;
+      const addCountFieldToCard = () => ({
+        ...card,
+        count: 1,
+      });
+
       let isInList = false;
-      const payloadCameraId = action.payload.id;
+      const payloadCameraId = card.id;
       const index = state.basketList.findIndex((camera) => camera.id === payloadCameraId);
 
       isInList = index >= 0;
       if (!isInList) {
-        const item = {
-          ...action.payload,
-          count: 1,
-        };
-        state.basketList.push(item);
+        const extendedCard = addCountFieldToCard();
+        state.basketList.push(extendedCard);
       } else {
         state.basketList[index].count += 1;
       }
