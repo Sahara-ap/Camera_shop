@@ -1,12 +1,10 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { NameSpace } from '../../consts';
 import { State } from '../../types/store';
-import { TBasketCard } from '../../types/general-types';
 
 const getBasketList = createSelector([(state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket]], (state) => {
   const basketList = state.basketList;
-  const basketListWithoutNullOfCount = basketList.filter((camera: TBasketCard) => camera.count !== 0);
-  return basketListWithoutNullOfCount;
+  return basketList;
 });
 
 const getTotalCount = createSelector([getBasketList], (basketList) => {

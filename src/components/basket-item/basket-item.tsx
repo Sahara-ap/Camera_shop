@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../hooks/store-hooks';
-import { decrementBasketItem, deleteBasketItem, incrementBasketItem } from '../../store/basket-store/basket-slice';
+import { decrementBasketItem, deleteBasketItem, incrementBasketItem, setItemCount } from '../../store/basket-store/basket-slice';
 import { TBasketCard } from '../../types/general-types';
 import { formatPrice, reduceFirstLetter } from '../../utils/utils-functions';
 
@@ -9,6 +9,12 @@ type TBasketItemProps = {
 function BasketItem({ card }: TBasketItemProps): JSX.Element {
   const dispatch = useAppDispatch();
 
+  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const count = event.target.value;
+    dispatch(setItemCount({id: card.id, count}));
+
+
+  }
   return (
     <li className="basket-item">
       <div className="basket-item__img">
@@ -44,7 +50,7 @@ function BasketItem({ card }: TBasketItemProps): JSX.Element {
           type="number"
           id="counter1"
           value={card.count}
-          onChange={()=> {}}
+          onChange={handleInputChange}
           min="1" max="99"
           aria-label="количество товара"
         />

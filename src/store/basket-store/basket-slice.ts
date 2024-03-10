@@ -45,11 +45,17 @@ const basketSlice = createSlice({
     incrementBasketItem: (state, action: PayloadAction<{ id: TBasketCard['id']; count: number }>) => {
       const index = state.basketList.findIndex((camera) => camera.id === action.payload.id);
       state.basketList[index].count += action.payload.count;
+    },
+    setItemCount: (state, action: PayloadAction<{ id: TBasketCard['id']; count: string }>) => {
+      const formatedCount = Number(action.payload.count);
+
+      const index = state.basketList.findIndex((camera) => camera.id === action.payload.id);
+      state.basketList[index].count = formatedCount;
     }
   }
 });
 
-const { addItemToBasketList, dropBasketList, deleteBasketItem, decrementBasketItem, incrementBasketItem } = basketSlice.actions;
+const { addItemToBasketList, dropBasketList, deleteBasketItem, decrementBasketItem, incrementBasketItem, setItemCount, } = basketSlice.actions;
 
 export {
   basketSlice,
@@ -59,4 +65,5 @@ export {
   deleteBasketItem,
   decrementBasketItem,
   incrementBasketItem,
+  setItemCount,
 };
