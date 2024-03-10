@@ -2,11 +2,10 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts';
 import { SearchMain } from '../search/search-main/search-main';
 import { useAppSelector } from '../../hooks/store-hooks';
-import { getBasketCount, getTotalCount } from '../../store/basket-store/basket-selectors';
+import { getTotalCount } from '../../store/basket-store/basket-selectors';
 
 
 function Header(): JSX.Element {
-  // const basketCount = useAppSelector(getBasketCount);
   const basketCount = useAppSelector(getTotalCount);
 
   return (

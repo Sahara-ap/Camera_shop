@@ -9,8 +9,7 @@ import { formatPrice } from '../../utils/utils-functions';
 import { AppRoute } from '../../consts';
 import { TCard } from '../../types/general-types';
 import { RatingStars } from '../rating-stars/rating-stars';
-import { getBasketListId, getBasketListUpgrade, getItemCount } from '../../store/basket-store/basket-selectors';
-import { basketSlice } from '../../store/basket-store/basket-slice';
+import { getItemCount } from '../../store/basket-store/basket-selectors';
 
 
 type TCardProps = {
