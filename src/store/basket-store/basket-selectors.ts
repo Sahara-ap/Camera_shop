@@ -23,11 +23,6 @@ const getItemCount = (id: number) => (state: Pick<State, NameSpace.Basket>) => {
   return result;
 };
 
-// const getItemCount = (id: number) => createSelector([getBasketListUpgrade], (basketList) => {
-//   const result = basketList.find((camera) => camera.id === id)?.count || 0;
-//   return result;
-// });
-
 
 export {
   getBasketList,
