@@ -29,6 +29,11 @@ const getTotalCount = createSelector([getBasketListUpgrade], (basketList) => {
   return totalCount;
 });
 
+// const getItemId =
+// const getItemCount = createSelector([getBasketListUpgrade], (basketList) => {
+
+// });
+
 const getBasketListWithUniqueItems = createSelector([getBasketList, getBasketListId], (basketList, ids) => {
   // const uniqueIds = Array.from(new Set(ids));
 
