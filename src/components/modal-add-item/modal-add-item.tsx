@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { getIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-selectors';
 import { disableScrollLock, enableScrollLock, formatPrice } from '../../utils/utils-functions';
 import { setIsAddProductToCartSuccess, setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
-import { useEffect, useRef} from 'react';
+import { useEffect, useRef } from 'react';
 import { addItemToBasketList } from '../../store/basket-store/basket-slice';
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
 
@@ -14,26 +14,29 @@ function ModalAddItem(): JSX.Element | null {
   const productData = useAppSelector(getSelectedCamera);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
-
-  function closeAddModal() {
-    dispatch(setIsBuyProductActive(false));
-  }
-  function openSuccessModal() {
-    dispatch(setIsAddProductToCartSuccess(true));
-  }
+  const modal = {
+    closeAddWindow: () => dispatch(setIsBuyProductActive(false)),
+    openSuccessWindow: () => dispatch(setIsAddProductToCartSuccess(true)),
+  };
+  // function closeAddWindowModal() {
+  //   dispatch(setIsBuyProductActive(false));
+  // }
+  // function openSuccessWindowModal() {
+  //   dispatch(setIsAddProductToCartSuccess(true));
+  // }
 
   function handleCloseButtonClick() {
-    closeAddModal();
+    modal.closeAddWindow();
   }
 
   function handleOverlayClick() {
-    closeAddModal();
+    modal.closeAddWindow();
   }
 
   function handleModalWindowKeydown(event: React.KeyboardEvent) {
     event.preventDefault();
     if (event.key.startsWith('Esc')) {
-      closeAddModal();
+      modal.closeAddWindow();
     }
   }
   useEffect(() => {
@@ -48,9 +51,9 @@ function ModalAddItem(): JSX.Element | null {
     };
   });
 
-  function handleAddButtonClick () {
-    closeAddModal();
-    openSuccessModal();
+  function handleAddButtonClick() {
+    modal.closeAddWindow();
+    modal.openSuccessWindow();
     if (productData) {
       dispatch(addItemToBasketList(productData));
     }
