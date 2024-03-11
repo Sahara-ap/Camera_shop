@@ -18,12 +18,7 @@ function ModalAddItem(): JSX.Element | null {
     closeAddWindow: () => dispatch(setIsBuyProductActive(false)),
     openSuccessWindow: () => dispatch(setIsAddProductToCartSuccess(true)),
   };
-  // function closeAddWindowModal() {
-  //   dispatch(setIsBuyProductActive(false));
-  // }
-  // function openSuccessWindowModal() {
-  //   dispatch(setIsAddProductToCartSuccess(true));
-  // }
+
 
   function handleCloseButtonClick() {
     modal.closeAddWindow();
