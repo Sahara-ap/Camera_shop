@@ -2,12 +2,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { TBasketCard, TSelectedCard } from '../../types/general-types';
 import { NameSpace } from '../../consts';
+import { getFromStorage } from '../../services/localStorage';
 
 type TBasketState = {
   basketList: TBasketCard[];
 }
 const initialState: TBasketState = {
-  basketList: [],
+  basketList: getFromStorage(),
 };
 const basketSlice = createSlice({
   name: NameSpace.Basket,
