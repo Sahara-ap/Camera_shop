@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from './root-reducer';
 import { createApi } from '../services/api';
+import { saveToStorage } from '../services/localStorage';
 
 const api = createApi();
 
@@ -12,6 +13,10 @@ const store = configureStore({
         extraArgument: api,
       }
     }),
+});
+
+store.subscribe(() => {
+  saveToStorage(store.getState().BASKET.basketList);
 });
 
 export default store;
