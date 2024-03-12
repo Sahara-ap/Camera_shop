@@ -46,7 +46,7 @@ const basketSlice = createSlice({
     decrementBasketItem: (state, action: PayloadAction<{ id: TBasketCard['id']; count: number }>) => {
       const index = state.basketList.findIndex((camera) => camera.id === action.payload.id);
       const stateCount = state.basketList[index].count;
-      if (stateCount === 0) {
+      if (stateCount === 1) {
         return;
       } else {
         state.basketList[index].count -= action.payload.count;
@@ -67,8 +67,8 @@ const basketSlice = createSlice({
       if (formatedCount > 99) {
         result = 99;
       }
-      if (formatedCount < 0) {
-        result = 0;
+      if (formatedCount < 1) {
+        result = 1;
       }
 
       const index = state.basketList.findIndex((camera) => camera.id === action.payload.id);

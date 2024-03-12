@@ -18,7 +18,6 @@ function BasketPage(): JSX.Element {
         <div className="page-content">
           <Breadcrumbs page='basket' />
 
-          {/* Корзина */}
           <section className="basket">
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>

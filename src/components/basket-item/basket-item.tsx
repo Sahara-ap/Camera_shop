@@ -9,12 +9,12 @@ type TBasketItemProps = {
 function BasketItem({ card }: TBasketItemProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleCountChange(event: React.ChangeEvent<HTMLInputElement>) {
     const count = event.target.value;
     dispatch(setItemCount({id: card.id, count}));
-
-
   }
+
+
   return (
     <li className="basket-item">
       <div className="basket-item__img">
@@ -39,6 +39,7 @@ function BasketItem({ card }: TBasketItemProps): JSX.Element {
           className="btn-icon btn-icon--prev"
           aria-label="уменьшить количество товара"
           onClick={() => dispatch(decrementBasketItem({id: card.id, count: 1}))}
+          disabled={card.count <= 1}
         >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
@@ -50,7 +51,7 @@ function BasketItem({ card }: TBasketItemProps): JSX.Element {
           type="number"
           id="counter1"
           value={card.count}
-          onChange={handleInputChange}
+          onChange={handleCountChange}
           min="1" max="99"
           aria-label="количество товара"
         />
@@ -59,6 +60,7 @@ function BasketItem({ card }: TBasketItemProps): JSX.Element {
           className="btn-icon btn-icon--next"
           aria-label="увеличить количество товара"
           onClick={() => dispatch(incrementBasketItem({id: card.id, count: 1}))}
+          disabled={card.count >= 99}
         >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
