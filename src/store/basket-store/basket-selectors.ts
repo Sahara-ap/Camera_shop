@@ -7,6 +7,13 @@ const getBasketList = createSelector([(state: Pick<State, NameSpace.Basket>) => 
   return basketList;
 });
 
+const getBasketRemoveItem = (state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket].setBasketRemoveItem;
+
+const getItemCount = (id: number) => (state: Pick<State, NameSpace.Basket>) => {
+  const basketList = state[NameSpace.Basket].basketList;
+  const result = basketList.find((camera) => camera.id === id)?.count || 0;
+  return result;
+};
 const getTotalCount = createSelector([getBasketList], (basketList) => {
   const totalCount = basketList.reduce((sum, camera) => {
     const result = sum + camera.count;
@@ -15,22 +22,19 @@ const getTotalCount = createSelector([getBasketList], (basketList) => {
   return totalCount;
 });
 
-const getItemCount = (id: number) => (state: Pick<State, NameSpace.Basket>) => {
-  const basketList = state[NameSpace.Basket].basketList;
-  const result = basketList.find((camera) => camera.id === id)?.count || 0;
-  return result;
-};
-
-const getBasketRemoveItem = (state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket].setBasketRemoveItem;
+const getTotalSum = createSelector([getBasketList], (basketList) => {
+  const totalSum = basketList.reduce((sum, camera) => sum + (camera.price * camera.count), 0);
+  return totalSum;
+});
 
 
 export {
   getBasketList,
-
-  getTotalCount,
-  getItemCount,
-
   getBasketRemoveItem,
+
+  getItemCount,
+  getTotalCount,
+  getTotalSum,
 };
 
 

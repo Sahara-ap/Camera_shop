@@ -3,11 +3,14 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { useAppSelector } from '../../hooks/store-hooks';
-import { getBasketList} from '../../store/basket-store/basket-selectors';
+import { getBasketList, getTotalSum} from '../../store/basket-store/basket-selectors';
 import { BasketList } from '../../components/basket-list/basket-list';
+import { formatPrice } from '../../utils/utils-functions';
 
 function BasketPage(): JSX.Element {
   const basketList = useAppSelector(getBasketList);
+  const totalSum = useAppSelector(getTotalSum);
+  const discount = 0.1;
 
 
   return (
@@ -43,9 +46,9 @@ function BasketPage(): JSX.Element {
                 </div>
 
                 <div className="basket__summary-order">
-                  <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">111 390 ₽</span></p>
-                  <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className="basket__summary-value basket__summary-value--bonus">0 ₽</span></p>
-                  <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">111 390 ₽</span></p>
+                  <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">{formatPrice(totalSum)} ₽</span></p>
+                  <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className="basket__summary-value basket__summary-value--bonus">{totalSum * discount} ₽</span></p>
+                  <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">{formatPrice(totalSum * (1 - discount))} ₽</span></p>
                   <button className="btn btn--purple" type="submit">Оформить заказ
                   </button>
                 </div>
