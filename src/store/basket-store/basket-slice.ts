@@ -6,9 +6,11 @@ import { getFromStorage } from '../../services/localStorage';
 
 type TBasketState = {
   basketList: TBasketCard[];
+  setBasketRemoveItem: TBasketCard | null;
 }
 const initialState: TBasketState = {
   basketList: getFromStorage(),
+  setBasketRemoveItem: null,
 };
 const basketSlice = createSlice({
   name: NameSpace.Basket,
@@ -73,11 +75,15 @@ const basketSlice = createSlice({
 
       const index = state.basketList.findIndex((camera) => camera.id === action.payload.id);
       state.basketList[index].count = result;
-    }
+    },
+
+    setBasketRemoveItem: (state, action: PayloadAction<TBasketCard>) => {
+      state.setBasketRemoveItem = action.payload;
+    },
   }
 });
 
-const { addItemToBasketList, dropBasketList, deleteBasketItem, decrementBasketItem, incrementBasketItem, setItemCount, } = basketSlice.actions;
+const { addItemToBasketList, dropBasketList, deleteBasketItem, decrementBasketItem, incrementBasketItem, setItemCount, setBasketRemoveItem, } = basketSlice.actions;
 
 export {
   basketSlice,
@@ -88,4 +94,6 @@ export {
   decrementBasketItem,
   incrementBasketItem,
   setItemCount,
+
+  setBasketRemoveItem,
 };

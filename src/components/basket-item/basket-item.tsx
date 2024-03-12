@@ -1,5 +1,6 @@
 import { useAppDispatch } from '../../hooks/store-hooks';
-import { decrementBasketItem, deleteBasketItem, incrementBasketItem, setItemCount } from '../../store/basket-store/basket-slice';
+import { decrementBasketItem, incrementBasketItem, setBasketRemoveItem, setItemCount } from '../../store/basket-store/basket-slice';
+import { setIsRemoveFromBasketActive } from '../../store/modal-windows-store/modal-windows-slice';
 import { TBasketCard } from '../../types/general-types';
 import { formatPrice, reduceFirstLetter } from '../../utils/utils-functions';
 
@@ -9,9 +10,18 @@ type TBasketItemProps = {
 function BasketItem({ card }: TBasketItemProps): JSX.Element {
   const dispatch = useAppDispatch();
 
+  const modal = {
+    openRemoveWindow: () => dispatch(setIsRemoveFromBasketActive(true)),
+  };
+
   function handleCountChange(event: React.ChangeEvent<HTMLInputElement>) {
     const count = event.target.value;
-    dispatch(setItemCount({id: card.id, count}));
+    dispatch(setItemCount({ id: card.id, count }));
+  }
+
+  function handleRemoveButtonClick() {
+    modal.openRemoveWindow();
+    dispatch(setBasketRemoveItem(card));
   }
 
 
@@ -73,13 +83,14 @@ function BasketItem({ card }: TBasketItemProps): JSX.Element {
         className="cross-btn"
         type="button"
         aria-label="Удалить товар"
-        onClick={() => dispatch(deleteBasketItem(card.id))}
+        onClick={handleRemoveButtonClick}
       >
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>
         </svg>
       </button>
     </li>
+
   );
 }
 

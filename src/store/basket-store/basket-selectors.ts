@@ -21,12 +21,16 @@ const getItemCount = (id: number) => (state: Pick<State, NameSpace.Basket>) => {
   return result;
 };
 
+const getBasketRemoveItem = (state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket].setBasketRemoveItem;
+
 
 export {
   getBasketList,
 
   getTotalCount,
   getItemCount,
+
+  getBasketRemoveItem,
 };
 
 
