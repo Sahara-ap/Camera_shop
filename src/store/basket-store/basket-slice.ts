@@ -10,14 +10,14 @@ type TBasketState = {
   setBasketRemoveItem: TBasketCard | null;
 
   discount: TCouponResponse;
-  isCouponSendingStatus: LoadingDataStatus;
+  couponSendingStatus: LoadingDataStatus;
 }
 const initialState: TBasketState = {
   basketList: getFromStorage(),
   setBasketRemoveItem: null,
 
   discount: 0,
-  isCouponSendingStatus: LoadingDataStatus.Unsent,
+  couponSendingStatus: LoadingDataStatus.Unsent,
 };
 const basketSlice = createSlice({
   name: NameSpace.Basket,
@@ -86,24 +86,28 @@ const basketSlice = createSlice({
     setBasketRemoveItem: (state, action: PayloadAction<TBasketCard>) => {
       state.setBasketRemoveItem = action.payload;
     },
+
+    setCouponSendingStatus: (state, action: PayloadAction<LoadingDataStatus>) => {
+      state.couponSendingStatus = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
       .addCase(postCoupon.pending, (state) => {
-        state.isCouponSendingStatus = LoadingDataStatus.Pending;
+        state.couponSendingStatus = LoadingDataStatus.Pending;
       })
       .addCase(postCoupon.fulfilled, (state, action) => {
-        state.isCouponSendingStatus = LoadingDataStatus.Success;
+        state.couponSendingStatus = LoadingDataStatus.Success;
         state.discount = action.payload;
       })
       .addCase(postCoupon.rejected, (state) => {
-        state.isCouponSendingStatus = LoadingDataStatus.Error;
+        state.couponSendingStatus = LoadingDataStatus.Error;
       });
 
   }
 });
 
-const { addItemToBasketList, dropBasketList, deleteBasketItem, decrementBasketItem, incrementBasketItem, setItemCount, setBasketRemoveItem, } = basketSlice.actions;
+const { addItemToBasketList, dropBasketList, deleteBasketItem, decrementBasketItem, incrementBasketItem, setItemCount, setBasketRemoveItem, setCouponSendingStatus,} = basketSlice.actions;
 
 export {
   basketSlice,
@@ -116,4 +120,5 @@ export {
   setItemCount,
 
   setBasketRemoveItem,
+  setCouponSendingStatus,
 };

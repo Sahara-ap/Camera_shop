@@ -14,7 +14,6 @@ function enableScrollLock() {
   document.body.classList.add('scroll-lock');
 }
 
-
 function formatDate(value: dayjs.ConfigType): string {
   dayjs.locale('ru');
   return dayjs(value, 'ru').format('DD MMMM');
@@ -42,6 +41,10 @@ function reduceFirstLetter(word: string) {
   return word[0].toLocaleLowerCase() + word.slice(1);
 }
 
+function removeSpacesFrom(coupon: string) {
+  const result = coupon.replace(/\s/g, '');
+  return result;
+}
 export {
   convertDateInMs,
 
@@ -54,5 +57,6 @@ export {
   pickRandomElement,
 
   reduceFirstLetter,
+  removeSpacesFrom,
 
 };
