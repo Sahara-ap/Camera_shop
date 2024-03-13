@@ -8,7 +8,8 @@ type TBasketState = {
   basketList: TBasketCard[];
 }
 const initialState: TBasketState = {
-  basketList: getFromStorage(),
+  // basketList: getFromStorage(),
+  basketList: [],
 };
 const basketSlice = createSlice({
   name: NameSpace.Basket,

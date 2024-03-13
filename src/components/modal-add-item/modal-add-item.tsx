@@ -3,9 +3,12 @@ import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { getIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-selectors';
 import { disableScrollLock, enableScrollLock, formatPrice } from '../../utils/utils-functions';
 import { setIsAddProductToCartSuccess, setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
-import { useEffect, useRef } from 'react';
+import { Dispatch, useEffect, useRef } from 'react';
 import { addItemToBasketList } from '../../store/basket-store/basket-slice';
 import { getSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-selectors';
+import { saveToStorage } from '../../services/localStorage';
+import { AnyAction } from '@reduxjs/toolkit';
+import { saveToStorageAction } from '../../store/middleware/middleware-count';
 
 function ModalAddItem(): JSX.Element | null {
 
@@ -46,14 +49,25 @@ function ModalAddItem(): JSX.Element | null {
     };
   });
 
+  const addItemToBasketListPromise = (): Promise<unknown> => {
+    const result = new Promise ((resolve) => {
+      if (productData) {
+        resolve(dispatch(addItemToBasketList(productData)));
+      }
+    });
+    return result;
+  };
+
   function handleAddButtonClick() {
     modal.closeAddWindow();
     modal.openSuccessWindow();
-    if (productData) {
-      dispatch(addItemToBasketList(productData));
-    }
-  }
+    addItemToBasketListPromise()
+      .then(() => dispatch(saveToStorageAction()));
 
+    // if (productData) {
+    //   dispatch(addItemToBasketList(productData));
+    // }
+  }
 
   if (!productData) {
     return null;
