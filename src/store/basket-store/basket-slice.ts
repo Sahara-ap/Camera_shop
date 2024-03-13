@@ -35,6 +35,7 @@ const basketSlice = createSlice({
       }
     },
 
+
     dropBasketList: (state) => {
       state.basketList = [];
     },
