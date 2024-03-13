@@ -36,7 +36,7 @@ type TCameraType = 'Коллекционная' | 'Моментальная' | '
 type TCameraId = string
 
 type TCouponBody = {
-  coupon: 'camera-333'|'camera-444'|'camera-555';
+  coupon: string;
 }
 type TCouponResponse = number
 

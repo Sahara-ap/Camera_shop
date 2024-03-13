@@ -2,15 +2,26 @@ import { Helmet } from 'react-helmet-async';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
-import { useAppSelector } from '../../hooks/store-hooks';
-import { getBasketList, getTotalSum} from '../../store/basket-store/basket-selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
+import { getBasketList, getDiscount, getTotalSum } from '../../store/basket-store/basket-selectors';
 import { BasketList } from '../../components/basket-list/basket-list';
 import { formatPrice } from '../../utils/utils-functions';
+import { postCoupon } from '../../store/api-actions/basket-actions';
+import React, { useRef } from 'react';
 
 function BasketPage(): JSX.Element {
+  const dispatch = useAppDispatch();
   const basketList = useAppSelector(getBasketList);
   const totalSum = useAppSelector(getTotalSum);
-  const discount = 0.1;
+  const discount = useAppSelector(getDiscount);
+  const promoCodeRef = useRef(null);
+
+  const body = { coupon: '' };
+
+  function onApplyPromoCodeClick(event: React.MouseEvent) {
+    event.preventDefault();
+    dispatch(postCoupon(body));
+  }
 
 
   return (
@@ -34,12 +45,26 @@ function BasketPage(): JSX.Element {
                     <form action="#">
                       <div className="custom-input">
                         <label><span className="custom-input__label">Промокод</span>
-                          <input type="text" name="promo" placeholder="Введите промокод" />
+                          <input
+                            ref={promoCodeRef}
+                            type="text"
+                            name="promo"
+                            placeholder="Введите промокод"
+                            onChange={(event) => {
+                              body.coupon = event.target.value;
+                            }}
+
+                          />
                         </label>
                         <p className="custom-input__error">Промокод неверный</p>
                         <p className="custom-input__success">Промокод принят!</p>
                       </div>
-                      <button className="btn" type="submit">Применить
+                      <button
+                        className="btn"
+                        type="submit"
+                        onClick={(event) => onApplyPromoCodeClick(event)}
+                      >
+                        Применить
                       </button>
                     </form>
                   </div>
@@ -47,7 +72,7 @@ function BasketPage(): JSX.Element {
 
                 <div className="basket__summary-order">
                   <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">{formatPrice(totalSum)} ₽</span></p>
-                  <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className="basket__summary-value basket__summary-value--bonus">{totalSum * discount} ₽</span></p>
+                  <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className="basket__summary-value basket__summary-value--bonus">{formatPrice(totalSum * discount)} ₽</span></p>
                   <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">{formatPrice(totalSum * (1 - discount))} ₽</span></p>
                   <button className="btn btn--purple" type="submit">Оформить заказ
                   </button>
