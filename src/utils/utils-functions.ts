@@ -36,6 +36,9 @@ function pickRandomElement<T>(items: T[]) {
 }
 
 function reduceFirstLetter(word: string) {
+  if (!word) {
+    return;
+  }
   return word[0].toLocaleLowerCase() + word.slice(1);
 }
 
