@@ -1,3 +1,5 @@
+import './basket-page.css';
+
 import { Helmet } from 'react-helmet-async';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
@@ -8,6 +10,7 @@ import { BasketList } from '../../components/basket-list/basket-list';
 import { formatPrice } from '../../utils/utils-functions';
 import { postCoupon } from '../../store/api-actions/basket-actions';
 import React, { useRef } from 'react';
+import cn from 'classnames';
 
 function BasketPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -72,7 +75,16 @@ function BasketPage(): JSX.Element {
 
                 <div className="basket__summary-order">
                   <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">{formatPrice(totalSum)} ₽</span></p>
-                  <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className="basket__summary-value basket__summary-value--bonus">{formatPrice(totalSum * discount)} ₽</span></p>
+                  <p className="basket__summary-item">
+                    <span className="basket__summary-text">Скидка:</span>
+                    <span
+                      className={cn(
+                        'basket__summary-value basket__summary-value--bonus',
+                        {'basket__summary-value basket__summary-value--bonus--black': discount === 0})}
+                    >
+                      {discount ? formatPrice(totalSum * discount) : 0} ₽
+                    </span>
+                  </p>
                   <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">{formatPrice(totalSum * (1 - discount))} ₽</span></p>
                   <button className="btn btn--purple" type="submit">Оформить заказ
                   </button>
