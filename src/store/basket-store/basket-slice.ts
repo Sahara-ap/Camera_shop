@@ -15,26 +15,29 @@ const basketSlice = createSlice({
   initialState,
   reducers: {
 
-    addItemToBasketList: (state, action: PayloadAction<TSelectedCard>) => {
-      const card = action.payload;
-      const addCountFieldToCard = () => ({
-        ...card,
-        count: 1,
-      });
+    // addItemToBasketList: (state, action: PayloadAction<TSelectedCard>) => {
+    //   const card = action.payload;
+    //   const addCountFieldToCard = () => ({
+    //     ...card,
+    //     count: 1,
+    //   });
 
-      let isInList = false;
-      const payloadCameraId = card.id;
-      const index = state.basketList.findIndex((camera) => camera.id === payloadCameraId);
+    //   let isInList = false;
+    //   const payloadCameraId = card.id;
+    //   const index = state.basketList.findIndex((camera) => camera.id === payloadCameraId);
 
-      isInList = index >= 0;
-      if (!isInList) {
-        const extendedCard = addCountFieldToCard();
-        state.basketList.push(extendedCard);
-      } else {
-        state.basketList[index].count += 1;
-      }
+    //   isInList = index >= 0;
+    //   if (!isInList) {
+    //     const extendedCard = addCountFieldToCard();
+    //     state.basketList.push(extendedCard);
+    //   } else {
+    //     state.basketList[index].count += 1;
+    //   }
+    // },
+
+    addItemToBasketList: (state, action: PayloadAction<TBasketCard[]>) => {
+      state.basketList = action.payload;
     },
-
 
     dropBasketList: (state) => {
       state.basketList = [];

@@ -1,17 +1,17 @@
 import { Middleware, PayloadAction } from '@reduxjs/toolkit';
 import { saveToStorage } from '../../services/localStorage';
 import { rootReducer } from '../root-reducer';
-import { TSelectedCard } from '../../types/general-types';
+import { TBasketCard, TSelectedCard } from '../../types/general-types';
 import { NameSpace } from '../../consts';
 
 type Reducer = ReturnType<typeof rootReducer>
 
 const middlewareLocalStorage: Middleware<unknown, Reducer> =
-  (store) => (next) => (action: PayloadAction<TSelectedCard>) => {
+  (store) => (next) => (action: PayloadAction<TSelectedCard | TBasketCard[]>) => {
 
     if (action.type === 'BASKET/addItemToBasketList') {
 
-      const card = action.payload;
+      const card = action.payload as TSelectedCard;
       const basketList = structuredClone(store.getState()[NameSpace.Basket].basketList);
       const addCountFieldToCard = () => ({
         ...card,
@@ -25,12 +25,12 @@ const middlewareLocalStorage: Middleware<unknown, Reducer> =
       isInList = index >= 0;
       if (!isInList) {
         const extendedCard = addCountFieldToCard();
-        basketList.push(extendedCard);
+        basketList.concat(extendedCard);
       } else {
         basketList[index].count += 1;
       }
-
       saveToStorage(basketList);
+      action.payload = basketList;
 
     }
     return next(action);
