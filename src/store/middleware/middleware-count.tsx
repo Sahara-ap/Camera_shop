@@ -11,26 +11,28 @@ const middlewareLocalStorage: Middleware<unknown, Reducer> =
 
     if (action.type === 'BASKET/addItemToBasketList') {
 
-      const card = action.payload;
-      const basketList = structuredClone(store.getState()[NameSpace.Basket].basketList);
-      const addCountFieldToCard = () => ({
-        ...card,
-        count: 1,
-      });
-
-      let isInList = false;
-      const payloadCameraId = card.id;
-      const index = basketList.findIndex((camera) => camera.id === payloadCameraId);
-
-      isInList = index >= 0;
-      if (!isInList) {
-        const extendedCard = addCountFieldToCard();
-        basketList.push(extendedCard);
-      } else {
-        basketList[index].count += 1;
-      }
-
+      const basketList = store.getState()[NameSpace.Basket].basketList;
       saveToStorage(basketList);
+      // const card = action.payload;
+      // const basketList = structuredClone(store.getState()[NameSpace.Basket].basketList);
+      // const addCountFieldToCard = () => ({
+      //   ...card,
+      //   count: 1,
+      // });
+
+      // let isInList = false;
+      // const payloadCameraId = card.id;
+      // const index = basketList.findIndex((camera) => camera.id === payloadCameraId);
+
+      // isInList = index >= 0;
+      // if (!isInList) {
+      //   const extendedCard = addCountFieldToCard();
+      //   basketList.push(extendedCard);
+      // } else {
+      //   basketList[index].count += 1;
+      // }
+
+      // saveToStorage(basketList);
 
     }
     return next(action);
