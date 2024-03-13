@@ -3,6 +3,7 @@ import { fetchCamerasAction, fetchSelectedCameraAction, fetchSimilars } from '..
 import { NameSpace, SortingOrder, SortingType } from '../../consts';
 import { fetchReviews } from '../api-actions/reviews-action';
 import { TCameraCategory, TCameraLevel, TCameraType } from '../../types/general-types';
+import { postCoupon } from '../api-actions/basket-actions';
 
 type TAppDataState = {
   errorServerResponse: null | string;
@@ -90,6 +91,13 @@ const appDataSlice = createSlice({
         state.hasErrorWithConnection = false;
       })
       .addCase(fetchReviews.rejected, (state) => {
+        state.hasErrorWithConnection = true;
+      })
+
+      .addCase(postCoupon.fulfilled, (state) => {
+        state.hasErrorWithConnection = false;
+      })
+      .addCase(postCoupon.rejected, (state) => {
         state.hasErrorWithConnection = true;
       });
   }

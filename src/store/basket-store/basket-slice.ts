@@ -1,22 +1,28 @@
 /* eslint-disable no-useless-return */
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { TBasketCard, TSelectedCard } from '../../types/general-types';
-import { NameSpace } from '../../consts';
+import { TBasketCard, TCouponResponse, TSelectedCard } from '../../types/general-types';
+import { LoadingDataStatus, NameSpace } from '../../consts';
 import { getFromStorage } from '../../services/localStorage';
+import { postCoupon } from '../api-actions/basket-actions';
 
 type TBasketState = {
   basketList: TBasketCard[];
   setBasketRemoveItem: TBasketCard | null;
+
+  discount: TCouponResponse;
+  isCouponSendingStatus: LoadingDataStatus;
 }
 const initialState: TBasketState = {
   basketList: getFromStorage(),
   setBasketRemoveItem: null,
+
+  discount: 0,
+  isCouponSendingStatus: LoadingDataStatus.Unsent,
 };
 const basketSlice = createSlice({
   name: NameSpace.Basket,
   initialState,
   reducers: {
-
     addItemToBasketList: (state, action: PayloadAction<TSelectedCard>) => {
       const card = action.payload;
       const addCountFieldToCard = () => ({
@@ -80,6 +86,20 @@ const basketSlice = createSlice({
     setBasketRemoveItem: (state, action: PayloadAction<TBasketCard>) => {
       state.setBasketRemoveItem = action.payload;
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(postCoupon.pending, (state) => {
+        state.isCouponSendingStatus = LoadingDataStatus.Pending;
+      })
+      .addCase(postCoupon.fulfilled, (state, action) => {
+        state.isCouponSendingStatus = LoadingDataStatus.Success;
+        state.discount = action.payload;
+      })
+      .addCase(postCoupon.rejected, (state) => {
+        state.isCouponSendingStatus = LoadingDataStatus.Error;
+      });
+
   }
 });
 

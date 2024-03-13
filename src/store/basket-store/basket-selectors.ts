@@ -8,6 +8,7 @@ const getBasketList = createSelector([(state: Pick<State, NameSpace.Basket>) => 
 });
 
 const getBasketRemoveItem = (state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket].setBasketRemoveItem;
+const getDiscount = (state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket].discount;
 
 const getItemCount = (id: number) => (state: Pick<State, NameSpace.Basket>) => {
   const basketList = state[NameSpace.Basket].basketList;
@@ -31,7 +32,7 @@ const getTotalSum = createSelector([getBasketList], (basketList) => {
 export {
   getBasketList,
   getBasketRemoveItem,
-
+  getDiscount,
   getItemCount,
   getTotalCount,
   getTotalSum,

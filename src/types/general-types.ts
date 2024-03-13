@@ -35,6 +35,11 @@ type TCameraType = 'Коллекционная' | 'Моментальная' | '
 
 type TCameraId = string
 
+type TCouponBody = {
+  coupon: 'camera-333'|'camera-444'|'camera-555';
+}
+type TCouponResponse = number
+
 type TPage = 'catalog' | 'product' | 'basket'
 
 type TParamsCatalog = {
@@ -110,6 +115,8 @@ export type {
   TCard,
   TCameraType,
   TCameraId,
+  TCouponBody,
+  TCouponResponse,
   TCameraCategory,
   TCameraLevel,
   TPage,
