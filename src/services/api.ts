@@ -7,11 +7,11 @@ const REQUEST_TIMEOUT = 5000;
 
 type DetailMessageError = {
   type: string;
-  message: string;
+  messages: string;
 }
 
 const StatusCodesMapping: Record<number, boolean> = {
-  [StatusCodes.BAD_REQUEST]: true,
+  // [StatusCodes.BAD_REQUEST]: true,
   [StatusCodes.UNAUTHORIZED]: true,
   [StatusCodes.NOT_FOUND]: true
 };
@@ -29,7 +29,7 @@ function createApi() {
     (response) => response,
     (error: AxiosError<DetailMessageError>) => {
       if (error.response && shouldDisplayError(error.response)) {
-        toast.warn(error.response.data.message);
+        toast.warn(error.response.data.messages[1]);
       }
 
       throw error;
