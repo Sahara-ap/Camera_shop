@@ -102,6 +102,7 @@ const basketSlice = createSlice({
       })
       .addCase(postCoupon.rejected, (state) => {
         state.couponSendingStatus = LoadingDataStatus.Error;
+        state.discount = 0;
       });
 
   }
