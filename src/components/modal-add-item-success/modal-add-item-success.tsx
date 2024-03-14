@@ -7,6 +7,8 @@ type TModalAddItemSuccessProps = {
   onLinkClick: () => void;
 }
 function ModalAddItemSuccess({ onLinkClick }: TModalAddItemSuccessProps): JSX.Element {
+  const href = window.location.href;
+
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const closeModal = onLinkClick;
   const navigate = useNavigate();
@@ -68,7 +70,7 @@ function ModalAddItemSuccess({ onLinkClick }: TModalAddItemSuccessProps): JSX.El
           <div className="modal__buttons">
             <Link
               className="btn btn--transparent modal__btn"
-              to={AppRoute.Catalog}
+              to={href}
               onClick={handleGoOnShoppingLinkClick}
             >
               Продолжить покупки
