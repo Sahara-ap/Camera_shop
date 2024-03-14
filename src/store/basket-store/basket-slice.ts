@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { TBasketCard, TCouponResponse, TSelectedCard } from '../../types/general-types';
 import { LoadingDataStatus, NameSpace } from '../../consts';
 import { getBasketFromStorage, getCouponSendingStatusFromStorage, getCouponValueFromStorage, getDiscountFromStorage } from '../../services/localStorage';
-import { postCoupon } from '../api-actions/basket-actions';
+import { postCoupon, postOrders } from '../api-actions/basket-actions';
 
 type TBasketState = {
   basketList: TBasketCard[];
@@ -12,6 +12,8 @@ type TBasketState = {
   discount: TCouponResponse;
   couponValue: string;
   couponSendingStatus: LoadingDataStatus;
+
+  isPostOrdersSending: boolean;
 }
 const initialState: TBasketState = {
   basketList: getBasketFromStorage(),
@@ -20,6 +22,8 @@ const initialState: TBasketState = {
   discount: getDiscountFromStorage(),
   couponValue: getCouponValueFromStorage(),
   couponSendingStatus: getCouponSendingStatusFromStorage(),
+
+  isPostOrdersSending: false,
 };
 const basketSlice = createSlice({
   name: NameSpace.Basket,
@@ -108,6 +112,15 @@ const basketSlice = createSlice({
       .addCase(postCoupon.rejected, (state) => {
         state.couponSendingStatus = LoadingDataStatus.Error;
         state.discount = 0;
+      })
+      .addCase(postOrders.pending, (state) => {
+        state.isPostOrdersSending = true;
+      })
+      .addCase(postOrders.fulfilled, (state) => {
+        state.isPostOrdersSending = false;
+      })
+      .addCase(postOrders.rejected, (state) => {
+        state.isPostOrdersSending = false;
       });
 
   }

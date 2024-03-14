@@ -2,6 +2,7 @@ enum APIRoute {
   Cameras = '/cameras',
   Banner = '/promo',
   Coupons = '/coupons',
+  Orders = '/orders',
   Reviews = '/reviews',
   SelectedCamera = '/cameras',
   Similars = '/similar',

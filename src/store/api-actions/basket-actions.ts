@@ -6,12 +6,24 @@ import { TCouponBody, TCouponResponse } from '../../types/general-types';
 
 const postCoupon = createAsyncThunk<TCouponResponse, TCouponBody, ThunkAPI>(
   'basket/postCoupon',
-  async(body, {extra: api}) => {
-    const {data} = await api.post<TCouponResponse>(APIRoute.Coupons, body);
+  async (body, { extra: api }) => {
+    const { data } = await api.post<TCouponResponse>(APIRoute.Coupons, body);
     return data;
+  }
+);
+
+type TOrdersBody = {
+  camerasIds: number[];
+  coupon: string;
+}
+const postOrders = createAsyncThunk<void, TOrdersBody, ThunkAPI>(
+  'basket/orders',
+  async (body, {extra: api}) => {
+    await api.post(APIRoute.Orders, body);
   }
 );
 
 export {
   postCoupon,
+  postOrders,
 };
