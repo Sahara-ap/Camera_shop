@@ -9,13 +9,15 @@ type TBasketListProps = {
 }
 function BasketList({ basketList }: TBasketListProps): JSX.Element {
   const isRemoveItemModalActive = useAppSelector(getIsRemoveFromBasketActive);
-
+  if (basketList.length === 0) {
+    return <h1 style={{ padding: '10%', paddingLeft: '30%' }}>В вашей корзине нет товаров</h1>;
+  }
   return (
     <ul className="basket__list">
       {basketList.map((item) => <BasketItem key={item.id} card={item} />
       )}
 
-      {isRemoveItemModalActive && <ModalBasketRemoveItem isActive={isRemoveItemModalActive}/>}
+      {isRemoveItemModalActive && <ModalBasketRemoveItem isActive={isRemoveItemModalActive} />}
 
     </ul>
   );
