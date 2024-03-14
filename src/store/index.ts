@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from './root-reducer';
 import { createApi } from '../services/api';
-import { saveToStorage } from '../services/localStorage';
+import { saveBasketToStorage, saveDiscountToStorage } from '../services/localStorage';
 import { NameSpace } from '../consts';
 
 const api = createApi();
@@ -17,7 +17,8 @@ const store = configureStore({
 });
 
 store.subscribe(() => {
-  saveToStorage(store.getState()[NameSpace.Basket].basketList);
+  saveBasketToStorage(store.getState()[NameSpace.Basket].basketList);
+  saveDiscountToStorage(store.getState()[NameSpace.Basket].discount);
 });
 
 export default store;

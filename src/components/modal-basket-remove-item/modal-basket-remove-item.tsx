@@ -28,8 +28,8 @@ function ModalBasketRemoveItem({ isActive }: TModalBasketRemoveItemProps): JSX.E
   }
 
   function handleModalWindowKeydown(event: React.KeyboardEvent) {
-    event.preventDefault();
     if (event.key.startsWith('Esc')) {
+      event.preventDefault();
       modal.closeRemoveWindow();
     }
   }
@@ -87,6 +87,7 @@ function ModalBasketRemoveItem({ isActive }: TModalBasketRemoveItemProps): JSX.E
               ref={buttonRef}
               className="btn btn--purple modal__btn modal__btn--half-width"
               type="button"
+              tabIndex={0}
               onClick={handelRemoveButton}
             >
               Удалить
@@ -94,6 +95,7 @@ function ModalBasketRemoveItem({ isActive }: TModalBasketRemoveItemProps): JSX.E
             <Link
               className="btn btn--transparent modal__btn modal__btn--half-width"
               to="#"
+              tabIndex={0}
               onClick={() => modal.closeRemoveWindow()}
             >
               Продолжить покупки
@@ -103,6 +105,7 @@ function ModalBasketRemoveItem({ isActive }: TModalBasketRemoveItemProps): JSX.E
             onClick={handleCloseButtonClick}
             className="cross-btn"
             type="button"
+            tabIndex={0}
             aria-label="Закрыть попап"
           >
             <svg width="10" height="10" aria-hidden="true">

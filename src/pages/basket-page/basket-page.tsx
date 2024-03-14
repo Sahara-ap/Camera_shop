@@ -64,7 +64,9 @@ function BasketPage(): JSX.Element {
 
               <BasketList basketList={basketList} />
 
+              {/* вынести в отдельный Родительский компонент  Summary*/}
               <div className="basket__summary">
+                {/* отдельный дочерний Promocod */}
                 <div className="basket__promo">
                   <p className="title title--h4">Если у вас есть промокод на скидку, примените его в этом поле</p>
                   <div className="basket-form">
@@ -100,6 +102,7 @@ function BasketPage(): JSX.Element {
                   </div>
                 </div>
 
+                {/*Вынести в отдельный компонент Summary-order */}
                 <div className="basket__summary-order">
                   <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">{formatPrice(totalSum)} ₽</span></p>
                   <p className="basket__summary-item">

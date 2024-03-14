@@ -10,7 +10,7 @@ const getBasketList = createSelector([(state: Pick<State, NameSpace.Basket>) => 
 const getBasketRemoveItem = (state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket].setBasketRemoveItem;
 const getCouponSendingStatus = (state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket].couponSendingStatus;
 
-const getDiscount = (state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket].discount / 100;
+const getDiscount = (state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket].discount;
 
 const getItemCount = (id: number) => (state: Pick<State, NameSpace.Basket>) => {
   const basketList = state[NameSpace.Basket].basketList;

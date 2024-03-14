@@ -2,7 +2,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { TBasketCard, TCouponResponse, TSelectedCard } from '../../types/general-types';
 import { LoadingDataStatus, NameSpace } from '../../consts';
-import { getFromStorage } from '../../services/localStorage';
+import { getBasketFromStorage, getDiscountFromStorage } from '../../services/localStorage';
 import { postCoupon } from '../api-actions/basket-actions';
 
 type TBasketState = {
@@ -13,10 +13,10 @@ type TBasketState = {
   couponSendingStatus: LoadingDataStatus;
 }
 const initialState: TBasketState = {
-  basketList: getFromStorage(),
+  basketList: getBasketFromStorage(),
   setBasketRemoveItem: null,
 
-  discount: 0,
+  discount: getDiscountFromStorage(),
   couponSendingStatus: LoadingDataStatus.Unsent,
 };
 const basketSlice = createSlice({
@@ -98,7 +98,7 @@ const basketSlice = createSlice({
       })
       .addCase(postCoupon.fulfilled, (state, action) => {
         state.couponSendingStatus = LoadingDataStatus.Success;
-        state.discount = action.payload;
+        state.discount = action.payload / 100;
       })
       .addCase(postCoupon.rejected, (state) => {
         state.couponSendingStatus = LoadingDataStatus.Error;
