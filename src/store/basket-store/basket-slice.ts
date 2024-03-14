@@ -2,7 +2,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { TBasketCard, TCouponResponse, TSelectedCard } from '../../types/general-types';
 import { LoadingDataStatus, NameSpace } from '../../consts';
-import { getBasketFromStorage, getDiscountFromStorage } from '../../services/localStorage';
+import { getBasketFromStorage, getCouponSendingStatusFromStorage, getCouponValueFromStorage, getDiscountFromStorage } from '../../services/localStorage';
 import { postCoupon } from '../api-actions/basket-actions';
 
 type TBasketState = {
@@ -10,6 +10,7 @@ type TBasketState = {
   setBasketRemoveItem: TBasketCard | null;
 
   discount: TCouponResponse;
+  couponValue: string;
   couponSendingStatus: LoadingDataStatus;
 }
 const initialState: TBasketState = {
@@ -17,7 +18,8 @@ const initialState: TBasketState = {
   setBasketRemoveItem: null,
 
   discount: getDiscountFromStorage(),
-  couponSendingStatus: LoadingDataStatus.Unsent,
+  couponValue: getCouponValueFromStorage(),
+  couponSendingStatus: getCouponSendingStatusFromStorage(),
 };
 const basketSlice = createSlice({
   name: NameSpace.Basket,
@@ -90,6 +92,9 @@ const basketSlice = createSlice({
     setCouponSendingStatus: (state, action: PayloadAction<LoadingDataStatus>) => {
       state.couponSendingStatus = action.payload;
     },
+    setCouponValue: (state, action: PayloadAction<string>) => {
+      state.couponValue = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -108,7 +113,7 @@ const basketSlice = createSlice({
   }
 });
 
-const { addItemToBasketList, dropBasketList, deleteBasketItem, decrementBasketItem, incrementBasketItem, setItemCount, setBasketRemoveItem, setCouponSendingStatus,} = basketSlice.actions;
+const { addItemToBasketList, dropBasketList, deleteBasketItem, decrementBasketItem, incrementBasketItem, setItemCount, setBasketRemoveItem, setCouponSendingStatus, setCouponValue,} = basketSlice.actions;
 
 export {
   basketSlice,
@@ -122,4 +127,5 @@ export {
 
   setBasketRemoveItem,
   setCouponSendingStatus,
+  setCouponValue,
 };

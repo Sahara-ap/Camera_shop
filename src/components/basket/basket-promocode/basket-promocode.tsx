@@ -1,19 +1,19 @@
 import cn from 'classnames';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks/store-hooks';
-import { getCouponSendingStatus } from '../../../store/basket-store/basket-selectors';
+import { getCouponSendingStatus, getCouponValue } from '../../../store/basket-store/basket-selectors';
 import { postCoupon } from '../../../store/api-actions/basket-actions';
-import { setCouponSendingStatus } from '../../../store/basket-store/basket-slice';
+import { setCouponValue } from '../../../store/basket-store/basket-slice';
 
 import { removeSpacesFrom } from '../../../utils/utils-functions';
 import { LoadingDataStatus } from '../../../consts';
 
 function BasketPromocode(): JSX.Element {
   const dispatch = useAppDispatch();
-  const [couponInput, setCouponInput] = useState('');
   const promoCodeRef = useRef<HTMLInputElement>(null);
 
+  const couponInput = useAppSelector(getCouponValue);
   const sendingStatus = useAppSelector(getCouponSendingStatus);
 
   const body = { coupon: couponInput };
@@ -26,21 +26,9 @@ function BasketPromocode(): JSX.Element {
 
   function handlePromoCodeChange(event: React.ChangeEvent<HTMLInputElement>) {
     const coupon = event.target.value;
-    setCouponInput(removeSpacesFrom(coupon));
+    dispatch(setCouponValue(removeSpacesFrom(coupon)));
   }
 
-  function handlePromoCodeBlur() {
-    dispatch(setCouponSendingStatus(LoadingDataStatus.Unsent));
-  }
-  // очистка поля ввода промокода после получения ответа с сервера
-  // const isCouponWasSended = sendingStatus === LoadingDataStatus.Success
-  //   || sendingStatus === LoadingDataStatus.Error;
-
-  // useEffect(() => {
-  //   if (isCouponWasSended) {
-  //     setCouponInput('');
-  //   }
-  // }, [isCouponWasSended]);
 
   return (
     <div className="basket__promo">
@@ -60,7 +48,6 @@ function BasketPromocode(): JSX.Element {
                 name="promo"
                 placeholder="Введите промокод"
                 value={couponInput} onChange={handlePromoCodeChange}
-                onBlur={handlePromoCodeBlur}
 
               />
             </label>
