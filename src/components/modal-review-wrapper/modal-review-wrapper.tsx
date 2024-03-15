@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { getIsReviewModalActive, getIsReviewModalSuccessActive } from '../../store/modal-windows-store/modal-windows-selectors';
-import { setIsAddProductToCartSuccess } from '../../store/modal-windows-store/modal-windows-slice';
+import { setIsAddProductToCartSuccess, setIsReviewModalSuccessActive } from '../../store/modal-windows-store/modal-windows-slice';
 
 import { ModalReviewSuccess } from '../modal-review-success/modal-review-success';
 import { ModalReview } from '../modal-review/modal-review';
@@ -11,7 +11,7 @@ function ModalReviewWrapper() {
   const isModalReviewSuccessActive = useAppSelector(getIsReviewModalSuccessActive);
 
   function closeModal () {
-    dispatch(setIsAddProductToCartSuccess(false));
+    dispatch(setIsReviewModalSuccessActive(false));
   }
 
   return (

@@ -32,8 +32,8 @@ function ModalAddItemSuccess({ onLinkClick }: TModalAddItemSuccessProps): JSX.El
   }
 
   function handleModalWindowKeydown(event: React.KeyboardEvent) {
-    event.preventDefault();
     if (event.key.startsWith('Esc')) {
+      event.preventDefault();
       closeModal();
     }
   }

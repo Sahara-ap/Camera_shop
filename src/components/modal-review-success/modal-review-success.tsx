@@ -6,45 +6,56 @@ import { setIsReviewModalSuccessActive } from '../../store/modal-windows-store/m
 import { DELAY } from '../../consts';
 import { disableScrollLock, enableScrollLock } from '../../utils/utils-functions';
 
+type TModalReviewSuccessProps = {
+  onLinkClick: () => void;
+}
+function ModalReviewSuccess({ onLinkClick }: TModalReviewSuccessProps): JSX.Element {
+  const closeModal = onLinkClick;
 
-function ModalReviewSuccess(): JSX.Element {
-  const isActive = useAppSelector(getIsReviewModalSuccessActive);
+  // const isActive = useAppSelector(getIsReviewModalSuccessActive);
 
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const ratingRef = useRef<HTMLButtonElement | null>(null);
 
 
   function handleCloseButtonClick() {
-    dispatch(setIsReviewModalSuccessActive(false));
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    // dispatch(setIsReviewModalSuccessActive(false));
+    closeModal();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   function handleOverlayClick() {
-    dispatch(setIsReviewModalSuccessActive(false));
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    closeModal();
+    // dispatch(setIsReviewModalSuccessActive(false));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   function handleModalWindowKeydown(event: React.KeyboardEvent) {
     if (event.key.startsWith('Esc')) {
-      dispatch(setIsReviewModalSuccessActive(false));
-      window.scrollTo({top: 0, behavior: 'smooth'});
+      closeModal();
+      // dispatch(setIsReviewModalSuccessActive(false));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
   useEffect(() => {
-    if (isActive && ratingRef.current) {
-      enableScrollLock();
+    // if (isActive && ratingRef.current) {
+    //   enableScrollLock();
 
-      setTimeout(() => ratingRef.current?.focus(), DELAY);
-    }
+    //   setTimeout(() => ratingRef.current?.focus(), DELAY);
+    // }
+    enableScrollLock();
+    ratingRef.current?.focus();
 
     return () => {
       disableScrollLock();
     };
-  }, [isActive]);
+    // }, [isActive]);
+  });
 
 
   return (
     <div
-      className={cn('modal modal--narrow', { 'is-active': isActive })}
+      // className={cn('modal modal--narrow', { 'is-active': isActive })}
+      className="modal modal--narrow is-active"
       onKeyDown={handleModalWindowKeydown}
       data-testid="modalReviewSuccessDiv"
     >
@@ -81,7 +92,7 @@ function ModalReviewSuccess(): JSX.Element {
           </button>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 
