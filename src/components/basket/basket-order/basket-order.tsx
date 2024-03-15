@@ -8,14 +8,16 @@ import { getCouponSendingStatusFromStorage, getCouponValueFromStorage } from '..
 
 import { formatPrice } from '../../../utils/utils-functions';
 import { LoadingDataStatus } from '../../../consts';
-import { ModalBasketSuccess } from '../../modal-basket-success/modal-basket-success';
+import { ModalBasketOrder } from '../../modal-basket-order/modal-basket-order';
 import { setPostOrdersSendingStatusToUnsent } from '../../../store/basket-store/basket-slice';
 
 function BasketOrder(): JSX.Element {
   const dispatch = useAppDispatch();
   const sendingStatus = useAppSelector(getPostOrdersSendingStatus);
 
-  const isModalActive = sendingStatus === LoadingDataStatus.Error || sendingStatus === LoadingDataStatus.Success;
+  const isModalActive =
+    sendingStatus === LoadingDataStatus.Error
+    || sendingStatus === LoadingDataStatus.Success;
 
   const basketList = useAppSelector(getBasketList);
   const emptyBasket = basketList.length === 0;
@@ -77,7 +79,7 @@ function BasketOrder(): JSX.Element {
         Оформить заказ
       </button>
       {isModalActive &&
-        <ModalBasketSuccess onClick={closeModal} />}
+        <ModalBasketOrder onClick={closeModal} />}
     </div>
   );
 }

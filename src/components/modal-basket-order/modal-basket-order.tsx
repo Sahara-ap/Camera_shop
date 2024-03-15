@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { disableScrollLock, enableScrollLock } from '../../utils/utils-functions';
 
-type TModalbasketSuccessProps = {
+type TModalBasketOrderProps = {
   onClick: () => void;
 }
-function ModalBasketSuccess({ onClick }: TModalbasketSuccessProps): JSX.Element {
+function ModalBasketOrder({ onClick }: TModalBasketOrderProps): JSX.Element {
   const closeModal = onClick;
 
   const ratingRef = useRef<HTMLButtonElement | null>(null);
@@ -69,4 +69,4 @@ function ModalBasketSuccess({ onClick }: TModalbasketSuccessProps): JSX.Element 
   );
 }
 
-export { ModalBasketSuccess };
+export { ModalBasketOrder };
