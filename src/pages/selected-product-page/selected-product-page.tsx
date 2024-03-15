@@ -21,6 +21,7 @@ import { ModalReview } from '../../components/modal-review/modal-review';
 import { ModalReviewSuccess } from '../../components/modal-review-success/modal-review-success';
 import { getCameras } from '../../store/cards-data-store/cards-data-selectors';
 import { NotFoundPage } from '../not-found-page/not-found-page';
+import { ModalReviewWrapper } from '../../components/modal-review-wrapper/modal-review-wrapper';
 
 function SelectedProductPage(): JSX.Element {
 
@@ -79,8 +80,9 @@ function SelectedProductPage(): JSX.Element {
               <use xlinkHref="#icon-arrow2"></use>
             </svg>
           </span>
-          <ModalReview />
-          <ModalReviewSuccess />
+          {/* <ModalReview />
+          <ModalReviewSuccess /> */}
+          <ModalReviewWrapper />
         </main>
         <Footer />
       </div>
