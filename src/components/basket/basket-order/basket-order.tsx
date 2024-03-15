@@ -79,7 +79,7 @@ function BasketOrder(): JSX.Element {
         Оформить заказ
       </button>
       {isModalActive &&
-        <ModalBasketOrder onClick={closeModal} />}
+        <ModalBasketOrder onClick={closeModal} sendigOrderStatus={sendingStatus} />}
     </div>
   );
 }
