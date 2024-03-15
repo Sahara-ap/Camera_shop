@@ -11,6 +11,8 @@ type TModalWindowsState = {
 
   isReviewModalActive: boolean;
   isReviewModalSuccessActive: boolean;
+
+  isBasketModalSuccessActive: boolean;
 }
 const initialState: TModalWindowsState = {
   isBuyProductActive: false,
@@ -21,6 +23,8 @@ const initialState: TModalWindowsState = {
 
   isReviewModalActive: false,
   isReviewModalSuccessActive: false,
+
+  isBasketModalSuccessActive: false
 };
 
 const modalWindowsSlice = createSlice({
@@ -44,10 +48,13 @@ const modalWindowsSlice = createSlice({
     setIsReviewModalSuccessActive: (state, action: PayloadAction<boolean>) => {
       state.isReviewModalSuccessActive = action.payload;
     },
+    setIsBasketModalSuccessActive: (state, action: PayloadAction<boolean>) => {
+      state.isBasketModalSuccessActive = action.payload;
+    },
   }
 });
 
-const {setIsBuyProductActive, setIsAddProductToCartSuccess, setIsRemoveFromBasketActive, setIsReviewModalActive, setIsReviewModalSuccessActive} = modalWindowsSlice.actions;
+const {setIsBuyProductActive, setIsAddProductToCartSuccess, setIsRemoveFromBasketActive, setIsReviewModalActive, setIsReviewModalSuccessActive, setIsBasketModalSuccessActive} = modalWindowsSlice.actions;
 
 export {
   modalWindowsSlice,
@@ -57,4 +64,5 @@ export {
   setIsRemoveFromBasketActive,
   setIsReviewModalActive,
   setIsReviewModalSuccessActive,
+  setIsBasketModalSuccessActive,
 };

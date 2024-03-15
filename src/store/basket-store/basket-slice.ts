@@ -13,7 +13,7 @@ type TBasketState = {
   couponValue: string;
   couponSendingStatus: LoadingDataStatus;
 
-  isPostOrdersSending: boolean;
+  postOrdersSendingStatus: LoadingDataStatus;
 }
 const initialState: TBasketState = {
   basketList: getBasketFromStorage(),
@@ -23,7 +23,7 @@ const initialState: TBasketState = {
   couponValue: getCouponValueFromStorage(),
   couponSendingStatus: getCouponSendingStatusFromStorage(),
 
-  isPostOrdersSending: false,
+  postOrdersSendingStatus: LoadingDataStatus.Unsent
 };
 const basketSlice = createSlice({
   name: NameSpace.Basket,
@@ -99,6 +99,10 @@ const basketSlice = createSlice({
     setCouponValue: (state, action: PayloadAction<string>) => {
       state.couponValue = action.payload;
     },
+
+    setPostOrdersSendingStatusToUnsent: (state) => {
+      state.postOrdersSendingStatus = LoadingDataStatus.Unsent;
+    },
   },
   extraReducers(builder) {
     builder
@@ -114,19 +118,19 @@ const basketSlice = createSlice({
         state.discount = 0;
       })
       .addCase(postOrders.pending, (state) => {
-        state.isPostOrdersSending = true;
+        state.postOrdersSendingStatus = LoadingDataStatus.Pending;
       })
       .addCase(postOrders.fulfilled, (state) => {
-        state.isPostOrdersSending = false;
+        state.postOrdersSendingStatus = LoadingDataStatus.Success;
       })
       .addCase(postOrders.rejected, (state) => {
-        state.isPostOrdersSending = false;
+        state.postOrdersSendingStatus = LoadingDataStatus.Error;
       });
 
   }
 });
 
-const { addItemToBasketList, dropBasketList, deleteBasketItem, decrementBasketItem, incrementBasketItem, setItemCount, setBasketRemoveItem, setCouponSendingStatus, setCouponValue,} = basketSlice.actions;
+const { addItemToBasketList, dropBasketList, deleteBasketItem, decrementBasketItem, incrementBasketItem, setItemCount, setBasketRemoveItem, setCouponSendingStatus, setCouponValue, setPostOrdersSendingStatusToUnsent,} = basketSlice.actions;
 
 export {
   basketSlice,
@@ -141,4 +145,5 @@ export {
   setBasketRemoveItem,
   setCouponSendingStatus,
   setCouponValue,
+  setPostOrdersSendingStatusToUnsent,
 };

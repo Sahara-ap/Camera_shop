@@ -19,7 +19,7 @@ const getItemCount = (id: number) => (state: Pick<State, NameSpace.Basket>) => {
   return result;
 };
 
-const getIsPostOrdersSending = (state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket].isPostOrdersSending;
+const getPostOrdersSendingStatus = (state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket].postOrdersSendingStatus;
 
 const getTotalCount = createSelector([getBasketList], (basketList) => {
   const totalCount = basketList.reduce((sum, camera) => {
@@ -41,7 +41,7 @@ export {
   getCouponValue,
   getBasketRemoveItem,
   getDiscount,
-  getIsPostOrdersSending,
+  getPostOrdersSendingStatus,
   getItemCount,
   getTotalCount,
   getTotalSum,

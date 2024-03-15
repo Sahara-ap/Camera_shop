@@ -10,6 +10,8 @@ const getIsRemoveFromBasketActive = (state:Pick<State, NameSpace.Modals>) => sta
 const getIsReviewModalActive = (state:Pick<State, NameSpace.Modals>) => state[NameSpace.Modals].isReviewModalActive;
 const getIsReviewModalSuccessActive = (state:Pick<State, NameSpace.Modals>) => state[NameSpace.Modals].isReviewModalSuccessActive;
 
+const getIsBasketModalSuccessActive = (state:Pick<State, NameSpace.Modals>) => state[NameSpace.Modals].isBasketModalSuccessActive;
+
 export {
   getIsBuyProductActive,
   getProductData,
@@ -19,5 +21,7 @@ export {
 
   getIsReviewModalActive,
   getIsReviewModalSuccessActive,
+
+  getIsBasketModalSuccessActive,
 };
 
