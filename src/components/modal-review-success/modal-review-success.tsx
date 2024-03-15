@@ -6,6 +6,7 @@ import { setIsReviewModalSuccessActive } from '../../store/modal-windows-store/m
 import { DELAY } from '../../consts';
 import { disableScrollLock, enableScrollLock } from '../../utils/utils-functions';
 
+
 function ModalReviewSuccess(): JSX.Element {
   const isActive = useAppSelector(getIsReviewModalSuccessActive);
 

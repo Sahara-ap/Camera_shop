@@ -5,7 +5,7 @@ import { setIsAddProductToCartSuccess } from '../../store/modal-windows-store/mo
 import { ModalAddItemSuccess } from '../modal-add-item-success/modal-add-item-success';
 import { ModalAddItem } from '../modal-add-item/modal-add-item';
 
-function ModalWrapper() {
+function ModalAddItemWrapper() {
   const dispatch = useAppDispatch();
   const isAddModalActive = useAppSelector(getIsBuyProductActive);
   const isAddModalSuccessActive = useAppSelector(getIsAddProductToCartSuccess);
@@ -22,4 +22,4 @@ function ModalWrapper() {
   );
 }
 
-export { ModalWrapper };
+export { ModalAddItemWrapper };
