@@ -8,25 +8,31 @@ import { setCouponValue } from '../../../store/basket-store/basket-slice';
 
 import { removeSpacesFrom } from '../../../utils/utils-functions';
 import { LoadingDataStatus } from '../../../consts';
+import { saveCouponValueToStorage } from '../../../services/localStorage';
 
 function BasketPromocode(): JSX.Element {
   const dispatch = useAppDispatch();
   const promoCodeRef = useRef<HTMLInputElement>(null);
 
   const couponInput = useAppSelector(getCouponValue);
+
   const sendingStatus = useAppSelector(getCouponSendingStatus);
 
-  const body = { coupon: couponInput };
 
   function onApplyPromoCodeClick(event: React.MouseEvent) {
     event.preventDefault();
+
+    const body = { coupon: couponInput};
+    saveCouponValueToStorage(body.coupon);
     dispatch(postCoupon(body));
+
     promoCodeRef.current?.focus();
   }
 
   function handlePromoCodeChange(event: React.ChangeEvent<HTMLInputElement>) {
     const coupon = event.target.value;
-    dispatch(setCouponValue(removeSpacesFrom(coupon)));
+    const couponWithoutSpaces = removeSpacesFrom(coupon);
+    dispatch(setCouponValue(couponWithoutSpaces));
   }
 
 
@@ -47,6 +53,7 @@ function BasketPromocode(): JSX.Element {
                 type="text"
                 name="promo"
                 placeholder="Введите промокод"
+                // value={couponInput} onChange={handlePromoCodeChange}
                 value={couponInput} onChange={handlePromoCodeChange}
 
               />
