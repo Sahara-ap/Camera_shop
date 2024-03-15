@@ -40,6 +40,11 @@ type TCouponBody = {
 }
 type TCouponResponse = number
 
+type TOrdersBody = {
+  camerasIds: number[];
+  coupon: string | null;
+}
+
 type TPage = 'catalog' | 'product' | 'basket'
 
 type TParamsCatalog = {
@@ -119,6 +124,7 @@ export type {
   TCouponResponse,
   TCameraCategory,
   TCameraLevel,
+  TOrdersBody,
   TPage,
   TParamsCatalog,
   TReview,

@@ -1,14 +1,39 @@
 import './basket-order.css';
-
 import cn from 'classnames';
-import { useAppSelector } from '../../../hooks/store-hooks';
-import { getBasketList, getDiscount, getTotalSum } from '../../../store/basket-store/basket-selectors';
+
+import { useAppDispatch, useAppSelector } from '../../../hooks/store-hooks';
+import { getBasketList, getDiscount, getIsPostOrdersSending, getTotalSum } from '../../../store/basket-store/basket-selectors';
+import { postOrders } from '../../../store/api-actions/basket-actions';
+import { getCouponSendingStatusFromStorage, getCouponValueFromStorage } from '../../../services/localStorage';
+
 import { formatPrice } from '../../../utils/utils-functions';
+import { LoadingDataStatus } from '../../../consts';
 
 function BasketOrder(): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const basketList = useAppSelector(getBasketList);
+  const coupon = getCouponValueFromStorage();
+  const couponStatus = getCouponSendingStatusFromStorage();
+  const validCoupon = couponStatus === LoadingDataStatus.Success ? coupon : null;
+
   const totalSum = useAppSelector(getTotalSum);
   const discount = useAppSelector(getDiscount);
-  const basketList = useAppSelector(getBasketList);
+  const isSending = useAppSelector(getIsPostOrdersSending);
+
+  const isButtonDisabled =
+    basketList.length === 0
+    || isSending;
+
+  function handleOrderButtonClick(event: React.MouseEvent) {
+    event.preventDefault();
+    const body = {
+      camerasIds: basketList.map((camera) => camera.id),
+      coupon: validCoupon,
+    };
+    dispatch(postOrders(body));
+  }
+
   return (
     <div className="basket__summary-order">
       <p className="basket__summary-item">
@@ -32,7 +57,8 @@ function BasketOrder(): JSX.Element {
       <button
         className="btn btn--purple"
         type="submit"
-        disabled={basketList.length === 0}
+        disabled={isButtonDisabled}
+        onClick={handleOrderButtonClick}
       >
         Оформить заказ
       </button>

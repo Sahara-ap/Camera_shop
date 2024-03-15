@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkAPI } from '../../types/store';
 import { APIRoute } from '../../consts';
-import { TCouponBody, TCouponResponse } from '../../types/general-types';
+import { TCouponBody, TCouponResponse, TOrdersBody } from '../../types/general-types';
 
 
 const postCoupon = createAsyncThunk<TCouponResponse, TCouponBody, ThunkAPI>(
@@ -12,10 +12,7 @@ const postCoupon = createAsyncThunk<TCouponResponse, TCouponBody, ThunkAPI>(
   }
 );
 
-type TOrdersBody = {
-  camerasIds: number[];
-  coupon: string;
-}
+
 const postOrders = createAsyncThunk<void, TOrdersBody, ThunkAPI>(
   'basket/orders',
   async (body, {extra: api}) => {
