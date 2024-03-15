@@ -1,9 +1,4 @@
-import cn from 'classnames';
-import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
-import { getIsReviewModalSuccessActive } from '../../store/modal-windows-store/modal-windows-selectors';
 import { useEffect, useRef } from 'react';
-import { setIsReviewModalSuccessActive } from '../../store/modal-windows-store/modal-windows-slice';
-import { DELAY } from '../../consts';
 import { disableScrollLock, enableScrollLock } from '../../utils/utils-functions';
 
 type TModalReviewSuccessProps = {
@@ -12,49 +7,36 @@ type TModalReviewSuccessProps = {
 function ModalReviewSuccess({ onLinkClick }: TModalReviewSuccessProps): JSX.Element {
   const closeModal = onLinkClick;
 
-  // const isActive = useAppSelector(getIsReviewModalSuccessActive);
-
-  // const dispatch = useAppDispatch();
   const ratingRef = useRef<HTMLButtonElement | null>(null);
 
 
   function handleCloseButtonClick() {
-    // dispatch(setIsReviewModalSuccessActive(false));
     closeModal();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   function handleOverlayClick() {
     closeModal();
-    // dispatch(setIsReviewModalSuccessActive(false));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   function handleModalWindowKeydown(event: React.KeyboardEvent) {
     if (event.key.startsWith('Esc')) {
       closeModal();
-      // dispatch(setIsReviewModalSuccessActive(false));
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
   useEffect(() => {
-    // if (isActive && ratingRef.current) {
-    //   enableScrollLock();
-
-    //   setTimeout(() => ratingRef.current?.focus(), DELAY);
-    // }
     enableScrollLock();
     ratingRef.current?.focus();
 
     return () => {
       disableScrollLock();
     };
-    // }, [isActive]);
   });
 
 
   return (
     <div
-      // className={cn('modal modal--narrow', { 'is-active': isActive })}
       className="modal modal--narrow is-active"
       onKeyDown={handleModalWindowKeydown}
       data-testid="modalReviewSuccessDiv"
