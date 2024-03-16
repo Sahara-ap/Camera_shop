@@ -126,7 +126,7 @@ const basketSlice = createSlice({
         state.discount = 0;
         state.couponSendingStatus = LoadingDataStatus.Unsent;
         state.couponValue = '';
-        saveCouponValueToStorage('');
+        // saveCouponValueToStorage('');
       })
       .addCase(postOrders.rejected, (state) => {
         state.postOrdersSendingStatus = LoadingDataStatus.Error;
