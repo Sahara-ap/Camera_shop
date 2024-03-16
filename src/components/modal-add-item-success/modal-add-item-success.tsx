@@ -1,13 +1,19 @@
 import { useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { disableScrollLock, enableScrollLock } from '../../utils/utils-functions';
 import { AppRoute } from '../../consts';
+import { TLocationState } from '../../types/general-types';
 
 type TModalAddItemSuccessProps = {
   onLinkClick: () => void;
+  page?: 'catalog' | 'product';
 }
-function ModalAddItemSuccess({ onLinkClick }: TModalAddItemSuccessProps): JSX.Element {
-  const href = window.location.href;
+function ModalAddItemSuccess({ onLinkClick, page }: TModalAddItemSuccessProps): JSX.Element {
+
+
+  const location = useLocation() as TLocationState;
+  const hrefForProduct = location.state?.fromForProduct;
+  const hrefForCatalog = window.location.href;
 
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const closeModal = onLinkClick;
@@ -17,7 +23,7 @@ function ModalAddItemSuccess({ onLinkClick }: TModalAddItemSuccessProps): JSX.El
   function handleGoOnShoppingLinkClick() {
     closeModal();
   }
-  function handleToBasketClick () {
+  function handleToBasketClick() {
     closeModal();
     navigate(AppRoute.Basket);
 
@@ -70,7 +76,8 @@ function ModalAddItemSuccess({ onLinkClick }: TModalAddItemSuccessProps): JSX.El
           <div className="modal__buttons">
             <Link
               className="btn btn--transparent modal__btn"
-              to={href}
+              to={page === 'product' ? hrefForProduct : hrefForCatalog}
+              // to={hrefForCatalog}
               onClick={handleGoOnShoppingLinkClick}
             >
               Продолжить покупки

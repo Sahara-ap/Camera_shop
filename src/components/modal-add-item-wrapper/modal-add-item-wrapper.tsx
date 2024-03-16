@@ -5,7 +5,10 @@ import { setIsAddProductToCartSuccess } from '../../store/modal-windows-store/mo
 import { ModalAddItemSuccess } from '../modal-add-item-success/modal-add-item-success';
 import { ModalAddItem } from '../modal-add-item/modal-add-item';
 
-function ModalAddItemWrapper() {
+type TModalAddItemWrapperProps = {
+  page?: 'catalog' | 'product';
+}
+function ModalAddItemWrapper({page}: TModalAddItemWrapperProps) {
   const dispatch = useAppDispatch();
   const isAddModalActive = useAppSelector(getIsBuyProductActive);
   const isAddModalSuccessActive = useAppSelector(getIsAddProductToCartSuccess);
@@ -17,7 +20,7 @@ function ModalAddItemWrapper() {
   return (
     <>
       {isAddModalActive && <ModalAddItem />}
-      {isAddModalSuccessActive && <ModalAddItemSuccess onLinkClick={closeModal}/>}
+      {isAddModalSuccessActive && <ModalAddItemSuccess onLinkClick={closeModal} page={page}/>}
     </>
   );
 }

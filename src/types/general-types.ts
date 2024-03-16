@@ -40,6 +40,12 @@ type TCouponBody = {
 }
 type TCouponResponse = number
 
+type TLocationState = {
+  state: {
+    fromForProduct: Location;
+  };
+}
+
 type TOrdersBody = {
   camerasIds: number[];
   coupon: string | null;
@@ -124,6 +130,7 @@ export type {
   TCouponResponse,
   TCameraCategory,
   TCameraLevel,
+  TLocationState,
   TOrdersBody,
   TPage,
   TParamsCatalog,

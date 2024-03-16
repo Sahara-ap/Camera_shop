@@ -51,7 +51,7 @@ function SelectedProductInfo(): JSX.Element | null {
           </div>
         </div>
       </section>
-      <ModalAddItemWrapper />
+      <ModalAddItemWrapper page='product'/>
     </div>
 
   );

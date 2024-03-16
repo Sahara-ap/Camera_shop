@@ -79,6 +79,7 @@ function Card({ cardData, page }: TCardProps): JSX.Element {
         <Link
           className="btn btn--transparent"
           to={`${AppRoute.Product}/${cardData.id}`}
+          state={{'fromForProduct': window.location.href}}
         >
           Подробнее
         </Link>
