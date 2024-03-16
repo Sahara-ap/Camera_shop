@@ -2,20 +2,20 @@ import cn from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks/store-hooks';
-import { getCouponSendingStatus, getCouponValue, getPostOrdersSendingStatus } from '../../../store/basket-store/basket-selectors';
+import { getCouponSendingStatus, getPostOrdersSendingStatus } from '../../../store/basket-store/basket-selectors';
 import { postCoupon } from '../../../store/api-actions/basket-actions';
 import { setCouponValue } from '../../../store/basket-store/basket-slice';
 
 import { removeSpacesFrom } from '../../../utils/utils-functions';
 import { LoadingDataStatus } from '../../../consts';
-import { getCouponValueFromStorage, saveCouponValueToStorage } from '../../../services/localStorage';
+import { getCouponValueFromStorage } from '../../../services/localStorage';
 
 function BasketPromocode(): JSX.Element {
   const dispatch = useAppDispatch();
+
+  const [couponInput, setCouponInput] = useState(getCouponValueFromStorage());
   const promoCodeRef = useRef<HTMLInputElement>(null);
 
-  // const couponInput = useAppSelector(getCouponValue);
-  const [couponInput, setCouponInput] = useState(getCouponValueFromStorage());
 
   const sendingCouponStatus = useAppSelector(getCouponSendingStatus);
   const sendingOrderStatus = useAppSelector(getPostOrdersSendingStatus);
@@ -30,9 +30,8 @@ function BasketPromocode(): JSX.Element {
     event.preventDefault();
 
     const body = { coupon: couponInput};
-    // saveCouponValueToStorage(body.coupon);
-    dispatch(setCouponValue(couponInput)); // нужен для однообразия, чтобы сохранять в LS и удалять только в одном единственном месте!
     dispatch(postCoupon(body));
+    dispatch(setCouponValue(couponInput)); // нужен для однообразия, чтобы сохранять в LS и удалять только в одном единственном месте!
 
     promoCodeRef.current?.focus();
   }
@@ -40,7 +39,6 @@ function BasketPromocode(): JSX.Element {
   function handlePromoCodeChange(event: React.ChangeEvent<HTMLInputElement>) {
     const coupon = event.target.value;
     const couponWithoutSpaces = removeSpacesFrom(coupon);
-    // dispatch(setCouponValue(couponWithoutSpaces));
     setCouponInput(couponWithoutSpaces);
   }
 
