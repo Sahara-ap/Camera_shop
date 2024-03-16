@@ -20,9 +20,13 @@ function BasketPromocode(): JSX.Element {
   const sendingCouponStatus = useAppSelector(getCouponSendingStatus);
   const sendingOrderStatus = useAppSelector(getPostOrdersSendingStatus);
   useEffect(() => {
-    if (sendingOrderStatus === LoadingDataStatus.Success) {
+    let isMounted = true;
+    if (isMounted && sendingOrderStatus === LoadingDataStatus.Success) {
       setCouponInput('');
     }
+    return (() => {
+      isMounted = false;
+    });
   }, [sendingOrderStatus]);
 
 
