@@ -77,7 +77,6 @@ function ModalAddItemSuccess({ onLinkClick, page }: TModalAddItemSuccessProps): 
             <Link
               className="btn btn--transparent modal__btn"
               to={page === 'product' ? hrefForProduct : hrefForCatalog}
-              // to={hrefForCatalog}
               onClick={handleGoOnShoppingLinkClick}
             >
               Продолжить покупки

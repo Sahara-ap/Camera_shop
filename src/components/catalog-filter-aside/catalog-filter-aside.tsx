@@ -2,12 +2,10 @@ import { FilterCategory } from './filter-category/filter-category';
 import { FilterType } from './filter-type/filter-type';
 import { FilterLevel } from './filter-level/filter-level';
 import { FilterPrice } from './filter-price/filter-price';
-import { useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getParams } from '../../utils/utils-functions';
 
 function CatalogFilterAside(): JSX.Element {
-  const formRef = useRef<HTMLFormElement | null>(null);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const params = getParams(searchParams);
@@ -36,7 +34,6 @@ function CatalogFilterAside(): JSX.Element {
       <div data-testid="catalogFilterAsideDivElement" className="catalog-filter">
         <form
           action="#"
-          ref={formRef}
         >
           <h2 className="visually-hidden">Фильтр</h2>
           <FilterPrice />
