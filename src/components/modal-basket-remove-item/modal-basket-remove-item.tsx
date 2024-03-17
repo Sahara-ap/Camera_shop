@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import { useEffect, useRef } from 'react';
 import { disableScrollLock, enableScrollLock, reduceFirstLetter } from '../../utils/utils-functions';
 import { setIsRemoveFromBasketActive } from '../../store/modal-windows-store/modal-windows-slice';
-import { getBasketRemoveItem } from '../../store/basket-store/basket-selectors';
+import { getBasketRemovedItem } from '../../store/basket-store/basket-selectors';
 import { deleteBasketItem } from '../../store/basket-store/basket-slice';
 
 type TModalBasketRemoveItemProps = {
@@ -11,7 +11,7 @@ type TModalBasketRemoveItemProps = {
 }
 function ModalBasketRemoveItem({ isActive }: TModalBasketRemoveItemProps): JSX.Element | null {
   const dispatch = useAppDispatch();
-  const card = useAppSelector(getBasketRemoveItem);
+  const card = useAppSelector(getBasketRemovedItem);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const modal = {

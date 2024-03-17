@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../../hooks/store-hooks';
-import { decrementBasketItem, incrementBasketItem, setBasketRemoveItem, setItemCount } from '../../../store/basket-store/basket-slice';
+import { decrementBasketItem, incrementBasketItem, setBasketRemovedItem, setItemCount } from '../../../store/basket-store/basket-slice';
 import { setIsRemoveFromBasketActive } from '../../../store/modal-windows-store/modal-windows-slice';
 import { TBasketCard } from '../../../types/general-types';
 import { formatPrice, reduceFirstLetter } from '../../../utils/utils-functions';
@@ -21,7 +21,7 @@ function BasketItem({ card }: TBasketItemProps): JSX.Element {
 
   function handleRemoveButtonClick() {
     modal.openRemoveWindow();
-    dispatch(setBasketRemoveItem(card));
+    dispatch(setBasketRemovedItem(card));
   }
 
 

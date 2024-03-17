@@ -7,7 +7,7 @@ import { postCoupon, postOrders } from '../api-actions/basket-actions';
 
 type TBasketState = {
   basketList: TBasketCard[];
-  setBasketRemoveItem: TBasketCard | null;
+  basketRemovedItem: TBasketCard | null;
 
   discount: TCouponResponse;
   couponValue: string;
@@ -17,7 +17,7 @@ type TBasketState = {
 }
 const initialState: TBasketState = {
   basketList: getBasketFromStorage(),
-  setBasketRemoveItem: null,
+  basketRemovedItem: null,
 
   discount: getDiscountFromStorage(),
   couponValue: getCouponValueFromStorage(),
@@ -89,8 +89,8 @@ const basketSlice = createSlice({
       state.basketList[index].count = result;
     },
 
-    setBasketRemoveItem: (state, action: PayloadAction<TBasketCard>) => {
-      state.setBasketRemoveItem = action.payload;
+    setBasketRemovedItem: (state, action: PayloadAction<TBasketCard>) => {
+      state.basketRemovedItem = action.payload;
     },
 
     setCouponSendingStatus: (state, action: PayloadAction<LoadingDataStatus>) => {
@@ -135,7 +135,7 @@ const basketSlice = createSlice({
   }
 });
 
-const { addItemToBasketList, dropBasketList, deleteBasketItem, decrementBasketItem, incrementBasketItem, setItemCount, setBasketRemoveItem, setCouponSendingStatus, setCouponValue, setPostOrdersSendingStatusToUnsent,} = basketSlice.actions;
+const { addItemToBasketList, dropBasketList, deleteBasketItem, decrementBasketItem, incrementBasketItem, setItemCount, setBasketRemovedItem, setCouponSendingStatus, setCouponValue, setPostOrdersSendingStatusToUnsent,} = basketSlice.actions;
 
 export {
   basketSlice,
@@ -147,7 +147,7 @@ export {
   incrementBasketItem,
   setItemCount,
 
-  setBasketRemoveItem,
+  setBasketRemovedItem,
   setCouponSendingStatus,
   setCouponValue,
   setPostOrdersSendingStatusToUnsent,

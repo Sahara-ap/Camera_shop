@@ -7,7 +7,7 @@ const getBasketList = createSelector([(state: Pick<State, NameSpace.Basket>) => 
   return basketList;
 });
 
-const getBasketRemoveItem = (state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket].setBasketRemoveItem;
+const getBasketRemovedItem = (state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket].basketRemovedItem;
 const getCouponSendingStatus = (state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket].couponSendingStatus;
 const getCouponValue = (state: Pick<State, NameSpace.Basket>) => state[NameSpace.Basket].couponValue;
 
@@ -39,7 +39,7 @@ export {
   getBasketList,
   getCouponSendingStatus,
   getCouponValue,
-  getBasketRemoveItem,
+  getBasketRemovedItem,
   getDiscount,
   getPostOrdersSendingStatus,
   getItemCount,
