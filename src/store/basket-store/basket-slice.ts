@@ -49,9 +49,6 @@ const basketSlice = createSlice({
       }
     },
 
-    dropBasketList: (state) => {
-      state.basketList = [];
-    },
     deleteBasketItem: (state, action: PayloadAction<TBasketCard['id']>) => {
       const deletedCardId = action.payload;
       const result = state.basketList.filter((card) => card.id !== deletedCardId);
@@ -135,13 +132,12 @@ const basketSlice = createSlice({
   }
 });
 
-const { addItemToBasketList, dropBasketList, deleteBasketItem, decrementBasketItem, incrementBasketItem, setItemCount, setBasketRemovedItem, setCouponSendingStatus, setCouponValue, setPostOrdersSendingStatusToUnsent,} = basketSlice.actions;
+const { addItemToBasketList, deleteBasketItem, decrementBasketItem, incrementBasketItem, setItemCount, setBasketRemovedItem, setCouponSendingStatus, setCouponValue, setPostOrdersSendingStatusToUnsent, } = basketSlice.actions;
 
 export {
   basketSlice,
 
   addItemToBasketList,
-  dropBasketList,
   deleteBasketItem,
   decrementBasketItem,
   incrementBasketItem,
@@ -151,4 +147,7 @@ export {
   setCouponSendingStatus,
   setCouponValue,
   setPostOrdersSendingStatusToUnsent,
+
 };
+export type { TBasketState };
+

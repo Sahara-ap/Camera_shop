@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { TBanner, TCard, TReview, TReviewPost, TSelectedCard, TSimilar } from '../types/general-types';
+import { TBanner, TBasketCard, TCard, TReview, TReviewPost, TSelectedCard, TSimilar } from '../types/general-types';
 import { pickRandomElement } from './utils-functions';
 import { State } from '../types/store';
 import { Action } from '@reduxjs/toolkit';
@@ -17,6 +17,7 @@ const makeFakeBanners = (): TBanner[] => new Array(3).fill(null).map(() => ({
   previewImgWebp: faker.internet.url(),
   previewImgWebp2x: faker.internet.url(),
 }));
+
 
 const makeFakeCard = (): TCard => ({
   id: faker.number.int(),
@@ -118,6 +119,12 @@ const makeFakeSelectedCard = (): TSelectedCard => ({
   previewImgWebp2x: faker.internet.url(),
 });
 
+const makeFakeBasketItem = (): TBasketCard => Object.assign(
+  makeFakeSelectedCard(),
+  {
+    count: faker.number.int()
+  });
+
 
 const makeFakeState = (initialState?: Partial<State>) => ({
   [NameSpace.App]: {
@@ -178,6 +185,7 @@ export {
   makeFakeReviewPost,
 
   makeFakeSelectedCard,
+  makeFakeBasketItem,
   makeFakeSimilars,
 
   makeFakeState,
