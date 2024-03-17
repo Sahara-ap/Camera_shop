@@ -11,6 +11,7 @@ import { fetchBannerAction } from './banner-action';
 import { extractActionTypes, makeFakeBanners, makeFakeCards, makeFakeReviewPost, makeFakeReviews, makeFakeSelectedCard, makeFakeSimilars } from '../../utils/mocks';
 import { fetchCamerasAction, fetchSelectedCameraAction, fetchSimilars } from './card-actions';
 import { fetchReviews, postReview } from './reviews-action';
+import { postCoupon, postOrders } from './basket-actions';
 
 type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createApi>, Action>
 
@@ -242,6 +243,74 @@ describe('Async actions', () => {
           postReview.rejected.type
         ]);
       });
+  });
+
+  describe('postCoupon', () => {
+    it('with "postCoupon" thunkAction and server response 200 - should dispatch postCoupon.pending and postCoupon.fulfilled actions',
+      async () => {
+        const mockServerResponse = 15;
+        const mockBody = { coupon: 'any string' };
+        const path = APIRoute.Coupons;
+        mockAxiosAdapter.onPost(path).reply(200, mockServerResponse);
+
+        await mockStore.dispatch(postCoupon(mockBody));
+        const actionsTypes = extractActionTypes(mockStore.getActions());
+
+        expect(actionsTypes).toEqual([
+          postCoupon.pending.type,
+          postCoupon.fulfilled.type
+        ]);
+      }
+    );
+    it('with "postCoupon" thunkAction and server response 400 - should dispatch postCoupon.pending and postCoupon.rejected actions',
+      async () => {
+        const mockServerResponse = 15;
+        const mockBody = { coupon: 'any string' };
+        const path = APIRoute.Coupons;
+        mockAxiosAdapter.onPost(path).reply(400, mockServerResponse);
+
+        await mockStore.dispatch(postCoupon(mockBody));
+        const actionsTypes = extractActionTypes(mockStore.getActions());
+
+        expect(actionsTypes).toEqual([
+          postCoupon.pending.type,
+          postCoupon.rejected.type
+        ]);
+      }
+    );
+
+    it('with "postOrders" thunkAction and server response 200 - should dispatch postOrders.pending and postOrders.fulfilled actions',
+      async () => {
+        const mockBody = {camerasIds: [], coupon: null };
+        const path = APIRoute.Orders;
+        mockAxiosAdapter.onPost(path).reply(200);
+
+        await mockStore.dispatch(postOrders(mockBody));
+        const actionsTypes = extractActionTypes(mockStore.getActions());
+
+        expect(actionsTypes).toEqual([
+          postOrders.pending.type,
+          postOrders.fulfilled.type
+        ]);
+      }
+    );
+    it('with "postOrders" thunkAction and server response 400 - should dispatch postOrders.pending and postOrders.rejected actions',
+      async () => {
+        const mockServerResponse = 15;
+        const mockBody = {camerasIds: [], coupon: 'any string' };
+        const path = APIRoute.Orders;
+        mockAxiosAdapter.onPost(path).reply(400, mockServerResponse);
+
+        await mockStore.dispatch(postOrders(mockBody));
+        const actionsTypes = extractActionTypes(mockStore.getActions());
+
+        expect(actionsTypes).toEqual([
+          postOrders.pending.type,
+          postOrders.rejected.type
+        ]);
+      }
+    );
+
   });
 
 });
