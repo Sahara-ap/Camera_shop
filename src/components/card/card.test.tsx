@@ -1,15 +1,16 @@
 import { withHistory, withStore } from '../../utils/mock-components';
 import { render, screen } from '@testing-library/react';
 import { Card } from './card';
-import { extractActionTypes, makeFakeCard } from '../../utils/mocks';
+import { extractActionTypes, makeFakeCard, makeFakeState } from '../../utils/mocks';
 import userEvent from '@testing-library/user-event';
 import { setSelectedCamera } from '../../store/selected-card-data-store/selected-card-data-slice';
 import { setIsBuyProductActive } from '../../store/modal-windows-store/modal-windows-slice';
 
 describe('Component: Card', () => {
+  const mockState = makeFakeState();
   const mockPageProp = 'catalog';
   const mockCardProp = makeFakeCard();
-  const { withStoreComponent, mockStore } = withStore(<Card cardData={mockCardProp} page={mockPageProp} />);
+  const { withStoreComponent, mockStore } = withStore(<Card cardData={mockCardProp} page={mockPageProp} />, mockState);
   const preparedComponent = withHistory(withStoreComponent);
 
   it('should render correctly', () => {

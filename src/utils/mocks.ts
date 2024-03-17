@@ -124,6 +124,7 @@ const makeFakeBasketItem = (): TBasketCard => Object.assign(
   {
     count: faker.number.int()
   });
+const makeFakeBasketList = (): TBasketCard[] => new Array(4).fill(null).map(() => makeFakeBasketItem());
 
 
 const makeFakeState = (initialState?: Partial<State>) => ({
@@ -145,6 +146,16 @@ const makeFakeState = (initialState?: Partial<State>) => ({
     isBannerCardLoading: false,
     isBannerError: false
   },
+  [NameSpace.Basket]: {
+    basketList: makeFakeBasketList(),
+    basketRemovedItem: makeFakeBasketItem(),
+
+    discount: 10,
+    couponValue: 'camera-333',
+    couponSendingStatus: LoadingDataStatus.Unsent,
+
+    postOrdersSendingStatus: LoadingDataStatus.Unsent,
+  },
   [NameSpace.Cards]: {
     cameras: makeFakeCards(),
     isCamerasLoading: false
@@ -152,9 +163,11 @@ const makeFakeState = (initialState?: Partial<State>) => ({
   [NameSpace.Modals]: {
     isBuyProductActive: false,
     productData: null,
-
+    isAddProductToCartSuccess: false,
+    isRemoveFromBasketActive: false,
     isReviewModalActive: false,
     isReviewModalSuccessActive: false,
+    isBasketModalSuccessActive: false
   },
   [NameSpace.Reviews]: {
     reviews: makeFakeReviews(),
@@ -186,6 +199,7 @@ export {
 
   makeFakeSelectedCard,
   makeFakeBasketItem,
+  makeFakeBasketList,
   makeFakeSimilars,
 
   makeFakeState,

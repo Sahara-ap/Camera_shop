@@ -7,6 +7,11 @@ describe('modal-windows-slice', () => {
 
     isReviewModalActive: false,
     isReviewModalSuccessActive: false,
+
+    isAddProductToCartSuccess: false,
+    isRemoveFromBasketActive: false,
+
+    isBasketModalSuccessActive: false,
   };
   it('should return initial state with empty action',
     () => {

@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../utils/mock-components';
 import userEvent from '@testing-library/user-event';
-import { extractActionTypes, makeFakeState } from '../../utils/mocks';
+import { makeFakeState } from '../../utils/mocks';
 import { ModalReviewSuccess } from './modal-review-success';
-import { setIsReviewModalSuccessActive } from '../../store/modal-windows-store/modal-windows-slice';
 
 describe('Component: ModalReviewSuccess', () => {
   const mockState = makeFakeState();
+  const mockHandleClick = vi.fn();
   mockState.MODALS.isReviewModalSuccessActive = true;
-  const { withStoreComponent, mockStore } = withStore(<ModalReviewSuccess />, mockState);
+  const { withStoreComponent, mockStore } = withStore(<ModalReviewSuccess onLinkClick={mockHandleClick} />, mockState);
   const preparedComponent = withHistory(withStoreComponent);
 
   beforeEach(() => {
@@ -30,32 +30,27 @@ describe('Component: ModalReviewSuccess', () => {
     expect(screen.getByTestId(expectedCloseButtonId)).toBeInTheDocument();
   });
 
-  it('should dispatch "setIsReviewModalSuccessActive" when push returnButton',
 
+  it('should call "closeModal" when click returnButton',
     async () => {
+      mockHandleClick.mockReset();
       const expectedReturnButtonId = 'modalReviewSuccessReturnButton';
       render(preparedComponent);
 
       await userEvent.click(screen.getByTestId(expectedReturnButtonId));
-      const actionTypes = extractActionTypes(mockStore.getActions());
 
-      expect(actionTypes).toEqual([
-        setIsReviewModalSuccessActive.type,
-      ]);
+      expect(mockHandleClick).toBeCalledTimes(1);
 
     });
-
-  it('should dispatch "setIsReviewModalSuccessActive" when push closeButton',
+  it('should call "closeModal" when click closeButton',
     async () => {
-      const expectedCloseButtonId = 'modalReviewCloseButton';
+      mockHandleClick.mockReset();
+      const expectedReturnButtonId = 'modalReviewCloseButton';
       render(preparedComponent);
 
-      await userEvent.click(screen.getByTestId(expectedCloseButtonId));
-      const actionTypes = extractActionTypes(mockStore.getActions());
+      await userEvent.click(screen.getByTestId(expectedReturnButtonId));
 
-      expect(actionTypes).toEqual([
-        setIsReviewModalSuccessActive.type,
-      ]);
+      expect(mockHandleClick).toBeCalledTimes(1);
 
     });
 
