@@ -51,7 +51,7 @@ function BasketOrder(): JSX.Element {
 
 
   return (
-    <div className="basket__summary-order">
+    <div className="basket__summary-order" data-testid="basketOrderDiv">
       <p className="basket__summary-item">
         <span className="basket__summary-text">Всего:</span>
         <span className="basket__summary-value">{formatPrice(totalSum)} ₽</span>

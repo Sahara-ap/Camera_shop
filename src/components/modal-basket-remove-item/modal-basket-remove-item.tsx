@@ -89,6 +89,7 @@ function ModalBasketRemoveItem({ isActive }: TModalBasketRemoveItemProps): JSX.E
               type="button"
               tabIndex={0}
               onClick={handelRemoveButton}
+              data-testid="deleteButton"
             >
               Удалить
             </button>
@@ -97,6 +98,7 @@ function ModalBasketRemoveItem({ isActive }: TModalBasketRemoveItemProps): JSX.E
               to="#"
               tabIndex={0}
               onClick={() => modal.closeRemoveWindow()}
+              data-testid="goOnLink"
             >
               Продолжить покупки
             </Link>
@@ -107,6 +109,7 @@ function ModalBasketRemoveItem({ isActive }: TModalBasketRemoveItemProps): JSX.E
             type="button"
             tabIndex={0}
             aria-label="Закрыть попап"
+            data-testid="closeModalButton"
           >
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>

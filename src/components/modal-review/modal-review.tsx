@@ -110,7 +110,7 @@ function ModalReview(): JSX.Element {
 
   return (
     <div
-      className={cn('modal', { 'is-active': isActive })}
+      className='modal is-active'
       onKeyDown={handleModalWindowKeydown}
     >
       <div className="modal__wrapper">

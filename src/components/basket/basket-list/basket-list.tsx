@@ -13,7 +13,7 @@ function BasketList({ basketList }: TBasketListProps): JSX.Element {
     return <h1 style={{ padding: '10%', paddingLeft: '30%' }}>В вашей корзине нет товаров</h1>;
   }
   return (
-    <ul className="basket__list">
+    <ul className="basket__list" data-testid="basketListDiv">
       {basketList.map((item) => <BasketItem key={item.id} card={item} />
       )}
 

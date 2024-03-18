@@ -56,6 +56,7 @@ function ModalBasketOrder({ onClick, sendigOrderStatus }: TModalBasketOrderProps
               className="btn btn--purple modal__btn modal__btn--fit-width"
               onClick={handleCloseButtonClick}
               type="button"
+              data-testid="returnModalButton"
             >
               Вернуться к покупкам
             </button>
@@ -65,6 +66,7 @@ function ModalBasketOrder({ onClick, sendigOrderStatus }: TModalBasketOrderProps
             onClick={handleCloseButtonClick}
             type="button"
             aria-label="Закрыть попап"
+            data-testid="closeModalButton"
           >
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>

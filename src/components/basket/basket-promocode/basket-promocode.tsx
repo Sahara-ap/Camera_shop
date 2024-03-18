@@ -37,7 +37,7 @@ function BasketPromocode(): JSX.Element {
 
 
   return (
-    <div className="basket__promo">
+    <div className="basket__promo" data-testid="basketPromocodeDiv">
       <p className="title title--h4">Если у вас есть промокод на скидку, примените его в этом поле</p>
       <div className="basket-form">
         <form action="#">

@@ -78,6 +78,7 @@ function ModalAddItemSuccess({ onLinkClick, page }: TModalAddItemSuccessProps): 
               className="btn btn--transparent modal__btn"
               to={page === 'product' ? hrefForProduct : hrefForCatalog}
               onClick={handleGoOnShoppingLinkClick}
+              data-testid="goOnLink"
             >
               Продолжить покупки
             </Link>
@@ -96,6 +97,7 @@ function ModalAddItemSuccess({ onLinkClick, page }: TModalAddItemSuccessProps): 
             type="button"
             aria-label="Закрыть попап"
             onClick={handleCloseButtonClick}
+            data-testid="closeModalButton"
           >
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>

@@ -26,7 +26,7 @@ function BasketItem({ card }: TBasketItemProps): JSX.Element {
 
 
   return (
-    <li className="basket-item">
+    <li className="basket-item" data-testid="basketItemLi">
       <div className="basket-item__img">
         <picture>
           <source type="image/webp" srcSet={`${card.previewImgWebp}, ${card.previewImgWebp2x} 2x`} />
