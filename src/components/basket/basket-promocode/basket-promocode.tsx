@@ -53,7 +53,6 @@ function BasketPromocode(): JSX.Element {
                 type="text"
                 name="promo"
                 placeholder="Введите промокод"
-                // value={couponInput} onChange={handlePromoCodeChange}
                 value={couponInput} onChange={handlePromoCodeChange}
 
               />
