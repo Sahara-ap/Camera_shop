@@ -10,6 +10,8 @@ import { activateDownKey, activateTabKey, activateUpKey, filterBySearch, formatS
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../../consts';
 
+const UL_SHOW_SYMBOLS_NUMBER = 3;
+const CLEAR_BUTTON_ACTIVE_SYMBOLS_NUMBER = 1;
 
 function SearchMain(): JSX.Element {
   const navigate = useNavigate();
@@ -32,8 +34,8 @@ function SearchMain(): JSX.Element {
     setSearchLineIndex(-1);
   }
   const filterCards = filterBySearch(cameras, search);
-  const isActiveUl = formatSearch(search).length >= 3;
-  const isActiveButton = formatSearch(search).length >= 1;
+  const isActiveUl = formatSearch(search).length >= UL_SHOW_SYMBOLS_NUMBER;
+  const isActiveButton = formatSearch(search).length >= CLEAR_BUTTON_ACTIVE_SYMBOLS_NUMBER;
 
 
   function handleKeydown(event: React.KeyboardEvent) {
