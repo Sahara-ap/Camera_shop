@@ -28,7 +28,7 @@ function SelectedProductReviews(): JSX.Element | null {
   const handleDocumentScroll = useCallback((event: Event) => {
     const target = event.target as Document;
     if (
-      target.documentElement.scrollHeight - (target.documentElement.scrollTop + window.innerHeight) === 0) {
+      target.documentElement.scrollHeight - (target.documentElement.scrollTop + window.innerHeight) <= 0) {
       setCountReviews(countReviews + INITIAL_NUMBER_REVIEWS);
     }
   }, [countReviews]);
