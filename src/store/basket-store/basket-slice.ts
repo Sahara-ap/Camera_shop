@@ -73,7 +73,7 @@ const basketSlice = createSlice({
       }
     },
     setItemCount: (state, action: PayloadAction<{ id: TBasketCard['id']; count: string }>) => {
-      const formatedCount = Number(action.payload.count);
+      const formatedCount = Math.round(+action.payload.count);
       let result = formatedCount;
       if (formatedCount > 99) {
         result = 99;
