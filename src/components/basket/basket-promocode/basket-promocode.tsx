@@ -1,30 +1,40 @@
 import cn from 'classnames';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks/store-hooks';
-import { getCouponSendingStatus, getCouponValue } from '../../../store/basket-store/basket-selectors';
+import { getCouponSendingStatus, getPostOrdersSendingStatus } from '../../../store/basket-store/basket-selectors';
 import { postCoupon } from '../../../store/api-actions/basket-actions';
 import { setCouponValue } from '../../../store/basket-store/basket-slice';
 
 import { removeSpacesFrom } from '../../../utils/utils-functions';
 import { LoadingDataStatus } from '../../../consts';
-import { saveCouponValueToStorage } from '../../../services/localStorage';
+import { getCouponValueFromStorage } from '../../../services/localStorage';
 
 function BasketPromocode(): JSX.Element {
   const dispatch = useAppDispatch();
+
+  const [couponUserValue, setCouponUserValue] = useState(getCouponValueFromStorage());
   const promoCodeRef = useRef<HTMLInputElement>(null);
 
-  const couponInput = useAppSelector(getCouponValue);
-
-  const sendingStatus = useAppSelector(getCouponSendingStatus);
+  const sendingCouponStatus = useAppSelector(getCouponSendingStatus);
+  const sendingOrderStatus = useAppSelector(getPostOrdersSendingStatus);
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted && sendingOrderStatus === LoadingDataStatus.Success) {
+      setCouponUserValue('');
+    }
+    return (() => {
+      isMounted = false;
+    });
+  }, [sendingOrderStatus]);
 
 
   function onApplyPromoCodeClick(event: React.MouseEvent) {
     event.preventDefault();
 
-    const body = { coupon: couponInput};
-    saveCouponValueToStorage(body.coupon);
+    const body = { coupon: couponUserValue};
     dispatch(postCoupon(body));
+    dispatch(setCouponValue(couponUserValue)); // нужен для однообразия, чтобы сохранять в LS и удалять только в одном единственном месте!
 
     promoCodeRef.current?.focus();
   }
@@ -32,7 +42,7 @@ function BasketPromocode(): JSX.Element {
   function handlePromoCodeChange(event: React.ChangeEvent<HTMLInputElement>) {
     const coupon = event.target.value;
     const couponWithoutSpaces = removeSpacesFrom(coupon);
-    dispatch(setCouponValue(couponWithoutSpaces));
+    setCouponUserValue(couponWithoutSpaces);
   }
 
 
@@ -43,8 +53,8 @@ function BasketPromocode(): JSX.Element {
         <form action="#">
           <div
             className={cn('custom-input', {
-              'is-invalid': sendingStatus === LoadingDataStatus.Error,
-              'is-valid': sendingStatus === LoadingDataStatus.Success
+              'is-invalid': sendingCouponStatus === LoadingDataStatus.Error,
+              'is-valid': sendingCouponStatus === LoadingDataStatus.Success
             })}
           >
             <label><span className="custom-input__label">Промокод</span>
@@ -53,7 +63,7 @@ function BasketPromocode(): JSX.Element {
                 type="text"
                 name="promo"
                 placeholder="Введите промокод"
-                value={couponInput} onChange={handlePromoCodeChange}
+                value={couponUserValue} onChange={handlePromoCodeChange}
 
               />
             </label>
