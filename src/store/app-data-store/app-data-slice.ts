@@ -94,12 +94,12 @@ const appDataSlice = createSlice({
         state.hasErrorWithConnection = true;
       })
 
+      //postCoupon.rejected умышлено снесен, чтобы в hasErrorConnection не попало ненужное true, что вызовет неуместную обработку ошибки на странице каталога
+      //  как раз из-за таких пересечений есть большой смысл errorConnection заводить для каждого слайса свой, а в компоненте ошибке выборочно доставать из стора только те ошибки, для которых есть смысл показывать этот самый компонент
       .addCase(postCoupon.fulfilled, (state) => {
         state.hasErrorWithConnection = false;
-      })
-      .addCase(postCoupon.rejected, (state) => {
-        state.hasErrorWithConnection = true;
       });
+
   }
 });
 const {
