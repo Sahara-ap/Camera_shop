@@ -13,7 +13,8 @@ function CatalogFilterAside(): JSX.Element {
   const hasSomeFiltersInParams = Object.keys(params).some((paramName) => paramName.includes('price') || paramName.includes('level') || paramName.includes('cat') || paramName.includes('type'));
   const isEmptyFilterParams = !hasSomeFiltersInParams;
 
-  function handleResetClick() {
+  function handleResetClick(event: React.MouseEvent) {
+    event.preventDefault();
 
     if (hasSomeFiltersInParams) {
       delete params.page;
